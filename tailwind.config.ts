@@ -1,5 +1,6 @@
 import type { Config } from 'tailwindcss'
 import button from './plugins/button'
+import input from './plugins/input'
 
 export default {
     content: [
@@ -70,5 +71,5 @@ export default {
             },
         },
     },
-    plugins: [button],
+    plugins: [button, input],
 } satisfies Config
