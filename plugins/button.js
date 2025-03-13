@@ -22,7 +22,7 @@ export default plugin(function ({ addComponents }) {
             },
         },
         '.btn-loading': {
-            '@apply flex items-center justify-center': '',
+            '@apply flex items-center justify-center gap-2': '',
             '& svg': {
                 '@apply animate-spin': '',
             },
@@ -30,37 +30,37 @@ export default plugin(function ({ addComponents }) {
         '.btn-pc-lg': {
             '@apply text-pc-body-lg px-6 py-4': '',
             '& svg': {
-                '@apply h-5 w-5 mr-2': '',
+                '@apply h-5 w-5': '',
             },
         },
         '.btn-pc-md': {
             '@apply text-pc-body-md px-6 py-3': '',
             '& svg': {
-                '@apply h-4 w-4 mr-2': '',
+                '@apply h-4 w-4': '',
             },
         },
         '.btn-pc-sm': {
             '@apply text-pc-body-sm px-4 py-2': '',
             '& svg': {
-                '@apply h-3 w-3 mr-2': '',
+                '@apply h-3 w-3': '',
             },
         },
         '.btn-mobile-lg': {
             '@apply text-mobile-body-lg px-6 py-4': '',
             '& svg': {
-                '@apply h-4 w-4 mr-2': '',
+                '@apply h-4 w-4': '',
             },
         },
         '.btn-mobile-md': {
             '@apply text-mobile-body-md px-6 py-3': '',
             '& svg': {
-                '@apply h-3 w-3 mr-2': '',
+                '@apply h-3 w-3': '',
             },
         },
         '.btn-mobile-sm': {
             '@apply text-mobile-body-sm px-4 py-2': '',
             '& svg': {
-                '@apply h-2 w-2 mr-2': '',
+                '@apply h-2 w-2': '',
             },
         },
     })
