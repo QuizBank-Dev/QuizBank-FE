@@ -9,6 +9,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@hookform/resolvers": "^4.1.3",
         "@tanstack/react-query": "^5.66.9",
         "axios": "^1.7.9",
         "dayjs": "^1.11.13",
