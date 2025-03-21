@@ -11,7 +11,7 @@ export default function AnnualStudyHeatmap() {
     const [year, setYear] = useState<number>(new Date().getFullYear())
     const [tooltip, setTooltip] = useState<Tooltip | null>(null)
 
-    // 데이터 패칭 로직 작성 필요 (현재 더미 데이터터).
+    // 데이터 패칭 로직 작성 필요 (현재 더미 데이터).
     const data = [
         { date: '2025-01-02', count: 12 },
         { date: '2025-01-22', count: 120 },
