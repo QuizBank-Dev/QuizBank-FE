@@ -10,6 +10,9 @@ export default {
     ],
     theme: {
         extend: {
+            boxShadow: {
+                point: '0px 4px 8px 0px #C099FF',
+            },
             fontFamily: {
                 pretendard: ['var(--font-pretendard)', 'sans-serif'],
             },
