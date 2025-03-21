@@ -20,6 +20,7 @@ const eslintConfig = [
             'no-unused-vars': ['warn'],
             'prettier/prettier': ['warn', { semi: false, endOfLine: 'auto' }],
             '@typescript-eslint/no-explicit-any': 'warn',
+            '@typescript-eslint/no-unused-vars': ['warn'],
         },
     },
 ]
