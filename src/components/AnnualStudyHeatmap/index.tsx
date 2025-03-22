@@ -37,7 +37,7 @@ export default function AnnualStudyHeatmap() {
     }
 
     return (
-        <article className="flex flex-col gap-[16px] rounded-lg p-[16px] shadow-point md:px-[32px] md:pt-[16px]">
+        <article className="flex flex-col gap-[16px] rounded-lg bg-white p-[16px] shadow-point md:px-[32px] md:pt-[16px]">
             <div className="flex items-center justify-between">
                 <h3 className="text-mobile-body-lg font-semi-bold md:text-pc-body-lg">
                     연간 학습
