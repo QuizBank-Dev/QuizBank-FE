@@ -37,11 +37,11 @@ export default function AnnualStudyHeatmap() {
     }
 
     return (
-        <section className="flex flex-col gap-[16px] rounded-lg p-[16px] shadow-point md:px-[32px] md:pt-[16px]">
+        <article className="flex flex-col gap-[16px] rounded-lg p-[16px] shadow-point md:px-[32px] md:pt-[16px]">
             <div className="flex items-center justify-between">
-                <p className="text-mobile-body-lg font-semi-bold md:text-pc-body-lg">
+                <h3 className="text-mobile-body-lg font-semi-bold md:text-pc-body-lg">
                     연간 학습
-                </p>
+                </h3>
                 <YearNavigator
                     year={year}
                     onPrev={onPrevHandler}
@@ -53,6 +53,6 @@ export default function AnnualStudyHeatmap() {
                 <HeatmapChart data={data} year={year} onTooltip={setTooltip} />
                 <HeatmapTooltip tooltip={tooltip} />
             </ScrollContainer>
-        </section>
+        </article>
     )
 }
