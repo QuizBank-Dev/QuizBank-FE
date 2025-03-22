@@ -16,14 +16,18 @@ export default function YearNavigator({
     disabled,
 }: YearNavigatorProps) {
     return (
-        <div className="flex items-center gap-[8px]">
+        <div className="flex items-center gap-[8px] text-gray-900">
             <button onClick={onPrev}>
                 <LeftArrowSvg className="h-[20px] w-[20px]" />
             </button>
             <p className="text-mobile-body-sm font-regular md:text-pc-body-sm">
                 {year}
             </p>
-            <button disabled={disabled} onClick={onNext}>
+            <button
+                disabled={disabled}
+                onClick={onNext}
+                className="disabled:cursor-not-allowed disabled:text-gray-400"
+            >
                 <RightArrowSvg className="h-[20px] w-[20px]" />
             </button>
         </div>
