@@ -1,4 +1,4 @@
-import { MonthLabelsType } from '@/types'
+import { MonthLabelsType } from '@/types/annualStudyHeatmap'
 
 export const MONTH_LABELS: MonthLabelsType = [
     '1월',

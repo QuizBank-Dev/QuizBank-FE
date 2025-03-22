@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Tooltip } from '@/types'
+import { Tooltip } from '@/types/annualStudyHeatmap'
 import YearNavigator from './YearNavigator'
 import HeatmapChart from './HeatmapChart'
 import HeatmapTooltip from './HeatmapTooltip'
