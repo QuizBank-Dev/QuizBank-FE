@@ -1,4 +1,4 @@
-import { Tooltip } from '@/types'
+import { Tooltip } from '@/types/annualStudyHeatmap'
 
 interface TooltipProps {
     tooltip: Tooltip | null
