@@ -7,12 +7,7 @@ export default {
         './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
         './src/components/**/*.{js,ts,jsx,tsx,mdx}',
         './src/app/**/*.{js,ts,jsx,tsx,mdx}',
-    ],
-    safelist: [
-        'text-[#4CAF50]',
-        'text-[#2196F3]',
-        'text-[#8A43EF]',
-        'text-[#4D3089]',
+        './src/constants/**/*.{js,ts,jsx,tsx,mdx}',
     ],
     theme: {
         extend: {
