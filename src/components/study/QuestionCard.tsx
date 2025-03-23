@@ -60,7 +60,7 @@ export default function QuestionCard({
                     {/* 카드 영역 */}
                     <div className="flex max-h-[200px] min-h-[200px] flex-col rounded-lg bg-white px-[16px] py-[16px] shadow-point md:max-h-[400px] md:min-h-[400px] md:px-[32px]">
                         <div className="mb-[8px] md:mb-[32px]">
-                            <ScoreTag type={'ox'} />
+                            <ScoreTag type={quiz.type} />
                         </div>
                         <div className="custom-scrollbar grid flex-1 place-items-center overflow-y-auto">
                             <p className="whitespace-pre-line break-words text-center text-mobile-body-lg font-semi-bold md:text-pc-body-lg">

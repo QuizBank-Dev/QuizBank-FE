@@ -1,7 +1,9 @@
-// SVG
-import PlusSvg from '@/assets/svgs/plus.svg'
+import clsx from 'clsx'
 import { TypeToColor, TypeToXp } from '@/constants/common/scoreTag'
 import { QuestionType } from '@/types/quiz'
+
+// SVG
+import PlusSvg from '@/assets/svgs/plus.svg'
 
 interface ScoreTagProps {
     type: QuestionType
@@ -9,14 +11,19 @@ interface ScoreTagProps {
 
 export default function ScoreTag({ type }: ScoreTagProps) {
     const xp = TypeToXp[type]
-    const color = TypeToColor[type]
 
     return (
         <span
-            className={`bg-point-50 px-[8px] py-[4px] text-mobile-body-sm font-semi-bold ${color} inline-flex items-center rounded-lg md:text-pc-body-sm`}
+            className={clsx(
+                'inline-flex items-center rounded-lg bg-point-50 px-[8px] py-[4px] text-mobile-body-sm font-semi-bold md:text-pc-body-sm',
+                TypeToColor[type],
+            )}
         >
             <PlusSvg
-                className={`h-[15px] w-[15px] ${color} md:h-[20px] md:w-[20px]`}
+                className={clsx(
+                    'h-[15px] w-[15px] md:h-[20px] md:w-[20px]',
+                    TypeToColor[type],
+                )}
             />
             {xp}xp
         </span>
