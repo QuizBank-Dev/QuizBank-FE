@@ -2,24 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-    --background: #ffffff;
-    --foreground: #171717;
+/* AnnualStudyHeatmap 스케일 별 컬러 */
+.react-calendar-heatmap .color-scale-1 {
+    fill: #e5d5fc;
+}
+.react-calendar-heatmap .color-scale-2 {
+    fill: #c19af9;
+}
+.react-calendar-heatmap .color-scale-3 {
+    fill: #9d65f4;
+}
+.react-calendar-heatmap .color-scale-4 {
+    fill: #8a43ef;
+}
+.react-calendar-heatmap
+    > .react-calendar-heatmap-month-labels
+    > .react-calendar-heatmap-month-label {
+    font-size: 8px;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background: #0a0a0a;
-        --foreground: #ededed;
-    }
+/* 커스텀 스크롤 */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #8a43ef;
+    border-radius: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background-color: #eaebed;
+    border-radius: 8px;
 }
 
-body {
-    color: var(--foreground);
-    background: var(--background);
-    font-family: Arial, Helvetica, sans-serif;
-}
-
+/* Input 자동 입력시 브라우저 기본 CSS 방지지 */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -29,11 +45,9 @@ input:-webkit-autofill:active {
     box-shadow: 0 0 0px 1000px transparent inset;
     transition: background-color 5000s ease-in-out 0s;
 }
-
 input:-webkit-autofill:disabled {
     -webkit-text-fill-color: #9fa4a8;
 }
-
 input:autofill,
 input:autofill:hover,
 input:autofill:focus,
