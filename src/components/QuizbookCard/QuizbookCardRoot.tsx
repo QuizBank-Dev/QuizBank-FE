@@ -53,7 +53,7 @@ export default function QuizbookCard({
         <QuizbookCardContext.Provider value={{ id, category, title, ...props }}>
             <div
                 className={clsx(
-                    'flex flex-col items-start gap-2 rounded-lg bg-white p-4 shadow-point hover:bg-gray-100',
+                    'flex cursor-pointer flex-col items-start gap-2 rounded-lg bg-white p-4 shadow-point hover:bg-gray-100',
                     className,
                 )}
                 onClick={handleQuizbookCardClick}
