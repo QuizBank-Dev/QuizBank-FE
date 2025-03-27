@@ -1,11 +1,11 @@
 import clsx from 'clsx'
 import {
-    QuizBookCardStatus,
+    QuizbookCardStatus,
     StatusColor,
 } from '@/constants/common/quizbookBadge'
 
 interface Props {
-    status: QuizBookCardStatus
+    status: QuizbookCardStatus
     customText?: string
 }
 
