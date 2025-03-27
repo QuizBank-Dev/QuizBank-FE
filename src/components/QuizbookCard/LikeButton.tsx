@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import clsx from 'clsx'
-import { useQuizbookCardContext } from './QuizbookCardRoot'
+import { useQuizbookCardContext } from '.'
 
 import HeartFillSvg from '@/assets/svgs/heart-fill.svg'
 

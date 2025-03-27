@@ -1,4 +1,6 @@
-import { useQuizbookCardContext } from './QuizbookCardRoot'
+'use client'
+
+import { useQuizbookCardContext } from '.'
 
 export default function Description() {
     const { description } = useQuizbookCardContext()

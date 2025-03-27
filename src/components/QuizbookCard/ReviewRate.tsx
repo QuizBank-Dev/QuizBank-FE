@@ -1,4 +1,4 @@
-import { useQuizbookCardContext } from './QuizbookCardRoot'
+import { useQuizbookCardContext } from '.'
 import StarFullSvg from '@/assets/svgs/star-full.svg'
 
 export default function ReviewRate() {

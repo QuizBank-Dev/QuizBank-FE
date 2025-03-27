@@ -1,4 +1,4 @@
-import { useQuizbookCardContext } from './QuizbookCardRoot'
+import { useQuizbookCardContext } from '.'
 import NoteSvg from '@/assets/svgs/note.svg'
 
 export default function QuizCount() {
