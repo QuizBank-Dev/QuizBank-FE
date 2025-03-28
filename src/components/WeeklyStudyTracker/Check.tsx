@@ -9,8 +9,8 @@ export default function Check({ checked, disabled }: Props) {
     return (
         <div
             className={clsx(
-                'flex aspect-square w-full max-w-16 items-center justify-center rounded-full bg-gray-100 text-point-500',
-                checked && '!bg-point-100',
+                'flex aspect-square w-full max-w-16 items-center justify-center rounded-full bg-gray-100 text-white',
+                checked && '!bg-point-200',
                 disabled && 'opacity-40',
             )}
         >
