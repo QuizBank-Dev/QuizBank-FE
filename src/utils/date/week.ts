@@ -1,7 +1,7 @@
 import { Dayjs } from 'dayjs'
 
 /**
- * ISO 8601을 기준으로 target이 N월 N주차인지 계산하는 함수
+ * ISO 8601을 기반으로 월 기준 주차를 계산하는 함수
  * @param target 대상 날짜 (월요일)
  */
 export const weekOfMonth = (target: Dayjs): string => {
