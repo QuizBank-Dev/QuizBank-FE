@@ -1,3 +1,5 @@
+'use client'
+
 import { ComponentProps, createContext, useContext } from 'react'
 import clsx from 'clsx'
 import { Quizbook } from '@/types/quizbook'
