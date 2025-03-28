@@ -1,6 +1,6 @@
 'use client'
 
-import { useQuizbookCardContext } from '.'
+import { useQuizbookCardContext } from './QuizbookCardContext'
 
 export default function Description() {
     const { description } = useQuizbookCardContext()

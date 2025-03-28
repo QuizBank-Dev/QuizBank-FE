@@ -1,4 +1,6 @@
-import { useQuizbookCardContext } from '.'
+'use client'
+
+import { useQuizbookCardContext } from './QuizbookCardContext'
 import UserSvg from '@/assets/svgs/user.svg'
 
 export default function SolvedRate() {

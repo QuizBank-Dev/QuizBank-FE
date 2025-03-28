@@ -1,4 +1,6 @@
-import { useQuizbookCardContext } from '.'
+'use client'
+
+import { useQuizbookCardContext } from './QuizbookCardContext'
 
 export default function Author() {
     const { author } = useQuizbookCardContext()

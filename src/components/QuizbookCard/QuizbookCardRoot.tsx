@@ -1,17 +1,14 @@
 'use client'
 
-import { ComponentProps, createContext, useContext } from 'react'
+import { ComponentProps } from 'react'
 import clsx from 'clsx'
-import { Quizbook } from '@/types/quizbook'
+import {
+    QuizbookCardContext,
+    QuizbookCardContextProps,
+} from './QuizbookCardContext'
 
 // 하위 컴포넌트
 import Badge from './Badge'
-import Description from './Description'
-import Author from './Author'
-import SolvedRate from './SolvedRate'
-import ReviewRate from './ReviewRate'
-import QuizCount from './QuizCount'
-import LikeButton from './LikeButton'
 
 interface Props {
     id: string
@@ -23,19 +20,7 @@ interface Props {
     className?: string
 }
 
-type ContextProps = Partial<Quizbook> & { id: string }
-
-const QuizbookCardContext = createContext<ContextProps | null>(null)
-
-export const useQuizbookCardContext = () => {
-    const context = useContext(QuizbookCardContext)
-    if (!context) {
-        throw new Error('QuizbookCard 하위에 작성되어야하는 컴포넌트입니다.')
-    }
-    return context
-}
-
-export default function QuizbookCard({
+export default function QuizbookCardRoot({
     id,
     category,
     title,
@@ -44,7 +29,7 @@ export default function QuizbookCard({
     children,
     className,
     ...props
-}: Props & ContextProps) {
+}: Props & QuizbookCardContextProps) {
     const handleQuizbookCardClick = () => {
         if (onClick) {
             onClick()
@@ -77,9 +62,9 @@ export default function QuizbookCard({
     )
 }
 
-QuizbookCard.Description = Description
-QuizbookCard.Author = Author
-QuizbookCard.SolvedRate = SolvedRate
-QuizbookCard.ReviewRate = ReviewRate
-QuizbookCard.QuizCount = QuizCount
-QuizbookCard.LikeButton = LikeButton
+// QuizbookCard.Description = Description
+// QuizbookCard.Author = Author
+// QuizbookCard.SolvedRate = SolvedRate
+// QuizbookCard.ReviewRate = ReviewRate
+// QuizbookCard.QuizCount = QuizCount
+// QuizbookCard.LikeButton = LikeButton
