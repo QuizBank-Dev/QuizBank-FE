@@ -1,9 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-
 import dayjs from '@/utils/date'
-
 import WeekNavigator from './WeekNavigator'
 import DayTracker from './DayTracker'
 
@@ -19,6 +17,11 @@ export default function WeeklyStudyTracker({ data }: Props) {
         [target],
     )
 
+    const hasThisDate = (target: string) => {
+        return data
+            .reduce((arr: string[], { date }) => [...arr, date], [])
+            .includes(target)
+    }
     const handlePrevWeek = () => {
         setTarget(target.subtract(1, 'week'))
     }
@@ -44,12 +47,7 @@ export default function WeeklyStudyTracker({ data }: Props) {
                     <DayTracker
                         key={day.format('WEEKLY_YYYY-MM-DD')}
                         target={day}
-                        completed={data
-                            .reduce(
-                                (arr: string[], { date }) => [...arr, date],
-                                [],
-                            )
-                            .includes(day.format('YYYY-MM-DD'))}
+                        completed={hasThisDate(day.format('YYYY-MM-DD'))}
                     />
                 ))}
             </div>
