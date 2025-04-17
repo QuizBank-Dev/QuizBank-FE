@@ -7,7 +7,7 @@ interface Prop {
 
 export default function DesktopHeaderRoot({ children }: Prop) {
     return (
-        <div className="hidden w-full justify-center bg-white p-[10px] text-gray-900 md:flex">
+        <header className="hidden w-full justify-center bg-white p-[10px] text-gray-900 md:flex">
             <div className="flex w-full max-w-[1024px] items-center gap-4">
                 <Link href="/" className="flex items-center">
                     <Logo className="mr-2 h-[54px] w-[50px]" />
@@ -17,6 +17,6 @@ export default function DesktopHeaderRoot({ children }: Prop) {
                 </Link>
                 <div className="flex flex-1 justify-between">{children}</div>
             </div>
-        </div>
+        </header>
     )
 }
