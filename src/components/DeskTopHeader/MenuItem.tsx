@@ -18,7 +18,7 @@ export default function MenuItem({ text, href }: Props) {
                 href={href}
                 className={clsx(
                     'text-pc-title-sm font-extra-bold',
-                    pathname.startsWith(href) ? 'text-point-500' : 'text-black',
+                    pathname.startsWith(href) && 'text-point-500',
                 )}
             >
                 {text}
