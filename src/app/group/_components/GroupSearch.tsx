@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/select'
 import GroupCard from './GroupCard'
 import { useRouter } from 'next/navigation'
+import SearchIcon from '@/assets/svgs/search.svg'
 
 const dummyDatas = [
     {
@@ -41,11 +42,14 @@ export default function GroupSearch() {
 
     return (
         <div className="flex flex-col gap-4">
-            <input
-                type="text"
-                placeholder="그룹 제목 검색"
-                className="input-solid input-mobile md:input-pc"
-            />
+            <div className="relative w-full">
+                <input
+                    type="text"
+                    placeholder="그룹 제목 검색"
+                    className="input-solid input-mobile pr-10 md:input-pc"
+                />
+                <SearchIcon className="absolute right-3 top-1/2 size-5 -translate-y-1/2 cursor-pointer text-gray-400 md:size-6" />
+            </div>
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <Select defaultValue="total">
