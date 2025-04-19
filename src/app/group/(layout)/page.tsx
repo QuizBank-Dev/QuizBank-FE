@@ -1,5 +1,10 @@
 import MobileHeader from '@/components/MobileHeader'
 import GroupSearch from './_components/GroupSearch'
+import MobileBottomNav from '@/components/MobileBottomNav'
+import BottomHome from '@/assets/svgs/bottom-home.svg'
+import BottomQuizbook from '@/assets/svgs/bottom-quizbook.svg'
+import BottomGroup from '@/assets/svgs/bottom-group.svg'
+import BottomMyStatus from '@/assets/svgs/bottom-my-status.svg'
 
 export default function GroupPage() {
     return (
@@ -18,6 +23,25 @@ export default function GroupPage() {
                     <GroupSearch />
                 </div>
             </main>
+
+            {/* 모바일 전용 바텀 Nav */}
+            <MobileBottomNav>
+                <MobileBottomNav.MenuItem text="홈" href="/">
+                    <BottomHome />
+                </MobileBottomNav.MenuItem>
+                <MobileBottomNav.MenuItem text="문제집" href="/quizbook">
+                    <BottomQuizbook />
+                </MobileBottomNav.MenuItem>
+                <MobileBottomNav.MenuItem text="그룹" href="/group">
+                    <BottomGroup />
+                </MobileBottomNav.MenuItem>
+                <MobileBottomNav.UserMenuItem
+                    text="학습현황"
+                    href="/study-status"
+                >
+                    <BottomMyStatus />
+                </MobileBottomNav.UserMenuItem>
+            </MobileBottomNav>
         </>
     )
 }
