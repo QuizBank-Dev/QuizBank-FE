@@ -28,7 +28,7 @@ export default function Item({ icon, text, subText, href }: Props) {
                 <div className="flex flex-col items-start gap-1 text-mobile-body-md font-regular md:text-pc-body-md">
                     {text}
                     {subText && (
-                        <span className="text-mobile-body-sm md:text-pc-body-sm">
+                        <span className="text-mobile-body-sm text-gray-400 md:text-pc-body-sm">
                             {subText}
                         </span>
                     )}
