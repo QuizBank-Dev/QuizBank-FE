@@ -4,7 +4,7 @@ interface Prop {
 
 export default function Group({ children }: Prop) {
     return (
-        <div className="flex w-full flex-col rounded-lg bg-white">
+        <div className="flex w-full flex-col overflow-hidden rounded-lg bg-white">
             {children}
         </div>
     )
