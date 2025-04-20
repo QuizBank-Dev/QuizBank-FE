@@ -19,7 +19,7 @@ const dummyDatas = [
         admin: {
             _id: '888888',
             nickname: 'Juni',
-            profileImg: '프로필 주소',
+            profileImg: '',
         },
         memberCount: 7,
         chatRoom: '99e8a002',
@@ -31,7 +31,7 @@ const dummyDatas = [
         admin: {
             _id: '888888',
             nickname: 'Juni',
-            profileImg: '프로필 주소',
+            profileImg: '',
         },
         memberCount: 7,
     },
