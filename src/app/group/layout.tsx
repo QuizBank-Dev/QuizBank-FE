@@ -1,6 +1,6 @@
 import DesktopHeader from '@/components/DesktopHeader'
 
-export default function GroupLayout({
+export default function GroupDesktopLayout({
     children,
 }: Readonly<{
     children: React.ReactNode
@@ -16,6 +16,7 @@ export default function GroupLayout({
                 <DesktopHeader.UserMenu />
             </DesktopHeader>
 
+            {/* 컨탠츠 */}
             {children}
         </div>
     )
