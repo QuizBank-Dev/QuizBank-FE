@@ -1,6 +1,13 @@
 import MobileHeader from '@/components/MobileHeader'
+import GroupQuizbookSearch from './_components/GroupQuizbookSearch'
 
-export default function GroupQuizbookPage() {
+export default async function GroupQuizbookPage({
+    params,
+}: Readonly<{
+    params: Promise<{ groupId: string }>
+}>) {
+    const { groupId } = await params
+
     return (
         <>
             {/* 모바일 전용 헤더 */}
@@ -12,7 +19,7 @@ export default function GroupQuizbookPage() {
                     <h2 className="hidden text-pc-title-sm font-extra-bold text-point-900 md:block">
                         그룹 선정 문제집
                     </h2>
-                    {/* 클라이언트 컴포넌트 */}
+                    <GroupQuizbookSearch groupId={groupId} />
                 </div>
             </main>
         </>
