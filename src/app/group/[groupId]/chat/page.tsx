@@ -1,4 +1,5 @@
 import MobileHeader from '@/components/MobileHeader'
+import GroupChat from './_components/GroupChat'
 
 export default async function GroupChatPage({
     params,
@@ -14,7 +15,7 @@ export default async function GroupChatPage({
 
             {/* 컨탠츠 */}
             <main className="flex w-full flex-1 flex-col items-center overflow-visible">
-                <div className="flex w-full flex-col gap-4 px-4 pb-4 md:px-0 md:pb-0">
+                <div className="flex w-full flex-1 flex-col gap-4 px-4 pb-4 md:px-0 md:pb-0">
                     <h2 className="hidden text-pc-title-sm font-extra-bold text-point-900 md:block">
                         그룹 채팅
                     </h2>

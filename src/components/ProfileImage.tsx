@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 interface ProfileImageProps {
     size: number
     profileImg: string
@@ -7,17 +9,10 @@ interface ProfileImageProps {
 
 export default function ProfileImage({ size, profileImg }: ProfileImageProps) {
     return (
-        <div
-            className="overflow-hidden rounded-full bg-gray-300"
-            style={{ width: size, height: size }}
-        >
-            {profileImg && (
-                <img
-                    src={profileImg}
-                    alt="프로필 이미지"
-                    className="h-full w-full object-cover"
-                />
-            )}
-        </div>
+        <Image
+            src={profileImg}
+            alt="프로필 이미지"
+            className={`w-[${size}px] h-[${size}px] rounded-full object-cover`}
+        />
     )
 }
