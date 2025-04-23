@@ -14,6 +14,7 @@ interface Props {
     disabled?: boolean
     children?: React.ReactNode
     error?: string
+    className?: string
 }
 
 export default function CustomSelectRoot({
@@ -24,6 +25,7 @@ export default function CustomSelectRoot({
     disabled,
     children,
     error,
+    className = '',
 }: Props) {
     const {
         control,
@@ -46,7 +48,7 @@ export default function CustomSelectRoot({
             <Controller
                 control={control}
                 name={name}
-                render={({ field: { value, onChange, ref } }) => (
+                render={({ field: { value, onChange } }) => (
                     <Select
                         value={value}
                         onValueChange={onChange}
@@ -54,7 +56,11 @@ export default function CustomSelectRoot({
                         open={isOpen}
                         onOpenChange={setIsOpen}
                     >
-                        <SelectTrigger id={id} data-error={error && !isOpen}>
+                        <SelectTrigger
+                            id={id}
+                            data-error={error && !isOpen}
+                            className={className}
+                        >
                             <SelectValue placeholder={placeholder} />
                         </SelectTrigger>
                         <SelectContent>{children}</SelectContent>
