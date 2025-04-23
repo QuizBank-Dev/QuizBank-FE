@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/select'
 import UserIcon from '@/assets/svgs/user.svg'
 import { useState } from 'react'
+import GroupMember from './GroupMember'
 
 const dummyData = {
     _id: '65e8a5d6fc13ae5e7f000002',
@@ -79,7 +80,9 @@ export default function GroupMemberList({ groupId }: { groupId: string }) {
                     <div className="flex items-center gap-1">
                         <UserIcon className="size-5 text-point-200" />
                         <div className="text-mobile-body-md font-semi-bold md:text-pc-body-md">
-                            {'5'}
+                            {status === 'member'
+                                ? dummyData.memberList.length
+                                : dummyData.applyingUserList.length}
                         </div>
                     </div>
                 </div>
@@ -94,12 +97,31 @@ export default function GroupMemberList({ groupId }: { groupId: string }) {
             </div>
             <div className="hidden w-full items-center gap-5 rounded-lg bg-point-100 px-4 py-[10px] text-pc-body-md font-semi-bold text-point-700 md:flex">
                 <div className="h-8 w-8" />
-                <span className="flex-[3]">닉네임</span>
+                <span className="flex-[2]">닉네임</span>
                 <div className="h-8 border-1 border-white" />
                 <span className="flex-[4]">이메일</span>
                 <div className="h-8 border-1 border-white" />
-                <span className="flex-[5]">역할</span>
+                <span className="flex-[7]">역할</span>
             </div>
+            {(status === 'member'
+                ? dummyData.memberList
+                : dummyData.applyingUserList
+            ).map((data, index) => (
+                <GroupMember
+                    key={data._id}
+                    groupId={groupId}
+                    data={data}
+                    status={
+                        status === 'member'
+                            ? index === 0
+                                ? '방장'
+                                : '그룹원'
+                            : '가입 요청중'
+                    }
+                    myId={'2'}
+                    isOwner={dummyData.admin._id === '2'}
+                />
+            ))}
         </section>
     )
 }
