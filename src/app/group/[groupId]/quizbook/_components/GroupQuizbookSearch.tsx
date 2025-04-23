@@ -58,7 +58,7 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
     }
 
     return (
-        <div className="flex flex-col gap-4">
+        <section className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <Select defaultValue="in-progress">
@@ -124,6 +124,6 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                     </div>
                 </QuizbookCard>
             ))}
-        </div>
+        </section>
     )
 }
