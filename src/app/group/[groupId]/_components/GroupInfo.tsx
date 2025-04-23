@@ -62,7 +62,7 @@ export default function GroupInfo() {
     }
 
     return (
-        <section className="w-full rounded-lg bg-white p-4 shadow-point md:p-8">
+        <section className="w-full rounded-lg bg-white p-4 shadow-point md:mb-8 md:p-8">
             <FormProvider {...methods}>
                 <form
                     onSubmit={methods.handleSubmit(handleFormSubmit)}

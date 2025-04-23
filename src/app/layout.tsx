@@ -21,8 +21,8 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <html lang="ko" className={`${pretendard.variable}`}>
-            <body className={`${pretendard.className} bg-point-50`}>
+        <html lang="ko" className={`${pretendard.variable} h-full`}>
+            <body className={`${pretendard.className} h-full bg-point-50`}>
                 {children}
             </body>
         </html>

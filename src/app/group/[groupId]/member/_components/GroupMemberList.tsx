@@ -63,7 +63,7 @@ export default function GroupMemberList({ groupId }: { groupId: string }) {
     const [status, setStatus] = useState('member')
 
     return (
-        <section className="flex flex-col gap-4">
+        <section className="flex flex-col gap-4 md:mb-8">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <Select value={status} onValueChange={setStatus}>
