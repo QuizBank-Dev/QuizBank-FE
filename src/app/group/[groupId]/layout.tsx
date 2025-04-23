@@ -37,7 +37,7 @@ export default async function GroupSidebarLayout({
                         />
                         <Sidebar.Item
                             icon={<MemberIcon className="size-5" />}
-                            text="멤버 관리"
+                            text="그룹원 관리"
                             href={`/group/${groupId}/member`}
                         />
                     </Sidebar.Group>
