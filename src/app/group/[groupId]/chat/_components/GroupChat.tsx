@@ -1,6 +1,8 @@
 'use client'
 
 import { ProfileImage } from '@/components'
+import ChatMessage from './ChatMessage'
+import { useRouter } from 'next/navigation'
 
 const dummyDatas = [
     {
@@ -23,14 +25,35 @@ const dummyDatas = [
         },
         createdAt: '2025-04-07',
     },
+    {
+        _id: '65e8a5d6fc13ae5e7f000003',
+        content: '안녕하세요~',
+        author: {
+            _id: 'aaaaa',
+            nickname: '닉네임1',
+            profileImg: '',
+        },
+        createdAt: '2025-04-07',
+    },
 ]
 
 export default function GroupChat({ groupId }: { groupId: string }) {
+    const router = useRouter()
+
     return (
-        <section className="flex w-full flex-1 flex-col rounded-lg bg-white p-4 shadow-point md:px-8">
-            <div className="flex w-full flex-1 flex-col"></div>
-            <form className="flex items-center gap-4 border-t-1 border-gray-300 pt-4 md:px-4">
-                <div className="h-8 w-8">
+        <section className="flex h-full flex-col gap-4">
+            <div className="flex h-0 flex-1 flex-col rounded-lg bg-white p-4 shadow-point md:px-8">
+                <div className="h-full flex-1 overflow-hidden overflow-y-auto">
+                    {dummyDatas.map((data) => (
+                        <ChatMessage key={data._id} data={data} />
+                    ))}
+                </div>
+            </div>
+            <form className="flex items-center gap-4 md:px-4">
+                <div
+                    className="h-8 w-8 cursor-pointer"
+                    onClick={() => router.push(`/user/me`)}
+                >
                     <ProfileImage size={32} profileImg={''} />
                 </div>
                 <input
