@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { TypeToColor, TypeToXp } from '@/constants/common/scoreTag'
+import { TypeToColor, TypeToXp } from '@/constants/quiz'
 import { QuestionType } from '@/types/quiz'
 
 // SVG
