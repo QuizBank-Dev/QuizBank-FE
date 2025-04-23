@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
+import { QueryProvider } from './_providers/QueryProvider'
+import { UserPrefetcher } from './_providers/UserPrefetcher'
 
 const pretendard = localFont({
     src: '../static/fonts/PretendardVariable.woff2',
@@ -23,7 +25,9 @@ export default function RootLayout({
     return (
         <html lang="ko" className={`${pretendard.variable} h-full`}>
             <body className={`${pretendard.className} h-full bg-point-50`}>
-                {children}
+                <QueryProvider>
+                    <UserPrefetcher>{children}</UserPrefetcher>
+                </QueryProvider>
             </body>
         </html>
     )

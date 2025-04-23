@@ -1,86 +1,86 @@
 'use client'
-import React, { ReactNode, useEffect } from 'react'
-import XCloseSvg from '@/assets/svgs/close.svg'
+
+import CloseSvg from '@/assets/svgs/close.svg'
+
+import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import clsx from 'clsx'
 
 interface ModalProps {
-    isOpen: boolean
-    onClose: () => void
     title?: string
-    children: ReactNode
+    children?: React.ReactNode
     closeOnOverlayClick?: boolean // 배경 클릭으로 닫기 여부 제어
+    className?: string
 }
 
 export default function Modal({
-    isOpen,
-    onClose,
     title,
     children,
     closeOnOverlayClick = false, // 기본값은 false로 설정 (= 배경 클릭으로 닫기 비활성화)
+    className = '',
 }: ModalProps) {
+    const router = useRouter()
+
     // ESC 키로 모달 닫기 가능
     useEffect(() => {
         const handleEscKey = (event: KeyboardEvent) => {
-            if (event.key === 'Escape' && isOpen) {
-                onClose()
+            if (event.key === 'Escape') {
+                router.back()
             }
         }
 
         window.addEventListener('keydown', handleEscKey)
-
-        // 모달이 열릴 때 body 스크롤 방지
-        if (isOpen) {
-            document.body.style.overflow = 'hidden'
-        }
+        document.body.style.overflow = 'hidden'
 
         return () => {
             window.removeEventListener('keydown', handleEscKey)
             document.body.style.overflow = 'auto'
         }
-    }, [isOpen, onClose])
-
-    // 모달이 닫혀있으면 렌더링하지 않음
-    if (!isOpen) return null
+    }, [router])
 
     const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (closeOnOverlayClick && e.target === e.currentTarget) {
-            onClose()
+            router.back()
         }
     }
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
+        <div
+            className="absolute inset-0 flex min-h-screen w-full flex-col items-center justify-center bg-gray-900 bg-opacity-70 px-[16px] backdrop-blur-sm md:px-[32px]"
+            onClick={handleOverlayClick}
+        >
+            {/* 모달 컨텐츠 영역 */}
             <div
-                className="fixed inset-0 bg-gray-900 bg-opacity-70 backdrop-blur-sm"
-                onClick={handleOverlayClick}
-                aria-hidden="true"
-            />
-
-            {/* 모달 컨테이너 */}
-            <div
-                className="z-60 relative w-[90%] max-w-[600px] rounded-lg bg-white px-[16px] py-[16px] shadow-lg md:px-[32px]"
+                className="flex max-h-[70vh] w-full max-w-[768px] flex-col gap-[16px] overflow-hidden rounded-lg bg-white py-[16px]"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby={title ? 'modal-title' : undefined}
             >
-                <button
-                    className="absolute right-[16px] top-[16px] hover:text-point-500"
-                    onClick={onClose}
-                    aria-label="닫기"
-                >
-                    <XCloseSvg className="h-[24px] w-[24px]" />
-                </button>
-
-                {/* 타이틀 렌더링 (있는 경우) */}
-                {title && (
-                    <h2
-                        id="modal-title"
-                        className="mb-[16px] text-pc-body-lg font-semi-bold"
+                {/* 타이틀 & 닫기버튼 */}
+                <div className="flex items-center justify-center px-[16px] md:px-[32px]">
+                    {title && (
+                        <h2
+                            id="modal-title"
+                            className="flex-1 pl-[24px] text-center text-mobile-title-sm font-semi-bold md:text-pc-title-sm"
+                        >
+                            {title}
+                        </h2>
+                    )}
+                    <button
+                        className="hover:text-point-500"
+                        onClick={() => router.back()}
+                        aria-label="닫기"
                     >
-                        {title}
-                    </h2>
-                )}
+                        <CloseSvg className="h-[24px] w-[24px]" />
+                    </button>
+                </div>
 
-                <div className="custom-scrollbar max-h-[70vh] overflow-y-auto">
+                <div
+                    className={clsx(
+                        'custom-scrollbar flex-1 grow overflow-y-auto px-[16px] md:px-[32px]',
+                        className,
+                    )}
+                >
                     {children}
                 </div>
             </div>
