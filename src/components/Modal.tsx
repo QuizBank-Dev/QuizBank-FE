@@ -1,21 +1,23 @@
 'use client'
 
+import CloseSvg from '@/assets/svgs/close.svg'
+
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-
-// SVG
-import CloseSvg from '@/assets/svgs/close.svg'
+import clsx from 'clsx'
 
 interface ModalProps {
     title?: string
-    children: React.ReactNode
+    children?: React.ReactNode
     closeOnOverlayClick?: boolean // 배경 클릭으로 닫기 여부 제어
+    className?: string
 }
 
 export default function Modal({
     title,
     children,
     closeOnOverlayClick = false, // 기본값은 false로 설정 (= 배경 클릭으로 닫기 비활성화)
+    className = '',
 }: ModalProps) {
     const router = useRouter()
 
@@ -44,7 +46,7 @@ export default function Modal({
 
     return (
         <div
-            className="fixed inset-0 flex min-h-screen w-full flex-col items-center justify-center bg-gray-900 bg-opacity-70 px-[16px] backdrop-blur-sm md:px-[32px]"
+            className="absolute inset-0 flex min-h-screen w-full flex-col items-center justify-center bg-gray-900 bg-opacity-70 px-[16px] backdrop-blur-sm md:px-[32px]"
             onClick={handleOverlayClick}
         >
             {/* 모달 컨텐츠 영역 */}
@@ -73,7 +75,12 @@ export default function Modal({
                     </button>
                 </div>
 
-                <div className="custom-scrollbar flex-1 grow overflow-y-auto px-[16px] md:px-[32px]">
+                <div
+                    className={clsx(
+                        'custom-scrollbar flex-1 grow overflow-y-auto px-[16px] md:px-[32px]',
+                        className,
+                    )}
+                >
                     {children}
                 </div>
             </div>
