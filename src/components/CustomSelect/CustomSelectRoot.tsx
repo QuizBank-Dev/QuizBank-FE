@@ -2,10 +2,9 @@
 
 import ExclamationSvg from '@/assets/svgs/exclamation.svg'
 
-import { Controller, useFormContext } from 'react-hook-form'
+import { Controller, get, useFormContext } from 'react-hook-form'
 import { Select, SelectContent, SelectTrigger, SelectValue } from '../ui/select'
-import clsx from 'clsx'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 
 interface Props {
     id: string
@@ -14,6 +13,7 @@ interface Props {
     placeholder?: string
     disabled?: boolean
     children?: React.ReactNode
+    error?: string
 }
 
 export default function CustomSelectRoot({
@@ -23,23 +23,14 @@ export default function CustomSelectRoot({
     placeholder,
     disabled,
     children,
+    error,
 }: Props) {
     const {
         control,
         formState: { errors },
     } = useFormContext()
-    const error = errors[name]?.message as string | undefined
+    error = error ? error : (get(errors, name)?.message as string | undefined)
     const [isOpen, setIsOpen] = useState(false)
-    const triggerRef = useRef<HTMLButtonElement | null>(null)
-
-    useEffect(() => {
-        const el = triggerRef.current
-        const isFocused = document.activeElement === el
-
-        if (el && isFocused && error) {
-            setIsOpen(true)
-        }
-    }, [error])
 
     return (
         <div className="flex w-full flex-col items-start gap-1">
@@ -63,14 +54,7 @@ export default function CustomSelectRoot({
                         open={isOpen}
                         onOpenChange={setIsOpen}
                     >
-                        <SelectTrigger
-                            ref={(el) => {
-                                ref(el)
-                                triggerRef.current = el
-                            }}
-                            id={id}
-                            data-error={error && !isOpen}
-                        >
+                        <SelectTrigger id={id} data-error={error && !isOpen}>
                             <SelectValue placeholder={placeholder} />
                         </SelectTrigger>
                         <SelectContent>{children}</SelectContent>

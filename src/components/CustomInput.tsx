@@ -1,7 +1,9 @@
 'use client'
 
-import { useFormContext } from 'react-hook-form'
 import Exclamation from '@/assets/svgs/exclamation.svg'
+
+import { get, useFormContext } from 'react-hook-form'
+import clsx from 'clsx'
 
 type CustomInputProps = {
     id: string
@@ -12,6 +14,7 @@ type CustomInputProps = {
     style?: 'solid' | 'outline'
     error?: string
     disabled?: boolean
+    area?: boolean
 }
 
 export default function CustomInput({
@@ -23,11 +26,16 @@ export default function CustomInput({
     style = 'solid',
     error,
     disabled = false,
+    area = false,
 }: CustomInputProps) {
-    const { register } = useFormContext()
+    const {
+        register,
+        formState: { errors },
+    } = useFormContext()
+    error = error ? error : (get(errors, name)?.message as string | undefined)
 
     const baseStyle = style === 'solid' ? 'input-solid' : 'input-outline'
-    const errorStyle = error ? 'input-error' : ''
+    const errorStyle = error ? 'input-error' : 'mb-4'
 
     return (
         <div className="flex w-full flex-col items-start gap-1">
@@ -39,14 +47,32 @@ export default function CustomInput({
                     {label}
                 </label>
             )}
-            <input
-                id={id}
-                {...register(name)}
-                type={type}
-                placeholder={placeholder}
-                disabled={disabled}
-                className={`input-mobile md:input-pc ${baseStyle} ${errorStyle} ${!error && 'mb-4'}`}
-            />
+            {area ? (
+                <textarea
+                    id={id}
+                    {...register(name)}
+                    placeholder={placeholder}
+                    disabled={disabled}
+                    className={clsx(
+                        'custom-scrollbar input-mobile min-h-[120px] md:input-pc',
+                        baseStyle,
+                        errorStyle,
+                    )}
+                />
+            ) : (
+                <input
+                    id={id}
+                    {...register(name)}
+                    type={type}
+                    placeholder={placeholder}
+                    disabled={disabled}
+                    className={clsx(
+                        'input-mobile md:input-pc',
+                        baseStyle,
+                        errorStyle,
+                    )}
+                />
+            )}
             {error && (
                 <div className="flex items-center gap-1 px-6 text-danger-400">
                     <Exclamation className="h-3 w-3 md:h-4 md:w-4" />
