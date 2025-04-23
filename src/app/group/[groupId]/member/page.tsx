@@ -1,5 +1,5 @@
 import MobileHeader from '@/components/MobileHeader'
-import GroupMember from './_components/GroupMember'
+import GroupMemberList from './_components/GroupMemberList'
 
 export default async function GroupMemberPage({
     params,
@@ -19,7 +19,7 @@ export default async function GroupMemberPage({
                     <h2 className="hidden text-pc-title-sm font-extra-bold text-point-900 md:block">
                         그룹원 관리
                     </h2>
-                    <GroupMember groupId={groupId} />
+                    <GroupMemberList groupId={groupId} />
                 </div>
             </main>
         </>
