@@ -12,5 +12,6 @@ export const useCurrentUser = () => {
         queryKey: QueryKey.user.DEFAULT,
         queryFn: () => getCurrentUser(),
         staleTime: 0,
+        retry: 0,
     })
 }
