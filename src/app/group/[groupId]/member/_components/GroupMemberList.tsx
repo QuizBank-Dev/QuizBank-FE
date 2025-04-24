@@ -118,8 +118,8 @@ export default function GroupMemberList({ groupId }: { groupId: string }) {
                                 : '그룹원'
                             : '가입 요청중'
                     }
-                    myId={'2'}
-                    isOwner={dummyData.admin._id === '2'}
+                    myId={'1'}
+                    isOwner={dummyData.admin._id === '1'}
                 />
             ))}
         </section>
