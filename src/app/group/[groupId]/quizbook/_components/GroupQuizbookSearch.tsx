@@ -58,7 +58,7 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
     }
 
     return (
-        <section className="flex flex-col gap-4 md:mb-8">
+        <section className="flex flex-col gap-4 md:mb-4">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <Select defaultValue="in-progress">

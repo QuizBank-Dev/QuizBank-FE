@@ -35,21 +35,109 @@ const dummyDatas = [
         },
         createdAt: '2025-04-07',
     },
+    {
+        _id: '65e8a5d6fc13ae5e7f000004',
+        content: '안녕하세요~',
+        author: {
+            _id: 'aaaaa',
+            nickname: '닉네임1',
+            profileImg: '',
+        },
+        createdAt: '2025-04-07',
+    },
+    {
+        _id: '65e8a5d6fc13ae5e7f000005',
+        content: '반가워요~',
+        author: {
+            _id: 'bbbbb',
+            nickname: '닉네임2',
+            profileImg: '',
+        },
+        createdAt: '2025-04-07',
+    },
+    {
+        _id: '65e8a5d6fc13ae5e7f000006',
+        content: '안녕하세요~',
+        author: {
+            _id: 'aaaaa',
+            nickname: '닉네임1',
+            profileImg: '',
+        },
+        createdAt: '2025-04-07',
+    },
+    {
+        _id: '65e8a5d6fc13ae5e7f000007',
+        content: '안녕하세요~',
+        author: {
+            _id: 'aaaaa',
+            nickname: '닉네임1',
+            profileImg: '',
+        },
+        createdAt: '2025-04-07',
+    },
+    {
+        _id: '65e8a5d6fc13ae5e7f000008',
+        content: '반가워요~',
+        author: {
+            _id: 'bbbbb',
+            nickname: '닉네임2',
+            profileImg: '',
+        },
+        createdAt: '2025-04-07',
+    },
+    {
+        _id: '65e8a5d6fc13ae5e7f000009',
+        content: '안녕하세요~',
+        author: {
+            _id: 'aaaaa',
+            nickname: '닉네임1',
+            profileImg: '',
+        },
+        createdAt: '2025-04-07',
+    },
+    {
+        _id: '65e8a5d6fc13ae5e7f000010',
+        content: '안녕하세요~',
+        author: {
+            _id: 'aaaaa',
+            nickname: '닉네임1',
+            profileImg: '',
+        },
+        createdAt: '2025-04-07',
+    },
+    {
+        _id: '65e8a5d6fc13ae5e7f000011',
+        content: '반가워요~',
+        author: {
+            _id: 'bbbbb',
+            nickname: '닉네임2',
+            profileImg: '',
+        },
+        createdAt: '2025-04-07',
+    },
+    {
+        _id: '65e8a5d6fc13ae5e7f000012',
+        content: '안녕하세요~',
+        author: {
+            _id: 'aaaaa',
+            nickname: '닉네임1',
+            profileImg: '',
+        },
+        createdAt: '2025-04-07',
+    },
 ]
 
 export default function GroupChat({ groupId }: { groupId: string }) {
     const router = useRouter()
 
     return (
-        <section className="flex h-full flex-col gap-4">
-            <div className="flex h-0 flex-1 flex-col rounded-lg bg-white p-4 shadow-point md:px-8">
-                <div className="h-full flex-1 overflow-hidden overflow-y-auto">
-                    {dummyDatas.map((data) => (
-                        <ChatMessage key={data._id} data={data} />
-                    ))}
-                </div>
+        <section className="flex flex-1 flex-col gap-4 overflow-auto">
+            <div className="custom-scrollbar flex-1 overflow-y-auto rounded-lg border-2 border-point-500 bg-white p-4">
+                {dummyDatas.map((data) => (
+                    <ChatMessage key={data._id} data={data} />
+                ))}
             </div>
-            <form className="flex items-center gap-4 md:px-4">
+            <form className="flex shrink-0 items-center gap-4 md:px-4">
                 <div
                     className="h-8 w-8 cursor-pointer"
                     onClick={() => router.push(`/user/me`)}

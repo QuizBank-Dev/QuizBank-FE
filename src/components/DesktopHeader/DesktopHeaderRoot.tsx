@@ -9,7 +9,7 @@ interface Prop {
 
 export default function DesktopHeaderRoot({ children }: Prop) {
     const isCustom = !!children
-    
+
     return (
         <header className="hidden w-full justify-center bg-white p-[10px] text-gray-900 md:flex">
             <div className="flex w-full max-w-[1024px] items-center gap-4">
