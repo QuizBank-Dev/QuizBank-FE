@@ -1,7 +1,7 @@
-import { QuestionType } from '@/types/quiz'
+import { QuizType } from '@/types/quiz'
 
 // 문제 유형
-export const QUESTION_TYPE = {
+export const QUIZ_TYPE = {
     OX: 'ox',
     MULTIPLE: '객관식',
     SHORT: '주관식',
@@ -9,7 +9,7 @@ export const QUESTION_TYPE = {
 } as const
 
 // 문제 유형별 경험치
-export const TypeToXp: Record<QuestionType, number> = {
+export const TypeToXp: Record<QuizType, number> = {
     ox: 5,
     객관식: 10,
     주관식: 15,
@@ -17,7 +17,7 @@ export const TypeToXp: Record<QuestionType, number> = {
 }
 
 // 문제 유형별 컬러
-export const TypeToColor: Record<QuestionType, string> = {
+export const TypeToColor: Record<QuizType, string> = {
     ox: 'text-[#4CAF50]',
     객관식: 'text-[#2196F3]',
     주관식: 'text-[#8A43EF]',
