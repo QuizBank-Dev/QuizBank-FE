@@ -1,6 +1,6 @@
 import MobileHeader from '@/components/MobileHeader'
 import BackBtn from './_components/BackBtn'
-import QuizbookTitle from './_components/QuizbookTitle'
+import TitleSection from './_components/TitleSection'
 
 export default function GroupQuizbookDetailPage() {
     return (
@@ -17,7 +17,7 @@ export default function GroupQuizbookDetailPage() {
                             선정 문제집 활동 상세
                         </h2>
                     </div>
-                    <QuizbookTitle
+                    <TitleSection
                         _id="555"
                         title="프론트엔드 CS 면접 기초 문제 모음"
                         category="카테고리"

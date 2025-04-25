@@ -6,7 +6,7 @@ interface Props {
     category: string
 }
 
-export default function QuizbookTitle({ _id, title, category }: Props) {
+export default function TitleSection({ _id, title, category }: Props) {
     return (
         <section className="flex flex-col gap-2 font-semi-bold">
             <span className="text-mobile-body-md text-gray-600 md:text-pc-body-md">
