@@ -20,7 +20,7 @@ export default function Item({ icon, text, subText, href }: Props) {
             href={href}
             className={clsx(
                 'flex items-center justify-between p-3',
-                pathname === href && 'bg-point-100',
+                pathname.startsWith(href) && 'bg-point-100',
             )}
         >
             <div className="flex items-center gap-3">
