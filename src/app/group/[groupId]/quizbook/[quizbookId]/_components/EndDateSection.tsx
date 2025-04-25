@@ -10,7 +10,7 @@ export default function EndDateSection({ endDate }: { endDate: string }) {
             <div className="flex w-full items-center gap-2 rounded-lg bg-white p-4 shadow-point md:gap-4 md:px-8">
                 <EndDateEdit endDate={endDate} />
                 <Link
-                    className="btn-solid btn-mobile-md md:btn-pc-md"
+                    className="btn-solid btn-mobile-sm md:btn-pc-sm"
                     href={''}
                 >
                     선정해제

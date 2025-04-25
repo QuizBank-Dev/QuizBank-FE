@@ -23,7 +23,7 @@ export default function EndDateEdit({ endDate }: { endDate: string }) {
                     <Button
                         variant={'outline'}
                         className={cn(
-                            'h-12 flex-1 justify-start text-left text-mobile-body-md font-regular md:text-pc-body-md',
+                            'h-8 flex-1 justify-start text-left text-mobile-body-sm font-regular md:text-pc-body-sm',
                             !date && 'text-muted-foreground',
                         )}
                     >
@@ -42,7 +42,7 @@ export default function EndDateEdit({ endDate }: { endDate: string }) {
                     />
                 </PopoverContent>
             </Popover>
-            <button className="btn-solid btn-mobile-md md:btn-pc-md">
+            <button className="btn-solid btn-mobile-sm md:btn-pc-sm">
                 적용
             </button>
         </div>

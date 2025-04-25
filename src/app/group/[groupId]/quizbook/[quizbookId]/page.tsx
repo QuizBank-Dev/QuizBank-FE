@@ -2,6 +2,83 @@ import MobileHeader from '@/components/MobileHeader'
 import BackBtn from './_components/BackBtn'
 import TitleSection from './_components/TitleSection'
 import EndDateSection from './_components/EndDateSection'
+import StudyStatus from './_components/StudyStatus'
+
+const scoreList = [
+    {
+        score: 100,
+        owner: {
+            _id: '1',
+            nickname: '쭈니1',
+            profileImg: '',
+        },
+    },
+    {
+        score: 50,
+        owner: {
+            _id: '2',
+            nickname: '쭈니2',
+            profileImg: '',
+        },
+    },
+    {
+        score: 30,
+        owner: {
+            _id: '3',
+            nickname: '쭈니3',
+            profileImg: '',
+        },
+    },
+]
+
+const memberList = [
+    {
+        _id: '1',
+        nickname: '쭈니1',
+        profileImg: '',
+    },
+    {
+        _id: '2',
+        nickname: '쭈니2',
+        profileImg: '',
+    },
+    {
+        _id: '3',
+        nickname: '쭈니3',
+        profileImg: '',
+    },
+    {
+        _id: '4',
+        nickname: '쭈니4',
+        profileImg: '',
+    },
+    {
+        _id: '5',
+        nickname: '쭈니5',
+        profileImg: '',
+    },
+]
+
+const quizList = [
+    {
+        _id: '1',
+        type: '주관식',
+        question: 'test1',
+        optionList: [],
+    },
+    {
+        _id: '2',
+        type: '서술형',
+        question: 'test2',
+        optionList: [],
+    },
+    {
+        _id: '3',
+        type: '주관식',
+        question: 'test3',
+        optionList: [],
+    },
+]
 
 export default function GroupQuizbookDetailPage() {
     return (
@@ -24,6 +101,11 @@ export default function GroupQuizbookDetailPage() {
                         category="카테고리"
                     />
                     <EndDateSection endDate="2025-03-21" />
+                    <StudyStatus
+                        scoreList={scoreList}
+                        memberList={memberList}
+                        quizList={quizList}
+                    />
                 </div>
             </main>
         </>
