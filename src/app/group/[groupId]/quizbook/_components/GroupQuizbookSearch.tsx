@@ -117,7 +117,7 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                             className="flex cursor-pointer items-center gap-1 text-point-500"
                         >
                             <span className="text-mobile-body-sm font-semi-bold md:text-pc-body-sm">
-                                그룹원 풀이 보기
+                                문제집 활동 상세
                             </span>
                             <RightArrowIcon className="size-5 md:size-6" />
                         </Link>
