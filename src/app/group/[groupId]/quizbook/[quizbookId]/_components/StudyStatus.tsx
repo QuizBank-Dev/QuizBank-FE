@@ -2,8 +2,9 @@
 
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useState } from 'react'
+import StudyStats from './StudyStats'
 
-interface Props {
+export interface Props {
     scoreList: {
         score: number
         owner: {
@@ -59,7 +60,11 @@ export default function StudyStatus({
                     </TabsList>
                 </Tabs>
             </nav>
-            {/* 학습 현황 컴포넌트 */}
+            <StudyStats
+                scoreList={scoreList}
+                memberList={memberList}
+                activeTab={activeTab}
+            />
             {/* 그룹원 답안 컴포넌트 */}
         </section>
     )
