@@ -2,7 +2,7 @@ import MobileHeader from '@/components/MobileHeader'
 import BackBtn from './_components/BackBtn'
 import TitleSection from './_components/TitleSection'
 import EndDateSection from './_components/EndDateSection'
-import StudyStatus from './_components/StudyStatus'
+import StudyStatus, { Props } from './_components/StudyStatus'
 
 const scoreList = [
     {
@@ -59,7 +59,7 @@ const memberList = [
     },
 ]
 
-const quizList = [
+const quizList: Props['quizList'][number][] = [
     {
         _id: '1',
         type: '주관식',
@@ -87,7 +87,7 @@ export default function GroupQuizbookDetailPage() {
             <MobileHeader title="선정 문제집 활동 상세" backBtn />
 
             {/* 컨탠츠 */}
-            <main className="flex w-full flex-1 flex-col items-center overflow-auto md:px-2">
+            <main className="custom-scrollbar flex w-full flex-1 flex-col items-center overflow-auto md:px-2">
                 <div className="flex w-full flex-col gap-8 px-4 pb-4 md:px-0 md:pb-0">
                     <div className="hidden items-center gap-4 md:flex">
                         <BackBtn />

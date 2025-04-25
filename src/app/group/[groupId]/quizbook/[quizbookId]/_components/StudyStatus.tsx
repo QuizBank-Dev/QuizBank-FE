@@ -3,6 +3,7 @@
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useState } from 'react'
 import StudyStats from './StudyStats'
+import MemberAnswer from './MemberAnswer'
 
 export interface Props {
     scoreList: {
@@ -20,7 +21,7 @@ export interface Props {
     }[]
     quizList: {
         _id: string
-        type: string
+        type: '객관식' | '주관식' | '서술형' | 'ox'
         question: string
         optionList: string[]
     }[]
@@ -65,7 +66,7 @@ export default function StudyStatus({
                 memberList={memberList}
                 activeTab={activeTab}
             />
-            {/* 그룹원 답안 컴포넌트 */}
+            <MemberAnswer quizList={quizList} activeTab={activeTab} />
         </section>
     )
 }
