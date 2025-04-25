@@ -35,7 +35,7 @@
     border-radius: 8px;
 }
 
-/* Input 자동 입력시 브라우저 기본 CSS 방지지 */
+/* Input 자동 입력시 브라우저 기본 CSS 방지 */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -62,7 +62,7 @@ input:autofill:disabled {
 }
 
 @layer base {
-  :root {
+    :root {
         --background: 0 0% 100%;
         --foreground: 224 71.4% 4.1%;
         --card: 0 0% 100%;
@@ -89,7 +89,7 @@ input:autofill:disabled {
         --chart-5: 27 87% 67%;
         --radius: 0.5rem;
     }
-  .dark {
+    .dark {
         --background: 224 71.4% 4.1%;
         --foreground: 210 20% 98%;
         --card: 224 71.4% 4.1%;
@@ -118,10 +118,10 @@ input:autofill:disabled {
 }
 
 @layer base {
-  * {
-    @apply border-border;
+    * {
+        @apply border-border;
     }
-  body {
-    @apply bg-background text-foreground;
+    body {
+        @apply bg-background text-foreground;
     }
 }
