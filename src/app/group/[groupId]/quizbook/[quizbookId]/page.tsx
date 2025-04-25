@@ -1,4 +1,5 @@
 import MobileHeader from '@/components/MobileHeader'
+import BackBtn from './_components/BackBtn'
 
 export default function GroupQuizbookDetailPage() {
     return (
@@ -9,7 +10,8 @@ export default function GroupQuizbookDetailPage() {
             {/* 컨탠츠 */}
             <main className="custom-scrollbar flex w-full flex-1 flex-col items-center overflow-auto md:px-2">
                 <div className="flex w-full flex-col gap-4 px-4 pb-4 md:px-0 md:pb-0">
-                    <div className="hidden gap-4 md:flex">
+                    <div className="hidden items-center gap-4 md:flex">
+                        <BackBtn />
                         <h2 className="hidden text-pc-title-sm font-extra-bold text-point-900 md:block">
                             선정 문제집 활동 상세
                         </h2>
