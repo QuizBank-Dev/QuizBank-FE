@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import EndDateEdit from './EndDateEdit'
 
 export default function EndDateSection({ endDate }: { endDate: string }) {
     return (
@@ -6,12 +7,13 @@ export default function EndDateSection({ endDate }: { endDate: string }) {
             <span className="text-mobile-body-md text-gray-600 md:text-pc-body-md">
                 마감일
             </span>
-            <div className="flex w-full items-center gap-4 rounded-lg bg-white p-4 shadow-point md:px-8">
+            <div className="flex w-full items-center gap-2 rounded-lg bg-white p-4 shadow-point md:gap-4 md:px-8">
+                <EndDateEdit endDate={endDate} />
                 <Link
                     className="btn-solid btn-mobile-md md:btn-pc-md"
                     href={''}
                 >
-                    선정 해제
+                    선정해제
                 </Link>
             </div>
         </section>
