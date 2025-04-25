@@ -1,6 +1,7 @@
 import MobileHeader from '@/components/MobileHeader'
 import BackBtn from './_components/BackBtn'
 import TitleSection from './_components/TitleSection'
+import EndDateSection from './_components/EndDateSection'
 
 export default function GroupQuizbookDetailPage() {
     return (
@@ -22,6 +23,7 @@ export default function GroupQuizbookDetailPage() {
                         title="프론트엔드 CS 면접 기초 문제 모음"
                         category="카테고리"
                     />
+                    <EndDateSection endDate="2025-03-21" />
                 </div>
             </main>
         </>
