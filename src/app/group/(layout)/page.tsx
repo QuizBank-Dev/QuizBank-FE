@@ -10,7 +10,7 @@ export default function GroupPage() {
             </MobileHeader>
 
             {/* 컨탠츠 */}
-            <main className="custom-scrollbar flex w-full flex-1 flex-col items-center overflow-auto">
+            <main className="no-scrollbar flex w-full flex-1 flex-col items-center overflow-auto">
                 <div className="flex w-full max-w-[1056px] flex-col gap-4 px-4 py-4 md:py-8">
                     <h2 className="hidden text-pc-title-sm font-extra-bold text-point-900 md:block">
                         그룹 검색

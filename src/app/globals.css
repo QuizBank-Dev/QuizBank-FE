@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 스크롤바 숨김 처리 */
+@layer utilities {
+    .no-scrollbar {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+}
+
 /* AnnualStudyHeatmap 스케일 별 컬러 */
 .react-calendar-heatmap .color-scale-1 {
     fill: #e5d5fc;
@@ -62,7 +74,7 @@ input:autofill:disabled {
 }
 
 @layer base {
-  :root {
+    :root {
         --background: 0 0% 100%;
         --foreground: 224 71.4% 4.1%;
         --card: 0 0% 100%;
@@ -89,7 +101,7 @@ input:autofill:disabled {
         --chart-5: 27 87% 67%;
         --radius: 0.5rem;
     }
-  .dark {
+    .dark {
         --background: 224 71.4% 4.1%;
         --foreground: 210 20% 98%;
         --card: 224 71.4% 4.1%;
@@ -118,10 +130,10 @@ input:autofill:disabled {
 }
 
 @layer base {
-  * {
-    @apply border-border;
+    * {
+        @apply border-border;
     }
-  body {
-    @apply bg-background text-foreground;
+    body {
+        @apply bg-background text-foreground;
     }
 }

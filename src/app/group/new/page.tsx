@@ -10,7 +10,7 @@ export default function GroupCreatePage() {
             </MobileHeader>
 
             {/* 컨탠츠 */}
-            <main className="custom-scrollbar flex h-full w-full flex-1 items-center justify-center overflow-auto p-4">
+            <main className="no-scrollbar flex h-full w-full flex-1 items-center justify-center overflow-auto p-4">
                 <div className="flex w-full max-w-[450px] flex-col items-center gap-4 rounded-lg bg-white p-4 shadow-point md:gap-8 md:p-8">
                     <h2 className="text-mobile-title-sm font-extra-bold text-point-900 md:text-pc-title-sm">
                         그룹 생성하기
