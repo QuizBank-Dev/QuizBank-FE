@@ -21,7 +21,7 @@ export default async function GroupSidebarLayout({
                         <Sidebar.Item
                             icon={<InfoIcon className="size-5" />}
                             text="그룹 정보"
-                            href={`/group/${groupId}`}
+                            href={`/group/${groupId}/info`}
                         />
                     </Sidebar.Group>
                     <Sidebar.Group>
