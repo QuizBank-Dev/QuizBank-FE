@@ -35,17 +35,19 @@ export default function MemberAnswer({
             <span className="hidden text-pc-body-md text-gray-600 md:block">
                 그룹원 답안
             </span>
-            <div className="mx-4 flex flex-col items-center gap-4 md:mx-8 md:gap-8">
-                <QuestionCard
-                    curIdx={pageNumber + 1}
-                    totalIdx={quizList.length}
-                    quiz={{
-                        type: quizList[pageNumber].type,
-                        question: quizList[pageNumber].question,
-                    }}
-                    onPrev={onPrevHandler}
-                    onNext={onNextHandler}
-                />
+            <div className="flex flex-col items-center gap-4 md:gap-8">
+                <div className="h-auto w-full">
+                    <QuestionCard
+                        curIdx={pageNumber + 1}
+                        totalIdx={quizList.length}
+                        quiz={{
+                            type: quizList[pageNumber].type,
+                            question: quizList[pageNumber].question,
+                        }}
+                        onPrev={onPrevHandler}
+                        onNext={onNextHandler}
+                    />
+                </div>
                 {showAnswers ? (
                     <AnswerList quizId={quizList[pageNumber]._id} />
                 ) : (

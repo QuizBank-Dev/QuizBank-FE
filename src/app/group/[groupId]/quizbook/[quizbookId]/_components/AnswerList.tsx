@@ -23,7 +23,7 @@ const answerList = [
 
 export default function AnswerList({ quizId }: { quizId: string }) {
     return (
-        <div className="flex w-full flex-col gap-4 md:gap-8 md:pb-4">
+        <div className="flex w-full flex-col gap-4 px-4 md:gap-8 md:px-8 md:pb-4">
             {answerList.map((data) => (
                 <SolvedCard
                     key={data.owner._id}
