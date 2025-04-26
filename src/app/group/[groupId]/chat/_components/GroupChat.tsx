@@ -146,7 +146,7 @@ export default function GroupChat({ groupId }: { groupId: string }) {
                 </div>
                 <input
                     type="text"
-                    className="btn-outline btn-pc-md w-full font-regular text-gray-900"
+                    className="input-solid input-mobile w-full font-regular text-gray-900 md:input-pc"
                 />
             </form>
         </section>
