@@ -35,7 +35,7 @@ export default function Page() {
                         {`네트워크 기초부터 HTTP와 HTTPS의 차이를 학습할 수 있는
                         문제집입니다.`}
                     </p>
-                    <div className="flex items-center gap-4 md:gap-8">
+                    <div className="flex flex-wrap items-center gap-4 md:gap-8">
                         <div className="flex items-center gap-2">
                             <StarFullIcon className="size-5 text-[#FDDD51] md:size-6" />
                             {`4.3 (후기 53개)`}
@@ -45,7 +45,7 @@ export default function Page() {
                             {`78.5% (학습자 121명)`}
                         </div>
                     </div>
-                    <div className="flex items-center gap-4 md:gap-8">
+                    <div className="flex flex-wrap items-center gap-4 md:gap-8">
                         <Link
                             href={`/user/${321}`}
                             className="flex items-center gap-2"
@@ -54,7 +54,7 @@ export default function Page() {
                             {`쭈니`}
                         </Link>
                         <div className="flex items-center gap-2">
-                            <NoteIcon className="size-5 text-[#FDDD51] md:size-6" />
+                            <NoteIcon className="size-5 md:size-6" />
                             {`20 문제`}
                         </div>
                         <div className="flex items-center gap-2">
