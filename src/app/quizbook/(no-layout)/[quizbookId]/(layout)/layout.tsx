@@ -1,8 +1,13 @@
+import DesktopHeader from '@/components/DesktopHeader'
+
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
-        <>
-            <div>문제집 상세 페이지 레이아웃</div>
-            <main>{children}</main>
-        </>
+        <div className="flex h-screen flex-col items-center text-gray-900">
+            {/* 데스크탑 전용 헤더 */}
+            <DesktopHeader />
+
+            {/* 컨탠츠 */}
+            {children}
+        </div>
     )
 }
