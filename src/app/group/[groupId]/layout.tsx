@@ -14,8 +14,8 @@ export default async function GroupSidebarLayout({
     const { groupId } = await params
 
     return (
-        <div className="flex h-full w-full max-w-[1056px] flex-1 flex-col gap-4 overflow-auto md:flex-row md:gap-0 md:px-4 md:py-4 md:pt-8">
-            <div className="hidden h-full w-[230px] px-2 md:block">
+        <div className="flex h-full w-full max-w-[1056px] flex-1 flex-col gap-4 overflow-auto md:flex-row md:gap-0 md:py-4 md:pt-8">
+            <div className="hidden h-full w-[230px] px-4 md:block">
                 <Sidebar gap={4}>
                     <Sidebar.Group>
                         <Sidebar.Item
