@@ -43,7 +43,7 @@
     border-radius: 8px;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
-    background-color: #eaebed;
+    background-color: transparent;
     border-radius: 8px;
 }
 
