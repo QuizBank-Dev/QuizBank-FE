@@ -10,7 +10,7 @@ export default function MobileBottomNav() {
         <nav className="flex w-full items-center justify-between bg-white px-4 py-3 md:hidden">
             <div className="flex items-center gap-2">
                 <button className="btn-solid btn-mobile-sm py-3">
-                    시작하기
+                    다시 풀기
                 </button>
                 <button className="btn-solid btn-mobile-sm py-3">해설</button>
                 <button className="btn-solid btn-mobile-sm py-3">
