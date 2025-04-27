@@ -9,7 +9,7 @@ export default function ReviewInduction() {
             </h2>
             <div className="flex w-full items-start gap-4 rounded-lg bg-[#FFF9DB] p-4">
                 <div className="flex flex-1 gap-2 md:gap-4">
-                    <StarFullIcon className="size-5 text-[#FDDD51] md:size-6" />
+                    <StarFullIcon className="size-5 text-[#FFCC00] md:size-6" />
                     <div className="flex flex-1 flex-col gap-2">
                         <span className="text-mobile-body-lg md:text-pc-body-lg">
                             후기를 남겨주세요!

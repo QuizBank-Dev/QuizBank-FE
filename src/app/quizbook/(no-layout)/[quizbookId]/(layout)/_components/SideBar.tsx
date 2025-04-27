@@ -45,7 +45,7 @@ export default function SideBar() {
                     {'78.5% (학습자 121명)'}
                 </div>
                 <div className="flex items-center gap-4">
-                    <StarFullIcon className="size-6 text-[#FDDD51]" />
+                    <StarFullIcon className="size-6 text-[#FFCC00]" />
                     {'4.3 (후기 53개)'}
                 </div>
             </div>
