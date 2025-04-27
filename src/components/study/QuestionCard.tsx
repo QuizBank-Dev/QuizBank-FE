@@ -5,6 +5,7 @@ import ScoreTag from './ScoreTag'
 import QuestionSvg from '@/assets/svgs/question.svg'
 import LeftArrowSvg from '@/assets/svgs/left-arrow.svg'
 import RightArrowSvg from '@/assets/svgs/right-arrow.svg'
+import clsx from 'clsx'
 
 interface QuestionCardProps {
     quiz: {
@@ -13,6 +14,7 @@ interface QuestionCardProps {
     } // 나중에 API 데이터 응답 타입으로 변경
     curIdx: number
     totalIdx: number
+    background?: boolean
     onPrev: () => void
     onNext: () => void
 }
@@ -21,13 +23,23 @@ export default function QuestionCard({
     quiz,
     curIdx,
     totalIdx,
+    background,
     onPrev,
     onNext,
 }: QuestionCardProps) {
     return (
         <article className="relative pb-[100px] md:pb-[200px]">
-            <div className="min-h-[175px] rounded-lg bg-point-500 md:min-h-[300px]" />
-            <div className="absolute top-[75px] w-full px-[16px] md:top-[100px] md:px-[32px]">
+            {background !== false && (
+                <div className="min-h-[175px] rounded-lg bg-point-500 md:min-h-[300px]" />
+            )}
+            <div
+                className={clsx(
+                    'absolute w-full px-[16px] md:px-[32px]',
+                    background !== false
+                        ? 'top-[75px] md:top-[100px]'
+                        : 'top-[50px] md:top-[75px]',
+                )}
+            >
                 <div className="relative">
                     {/* 모바일 용 도넛 */}
                     <div className="absolute -top-[50px] left-1/2 z-10 flex -translate-x-1/2 items-center justify-center rounded-full md:hidden">
