@@ -9,9 +9,13 @@ export default function MobileBottomNav() {
     return (
         <nav className="flex w-full items-center justify-between bg-white px-4 py-3 md:hidden">
             <div className="flex items-center gap-2">
-                <button className="btn-solid btn-mobile-sm">시작하기</button>
-                <button className="btn-solid btn-mobile-sm">해설</button>
-                <button className="btn-solid btn-mobile-sm">그룹에 추가</button>
+                <button className="btn-solid btn-mobile-sm py-3">
+                    시작하기
+                </button>
+                <button className="btn-solid btn-mobile-sm py-3">해설</button>
+                <button className="btn-solid btn-mobile-sm py-3">
+                    그룹에 추가
+                </button>
             </div>
             <div className="flex items-center gap-2">
                 <button className="btn-outline p-2">
