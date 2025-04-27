@@ -9,7 +9,7 @@ import { ProfileImage } from '@/components'
 
 export default function Page() {
     return (
-        <main className="w-full">
+        <main className="no-scrollbar flex w-full flex-1 flex-col items-center overflow-auto">
             <section className="relative flex w-full justify-center overflow-hidden">
                 {/* 배경 이미지 */}
                 <Image

@@ -1,5 +1,6 @@
 import DesktopHeader from '@/components/DesktopHeader'
 import MobileHeader from '@/components/MobileHeader'
+import MobileBottomNav from './_components/MobileBottomNav'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
@@ -14,6 +15,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             {/* 컨탠츠 */}
             {children}
+
+            {/* 문제 상세 페이지 전용 바텀 Nav */}
+            <MobileBottomNav />
         </div>
     )
 }
