@@ -8,7 +8,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <DesktopHeader />
 
             {/* 모바일 전용 헤더 */}
-            <MobileHeader title="그룹 정보" backBtn />
+            <MobileHeader title="그룹 정보" backBtn>
+                <MobileHeader.UserMenu />
+            </MobileHeader>
 
             {/* 컨탠츠 */}
             {children}
