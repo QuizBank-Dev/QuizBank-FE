@@ -1,7 +1,7 @@
 import MobileHeader from '@/components/MobileHeader'
-import GroupQuizbookSearch from './_components/GroupQuizbookSearch'
+import GroupMemberList from './_components/GroupMemberList'
 
-export default async function GroupQuizbookPage({
+export default async function GroupMemberPage({
     params,
 }: Readonly<{
     params: Promise<{ groupId: string }>
@@ -11,15 +11,15 @@ export default async function GroupQuizbookPage({
     return (
         <>
             {/* 모바일 전용 헤더 */}
-            <MobileHeader title="그룹 선정 문제집" backBtn />
+            <MobileHeader title="그룹원 관리" backBtn />
 
             {/* 컨탠츠 */}
             <main className="no-scrollbar flex w-full flex-1 flex-col items-center overflow-auto md:px-4">
-                <div className="flex w-full flex-col gap-4 px-4 pb-4 md:px-0 md:pb-0">
+                <div className="flex w-full flex-col gap-4 px-4 md:px-0">
                     <h2 className="hidden text-pc-title-sm font-extra-bold text-point-900 md:block">
-                        그룹 선정 문제집
+                        그룹원 관리
                     </h2>
-                    <GroupQuizbookSearch groupId={groupId} />
+                    <GroupMemberList groupId={groupId} />
                 </div>
             </main>
         </>

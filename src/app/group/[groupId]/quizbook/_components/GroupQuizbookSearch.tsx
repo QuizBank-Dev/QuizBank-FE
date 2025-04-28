@@ -58,11 +58,11 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
     }
 
     return (
-        <div className="flex flex-col gap-4">
+        <section className="flex flex-col gap-4 md:mb-4">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                     <Select defaultValue="in-progress">
-                        <SelectTrigger className="w-auto gap-[5px] rounded-lg border-2 border-gray-200 bg-white px-[15px] py-[7.5px] text-mobile-body-sm font-regular text-gray-900 md:gap-2 md:px-6 md:py-5 md:text-pc-body-md">
+                        <SelectTrigger className="mb-0 w-auto gap-[5px] rounded-lg border-2 border-gray-200 bg-white px-[15px] py-[7.5px] text-mobile-body-sm font-regular text-gray-900 md:gap-2 md:px-6 md:py-3 md:text-pc-body-md">
                             <SelectValue placeholder="Status" />
                         </SelectTrigger>
                         <SelectContent>
@@ -117,13 +117,13 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                             className="flex cursor-pointer items-center gap-1 text-point-500"
                         >
                             <span className="text-mobile-body-sm font-semi-bold md:text-pc-body-sm">
-                                그룹원 풀이 보기
+                                문제집 활동 상세
                             </span>
                             <RightArrowIcon className="size-5 md:size-6" />
                         </Link>
                     </div>
                 </QuizbookCard>
             ))}
-        </div>
+        </section>
     )
 }
