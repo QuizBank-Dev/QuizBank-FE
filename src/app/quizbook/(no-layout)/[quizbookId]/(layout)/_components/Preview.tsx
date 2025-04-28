@@ -38,7 +38,7 @@ export default function Preview() {
     }
 
     return (
-        <section className="flex w-full flex-col gap-4 font-semi-bold">
+        <section className="flex w-full flex-col font-semi-bold">
             <h2 className="text-mobile-body-lg md:text-pc-body-lg">
                 Preview 문제
             </h2>
