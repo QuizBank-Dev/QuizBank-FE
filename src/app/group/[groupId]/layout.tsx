@@ -14,14 +14,14 @@ export default async function GroupSidebarLayout({
     const { groupId } = await params
 
     return (
-        <div className="flex w-full max-w-[1056px] flex-col gap-4 md:flex-row md:gap-8 md:px-4 md:py-8">
-            <div className="hidden w-[230px] md:block">
+        <div className="flex h-full w-full max-w-[1056px] flex-1 flex-col gap-4 overflow-auto md:flex-row md:gap-0 md:py-4 md:pt-8">
+            <div className="hidden h-full w-[230px] px-4 md:block">
                 <Sidebar gap={4}>
                     <Sidebar.Group>
                         <Sidebar.Item
                             icon={<InfoIcon className="size-5" />}
                             text="그룹 정보"
-                            href={`/group/${groupId}`}
+                            href={`/group/${groupId}/info`}
                         />
                     </Sidebar.Group>
                     <Sidebar.Group>
@@ -37,7 +37,7 @@ export default async function GroupSidebarLayout({
                         />
                         <Sidebar.Item
                             icon={<MemberIcon className="size-5" />}
-                            text="멤버 관리"
+                            text="그룹원 관리"
                             href={`/group/${groupId}/member`}
                         />
                     </Sidebar.Group>

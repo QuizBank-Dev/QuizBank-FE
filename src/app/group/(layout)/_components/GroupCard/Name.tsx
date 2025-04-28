@@ -10,7 +10,7 @@ export default function Name() {
 
     return (
         <h3 className="cursor-pointer text-mobile-body-lg font-semi-bold md:text-pc-body-lg">
-            <Link href={`/group/${_id}`}>{name}</Link>
+            <Link href={`/group/${_id}/info`}>{name}</Link>
         </h3>
     )
 }

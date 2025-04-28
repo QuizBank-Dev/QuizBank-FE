@@ -49,7 +49,6 @@ export default function GroupCreateForm() {
                         label="그룹 이름"
                         placeholder="그룹 이름을 입력해주세요"
                         style="solid"
-                        error={methods.formState.errors.name?.message}
                         disabled={isLoading}
                     />
                     <CustomInput
@@ -58,7 +57,6 @@ export default function GroupCreateForm() {
                         label="그룹 소개(50자 이하)"
                         placeholder="그룹 소개를 입력해주세요"
                         style="solid"
-                        error={methods.formState.errors.description?.message}
                         disabled={isLoading}
                     />
                 </div>
