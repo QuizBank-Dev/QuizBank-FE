@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import StarFullIcon from '@/assets/svgs/star-full.svg'
+import ReviewList from './ReviewList'
 
-export default function ReviewInduction() {
+export default function Review() {
     return (
         <section className="flex w-full flex-col gap-4 font-semi-bold">
             <h2 className="text-mobile-body-lg md:text-pc-body-lg">
@@ -27,6 +28,7 @@ export default function ReviewInduction() {
                     후기 남기기
                 </Link>
             </div>
+            <ReviewList />
         </section>
     )
 }

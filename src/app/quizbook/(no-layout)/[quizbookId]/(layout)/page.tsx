@@ -6,11 +6,14 @@ import NoteIcon from '@/assets/svgs/note.svg'
 import DateIcon from '@/assets/svgs/date.svg'
 import Link from 'next/link'
 import { ProfileImage } from '@/components'
+import Preview from './_components/Preview'
+import Review from './_components/Review'
+import SideBar from './_components/SideBar'
 
 export default function Page() {
     return (
         <main className="no-scrollbar flex w-full flex-1 flex-col items-center overflow-auto">
-            <section className="relative flex w-full justify-center overflow-hidden">
+            <section className="relative flex w-full justify-center">
                 {/* 배경 이미지 */}
                 <Image
                     src={backgroundImg}
@@ -64,6 +67,15 @@ export default function Page() {
                     </div>
                 </div>
             </section>
+            <div className="flex w-full max-w-[1056px] items-start">
+                <div className="flex flex-1 flex-col gap-8 p-4 md:py-8">
+                    <Preview />
+                    <Review />
+                </div>
+                <div className="relative hidden h-full p-4 md:block md:py-8">
+                    <SideBar />
+                </div>
+            </div>
         </main>
     )
 }

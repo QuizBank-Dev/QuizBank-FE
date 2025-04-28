@@ -12,7 +12,7 @@ export default function SideBar() {
     // 추후 인증 로직 추가
 
     return (
-        <section className="flex w-[282px] flex-col gap-4 rounded-lg bg-white p-4 font-semi-bold shadow-point">
+        <section className="sticky top-8 flex w-[282px] flex-col gap-4 rounded-lg bg-white p-4 font-semi-bold shadow-point">
             <h2 className="pt-2 text-pc-body-lg font-extra-bold">
                 {'네트워크 마스터를 위한 OX 퀴즈'}
             </h2>
