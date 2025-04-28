@@ -63,10 +63,3 @@ export default function QuizbookCardRoot({
         </QuizbookCardContext.Provider>
     )
 }
-
-// QuizbookCard.Description = Description
-// QuizbookCard.Author = Author
-// QuizbookCard.SolvedRate = SolvedRate
-// QuizbookCard.ReviewRate = ReviewRate
-// QuizbookCard.QuizCount = QuizCount
-// QuizbookCard.LikeButton = LikeButton
