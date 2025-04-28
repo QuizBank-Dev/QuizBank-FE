@@ -28,7 +28,14 @@ export default function QuestionCard({
     onNext,
 }: QuestionCardProps) {
     return (
-        <article className="relative pb-[100px] md:pb-[200px]">
+        <article
+            className={clsx(
+                'relative',
+                background !== false
+                    ? 'pb-[100px] md:pb-[200px]'
+                    : 'pb-[250px] md:pb-[475px]',
+            )}
+        >
             {background !== false && (
                 <div className="min-h-[175px] rounded-lg bg-point-500 md:min-h-[300px]" />
             )}
