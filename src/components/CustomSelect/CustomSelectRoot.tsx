@@ -50,7 +50,7 @@ export default function CustomSelectRoot({
                 name={name}
                 render={({ field: { value, onChange } }) => (
                     <Select
-                        value={value}
+                        value={value ?? ''}
                         onValueChange={onChange}
                         disabled={disabled}
                         open={isOpen}

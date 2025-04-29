@@ -1,12 +1,12 @@
 import clsx from 'clsx'
 import { TypeToColor, TypeToXp } from '@/constants/quiz'
-import { QuestionType } from '@/types/quiz'
+import { QuizType } from '@/types/quiz'
 
 // SVG
 import PlusSvg from '@/assets/svgs/plus.svg'
 
 interface ScoreTagProps {
-    type: QuestionType
+    type: QuizType
 }
 
 export default function ScoreTag({ type }: ScoreTagProps) {
