@@ -11,13 +11,15 @@ interface ModalProps {
     children?: React.ReactNode
     closeOnOverlayClick?: boolean // 배경 클릭으로 닫기 여부 제어
     className?: string
+    isFullWith?: boolean
 }
 
 export default function Modal({
     title,
     children,
-    closeOnOverlayClick = false, // 기본값은 false로 설정 (= 배경 클릭으로 닫기 비활성화)
+    closeOnOverlayClick = true, // 기본값은 true로 설정 (= 배경 클릭으로 닫기 비활성화)
     className = '',
+    isFullWith = true,
 }: ModalProps) {
     const router = useRouter()
 
@@ -51,7 +53,10 @@ export default function Modal({
         >
             {/* 모달 컨텐츠 영역 */}
             <div
-                className="flex max-h-[70vh] w-full max-w-[768px] flex-col gap-[16px] overflow-hidden rounded-lg bg-white py-[16px]"
+                className={clsx(
+                    'flex max-w-[768px] flex-col gap-[16px] overflow-hidden rounded-lg bg-white py-[16px] md:py-[32px]',
+                    isFullWith ? 'w-full' : '',
+                )}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby={title ? 'modal-title' : undefined}
@@ -77,7 +82,7 @@ export default function Modal({
 
                 <div
                     className={clsx(
-                        'custom-scrollbar flex-1 grow overflow-y-auto px-[16px] md:px-[32px]',
+                        'md:custom-scrollbar flex-1 grow overflow-y-auto px-[16px] md:px-[32px]',
                         className,
                     )}
                 >
