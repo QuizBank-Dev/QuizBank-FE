@@ -1,4 +1,5 @@
 import CreateReviewModal from './_components/CreateReviewModal'
+import IncludeGroupModal from './_components/IncludeGroupModal'
 
 export default async function ModalWrapper({
     params,
@@ -10,8 +11,8 @@ export default async function ModalWrapper({
     switch (modalType) {
         case 'create-review':
             return <CreateReviewModal />
-        // case 'include-group':
-        //     return <IncludeGroupModal />
+        case 'include-group':
+            return <IncludeGroupModal />
         default:
             return null
     }

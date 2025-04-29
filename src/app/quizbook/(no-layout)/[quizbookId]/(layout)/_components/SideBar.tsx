@@ -7,8 +7,10 @@ import UserIcon from '@/assets/svgs/user.svg'
 import StarFullIcon from '@/assets/svgs/star-full.svg'
 import { ProfileImage } from '@/components'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 
 export default function SideBar() {
+    const params = useParams()
     // 추후 인증 로직 추가
 
     return (
@@ -17,9 +19,24 @@ export default function SideBar() {
                 {'네트워크 마스터를 위한 OX 퀴즈'}
             </h2>
             <nav className="flex flex-col gap-[10px]">
-                <button className="btn-solid btn-pc-md">다시 풀기</button>
-                <button className="btn-solid btn-pc-md">해설 보기</button>
-                <button className="btn-solid btn-pc-md">그룹에 추가하기</button>
+                <Link
+                    href={`/quizbook/${params.quizbookId}`}
+                    className="btn-solid btn-pc-md text-center"
+                >
+                    다시 풀기
+                </Link>
+                <Link
+                    href={`/quizbook/${params.quizbookId}`}
+                    className="btn-solid btn-pc-md text-center"
+                >
+                    해설 보기
+                </Link>
+                <Link
+                    href={`/quizbook/${params.quizbookId}/include-group`}
+                    className="btn-solid btn-pc-md text-center"
+                >
+                    그룹에 추가하기
+                </Link>
                 <div className="flex w-full gap-[10px]">
                     <button className="h-auth btn-outline btn-pc-md flex flex-1 items-center justify-center gap-2">
                         <HeartOutlineIcon className="size-5" />

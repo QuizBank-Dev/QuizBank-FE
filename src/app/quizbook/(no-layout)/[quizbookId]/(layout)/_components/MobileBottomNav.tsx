@@ -2,20 +2,34 @@
 
 import HeartOutlineIcon from '@/assets/svgs/heart-outline.svg'
 import ShareIcon from '@/assets/svgs/share.svg'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
 
 export default function MobileBottomNav() {
+    const params = useParams()
     // 추후 인증 로직 필요
 
     return (
         <nav className="flex w-full items-center justify-between bg-white px-4 py-3 md:hidden">
             <div className="flex items-center gap-2">
-                <button className="btn-solid btn-mobile-sm py-3">
+                <Link
+                    href={`/quizbook/${params.quizbookId}`}
+                    className="btn-solid btn-mobile-sm py-3"
+                >
                     다시 풀기
-                </button>
-                <button className="btn-solid btn-mobile-sm py-3">해설</button>
-                <button className="btn-solid btn-mobile-sm py-3">
+                </Link>
+                <Link
+                    href={`/quizbook/${params.quizbookId}`}
+                    className="btn-solid btn-mobile-sm py-3"
+                >
+                    해설
+                </Link>
+                <Link
+                    href={`/quizbook/${params.quizbookId}/include-group`}
+                    className="btn-solid btn-mobile-sm py-3"
+                >
                     그룹에 추가
-                </button>
+                </Link>
             </div>
             <div className="flex items-center gap-2">
                 <button className="btn-outline p-2">
