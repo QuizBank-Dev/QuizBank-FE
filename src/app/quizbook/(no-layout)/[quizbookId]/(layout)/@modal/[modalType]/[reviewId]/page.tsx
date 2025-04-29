@@ -1,3 +1,4 @@
+import DeleteReviewModal from './_components/DeleteReviewModal'
 import EditReviewModal from './_components/EditReviewModal'
 
 export default async function ModalWithIdWrapper({
@@ -10,8 +11,8 @@ export default async function ModalWithIdWrapper({
     switch (modalType) {
         case 'edit-review':
             return <EditReviewModal />
-        // case 'delete-review':
-        //     return <DeleteReviewModal />
+        case 'delete-review':
+            return <DeleteReviewModal />
         default:
             return null
     }

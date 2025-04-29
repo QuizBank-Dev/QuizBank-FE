@@ -77,7 +77,7 @@ export default function ReviewCard({
                                 </span>
                             </Link>
                             <Link
-                                href={``}
+                                href={`/quizbook/${params.quizbookId}/delete-review/${_id}`}
                                 className="flex items-center gap-2 md:gap-4"
                             >
                                 <TrashIcon className="size-5" />
