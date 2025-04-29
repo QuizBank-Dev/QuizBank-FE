@@ -8,6 +8,9 @@ export default function MultipleAnswerInput() {
     const { control, watch } = useFormContext()
     const { fields } = useFieldArray({ control, name: 'optionList' })
 
+    // select 중복 방지 변수
+    const rendered = new Set<string>()
+
     return (
         <>
             {/* 선택지 영역 */}
@@ -36,11 +39,14 @@ export default function MultipleAnswerInput() {
             >
                 {fields.map((field, idx) => {
                     const option = watch(`optionList.${idx}`)
-
-                    if (!option) return null
+                    if (!option || rendered.has(option)) return null
+                    rendered.add(option)
 
                     return (
-                        <CustomSelect.Item key={field.id} value={option}>
+                        <CustomSelect.Item
+                            key={`${field.id}-${option}`}
+                            value={option}
+                        >
                             선택지 {idx + 1}
                         </CustomSelect.Item>
                     )
