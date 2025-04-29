@@ -6,11 +6,17 @@ import NoteIcon from '@/assets/svgs/note.svg'
 import DateIcon from '@/assets/svgs/date.svg'
 import Link from 'next/link'
 import { ProfileImage } from '@/components'
-import Preview from './_components/Preview'
-import Review from './_components/Review'
-import SideBar from './_components/SideBar'
+import Preview from '../_components/Preview'
+import Review from '../_components/Review'
+import SideBar from '../_components/SideBar'
 
-export default function Page() {
+export default async function QuizbookDetailPage({
+    params,
+}: {
+    params: Promise<{ quizbookId: string }>
+}) {
+    const { quizbookId } = await params
+
     return (
         <main className="no-scrollbar flex w-full flex-1 flex-col items-center overflow-auto">
             <section className="relative flex w-full justify-center">
@@ -70,7 +76,7 @@ export default function Page() {
             <div className="flex w-full max-w-[1056px] items-start">
                 <div className="flex flex-1 flex-col gap-8 p-4 md:py-8">
                     <Preview />
-                    <Review />
+                    <Review quizbookId={quizbookId} />
                 </div>
                 <div className="relative hidden h-full p-4 md:block md:py-8">
                     <SideBar />

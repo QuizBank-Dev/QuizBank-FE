@@ -46,7 +46,7 @@ export default function Modal({
 
     return (
         <div
-            className="absolute inset-0 flex min-h-screen w-full flex-col items-center justify-center bg-gray-900 bg-opacity-70 px-[16px] backdrop-blur-sm md:px-[32px]"
+            className="absolute inset-0 z-20 flex min-h-screen w-full flex-col items-center justify-center bg-gray-900 bg-opacity-70 px-[16px] backdrop-blur-sm md:px-[32px]"
             onClick={handleOverlayClick}
         >
             {/* 모달 컨텐츠 영역 */}

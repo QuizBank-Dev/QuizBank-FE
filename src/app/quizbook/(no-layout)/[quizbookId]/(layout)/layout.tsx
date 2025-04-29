@@ -2,22 +2,31 @@ import DesktopHeader from '@/components/DesktopHeader'
 import MobileHeader from '@/components/MobileHeader'
 import MobileBottomNav from './_components/MobileBottomNav'
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({
+    main,
+    modal,
+}: {
+    main: React.ReactNode
+    modal: React.ReactNode
+}) {
     return (
-        <div className="flex h-screen flex-col items-center font-semi-bold text-gray-900">
-            {/* 데스크탑 전용 헤더 */}
-            <DesktopHeader />
+        <>
+            <div className="flex h-screen flex-col items-center font-semi-bold text-gray-900">
+                {/* 데스크탑 전용 헤더 */}
+                <DesktopHeader />
 
-            {/* 모바일 전용 헤더 */}
-            <MobileHeader title="그룹 정보" backBtn>
-                <MobileHeader.UserMenu />
-            </MobileHeader>
+                {/* 모바일 전용 헤더 */}
+                <MobileHeader title="그룹 정보" backBtn>
+                    <MobileHeader.UserMenu />
+                </MobileHeader>
 
-            {/* 컨탠츠 */}
-            {children}
+                {main}
 
-            {/* 문제 상세 페이지 전용 바텀 Nav */}
-            <MobileBottomNav />
-        </div>
+                {/* 문제 상세 페이지 전용 바텀 Nav */}
+                <MobileBottomNav />
+            </div>
+
+            {modal}
+        </>
     )
 }
