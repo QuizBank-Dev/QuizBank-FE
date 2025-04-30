@@ -1,17 +1,21 @@
 import MobileBottomNav from '@/components/MobileBottomNav'
 
 export default function GroupMobileLayout({
-    children,
+    main,
+    modal,
 }: Readonly<{
-    children: React.ReactNode
+    main: React.ReactNode
+    modal: React.ReactNode
 }>) {
     return (
         <>
             {/* 컨탠츠 */}
-            {children}
+            {main}
 
             {/* 모바일 전용 바텀 Nav */}
             <MobileBottomNav />
+
+            {modal}
         </>
     )
 }
