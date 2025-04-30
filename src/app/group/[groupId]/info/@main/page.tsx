@@ -48,7 +48,7 @@ export default async function GroupInfoPage({
                     </div>
                 </div>
                 <Link
-                    href={``}
+                    href={`/group/${groupId}/info/delete`}
                     className="text-mobile-body-sm font-regular text-gray-500 underline md:text-pc-body-sm"
                 >
                     그룹 삭제
