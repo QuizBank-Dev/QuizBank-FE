@@ -1,4 +1,5 @@
 import ChangeOwnerModal from './_components/ChangeOwnerModal'
+import DeleteMemberModal from './_components/DeleteMemberModal'
 
 export default async function ModalWrapper({
     params,
@@ -10,8 +11,8 @@ export default async function ModalWrapper({
     switch (modalType) {
         case 'change-owner':
             return <ChangeOwnerModal />
-        // case 'delete-member':
-        //     return <DeleteMemberModal />
+        case 'delete-member':
+            return <DeleteMemberModal />
         // case 'accept-apply':
         //     return <AcceptApplyModal />
         // case 'reject-apply':
