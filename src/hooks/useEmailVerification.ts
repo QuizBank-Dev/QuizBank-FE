@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
-export function useEmailVerification() {
+type SenderType = 'signup' | 'reset-password'
+
+export function useEmailVerification(type: SenderType = 'signup') {
     // 이메일 검증 여부
     const [isVerified, setIsVerified] = useState(false)
     // 인증코드 검증중인지 확인
@@ -22,9 +24,9 @@ export function useEmailVerification() {
 
         if (result === 'OK') {
             setTimer(300)
-            alert('이메일이 전송되었습니다.')
+            alert('인증코드가 전송되었습니다.')
         } else {
-            alert('이메일이 전송 중 오류가 발생했습니다.')
+            alert('전송 중 오류가 발생했습니다.')
         }
     }
 
@@ -41,7 +43,11 @@ export function useEmailVerification() {
 
         if (result === 'OK') {
             setIsVerified(true)
-            alert('인증이 완료되었습니다.')
+            alert(
+                type === 'signup'
+                    ? '인증이 완료되었습니다.'
+                    : '초기화 비밀번호가 전송되었습니다.',
+            )
         } else {
             alert('에러메시지 출력')
         }
