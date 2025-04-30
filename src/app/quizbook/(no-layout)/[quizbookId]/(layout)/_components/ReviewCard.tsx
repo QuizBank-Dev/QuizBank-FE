@@ -10,6 +10,7 @@ import TrashIcon from '@/assets/svgs/trash.svg'
 import Link from 'next/link'
 import { ProfileImage } from '@/components'
 import { useState } from 'react'
+import { useParams } from 'next/navigation'
 
 interface Props {
     _id: string
@@ -29,6 +30,7 @@ export default function ReviewCard({
     myReview,
 }: Props) {
     const [isDropMenuOpen, setIsDropMenuOpen] = useState(false)
+    const params = useParams()
 
     const handleDropMenu = () => {
         setIsDropMenuOpen((prev) => !prev)
@@ -66,7 +68,7 @@ export default function ReviewCard({
                     {isDropMenuOpen && (
                         <div className="absolute right-0 top-5 flex flex-col items-start gap-2 rounded-lg bg-white p-4 shadow-point md:gap-4">
                             <Link
-                                href={``}
+                                href={`/quizbook/${params.quizbookId}/edit-review/${_id}`}
                                 className="flex items-center gap-2 md:gap-4"
                             >
                                 <EditIcon className="size-5" />
@@ -75,7 +77,7 @@ export default function ReviewCard({
                                 </span>
                             </Link>
                             <Link
-                                href={``}
+                                href={`/quizbook/${params.quizbookId}/delete-review/${_id}`}
                                 className="flex items-center gap-2 md:gap-4"
                             >
                                 <TrashIcon className="size-5" />
