@@ -7,10 +7,10 @@ import UserIcon from '@/assets/svgs/user.svg'
 import StarFullIcon from '@/assets/svgs/star-full.svg'
 import { ProfileImage } from '@/components'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 export default function SideBar() {
-    const params = useParams()
+    const path = usePathname()
     // 추후 인증 로직 추가
 
     return (
@@ -20,19 +20,19 @@ export default function SideBar() {
             </h2>
             <nav className="flex flex-col gap-[10px]">
                 <Link
-                    href={`/quizbook/${params.quizbookId}`}
+                    href={`${path}`}
                     className="btn-solid btn-pc-md text-center"
                 >
                     다시 풀기
                 </Link>
                 <Link
-                    href={`/quizbook/${params.quizbookId}`}
+                    href={`${path}`}
                     className="btn-solid btn-pc-md text-center"
                 >
                     해설 보기
                 </Link>
                 <Link
-                    href={`/quizbook/${params.quizbookId}/include-group`}
+                    href={`${path}/include-group`}
                     className="btn-solid btn-pc-md text-center"
                 >
                     그룹에 추가하기
