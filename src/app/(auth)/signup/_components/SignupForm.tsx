@@ -7,7 +7,7 @@ import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CustomInput } from '@/components'
 import { useEmailVerification } from '@/hooks/useEmailVerification'
-import LoadingButton from './LoadingButton'
+import LoadingButton from '../../_components/LoadingButton'
 
 const schema = z
     .object({
