@@ -3,11 +3,11 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import clsx from 'clsx'
 import * as z from 'zod'
 import { toast } from 'sonner'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { CustomInput, LoopAnimation } from '@/components'
+import { CustomInput } from '@/components'
+import LoadingButton from '../../_components/LoadingButton'
 
 const schema = z.object({
     email: z.string().email(),
@@ -73,17 +73,15 @@ export default function LoginForm() {
                         disabled={isLoading}
                     />
                 </div>
-                <button
+                <LoadingButton
                     type="submit"
-                    disabled={isLoading || !methods.formState.isValid}
-                    className={clsx(
-                        'btn-solid btn-mobile-lg md:btn-pc-lg',
-                        isLoading && 'btn-loading',
-                    )}
+                    size="lg"
+                    isLoading={isLoading}
+                    loadingMessage="Loading..."
+                    disabled={!methods.formState.isValid}
                 >
-                    {isLoading && <LoopAnimation />}
-                    {isLoading ? 'Loading...' : '로그인'}
-                </button>
+                    로그인
+                </LoadingButton>
             </form>
         </FormProvider>
     )
