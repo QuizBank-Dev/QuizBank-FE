@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import * as z from 'zod'
+import { toast } from 'sonner'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CustomInput } from '@/components'
 import { useEmailVerification } from '@/hooks/useEmailVerification'
@@ -55,8 +56,8 @@ export default function SignupForm() {
             // 가입 완료 처리
             router.push('/')
         } else {
-            // 가입 실패 처리 (Toast로 변경)
-            alert('ERROR')
+            // 가입 실패 처리
+            toast('ERROR')
         }
     }
 
@@ -80,7 +81,7 @@ export default function SignupForm() {
                             className="w-32 shrink-0 !px-0 md:mt-1"
                             isLoading={isSending}
                             loadingMessage="전송중"
-                            onClick={() => sendCode('')}
+                            onClick={() => sendCode(methods.watch('email'))}
                             disabled={isVerified}
                         >
                             {timer === 0 ? '인증번호 전송' : '재전송'}

@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import clsx from 'clsx'
 import * as z from 'zod'
+import { toast } from 'sonner'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CustomInput, LoopAnimation } from '@/components'
 
@@ -43,8 +44,8 @@ export default function LoginForm() {
             // 로그인 완료 처리
             router.push('/')
         } else {
-            // 로그인 실패 처리 (Toast로 변경)
-            alert('이메일 또는 비밀번호를 확인해주세요.')
+            // 로그인 실패 처리
+            toast('이메일 또는 비밀번호를 확인해주세요.')
         }
     }
 

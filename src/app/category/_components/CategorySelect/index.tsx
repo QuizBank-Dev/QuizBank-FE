@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import clsx from 'clsx'
+import { toast } from 'sonner'
 import { CategoryType } from '@/constants/common/category'
 import { LoopAnimation } from '@/components'
 import CategoryList from './CategoryList'
@@ -27,11 +28,11 @@ export default function CategorySelect() {
 
         if (result === 'OK') {
             // 완료
-            alert('카테고리를 저장했습니다.')
-            router.back()
+            toast('카테고리를 저장했습니다.')
+            router.push('/')
         } else {
-            // 실패 (Toast로 변경)
-            alert('카테고리를 저장할 수 없습니다.')
+            // 실패
+            toast('카테고리를 저장할 수 없습니다.')
         }
     }
 

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 type SenderType = 'signup' | 'reset-password'
 
@@ -24,9 +25,9 @@ export function useEmailVerification(type: SenderType = 'signup') {
 
         if (result === 'OK') {
             setTimer(300)
-            alert('인증코드가 전송되었습니다.')
+            toast('인증코드가 전송되었습니다.')
         } else {
-            alert('전송 중 오류가 발생했습니다.')
+            toast('전송 중 오류가 발생했습니다.')
         }
     }
 
@@ -43,13 +44,13 @@ export function useEmailVerification(type: SenderType = 'signup') {
 
         if (result === 'OK') {
             setIsVerified(true)
-            alert(
+            toast(
                 type === 'signup'
                     ? '인증이 완료되었습니다.'
                     : '초기화 비밀번호가 전송되었습니다.',
             )
         } else {
-            alert('에러메시지 출력')
+            toast('에러메시지 출력')
         }
     }
     return { isVerified, isVerifying, isSending, timer, sendCode, verifyCode }
