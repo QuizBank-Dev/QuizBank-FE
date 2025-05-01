@@ -10,13 +10,8 @@ import { CustomInput } from '@/components'
 import LoadingButton from '../../_components/LoadingButton'
 
 const schema = z.object({
-    email: z.string().email(),
-    password: z
-        .string()
-        .nonempty()
-        .regex(
-            /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d`~!@#$%^&*()\-_=+\\|/?,.<>;:'"[\]{}]+$/,
-        ),
+    email: z.string(),
+    password: z.string(),
 })
 
 type FormData = z.infer<typeof schema>
@@ -78,7 +73,6 @@ export default function LoginForm() {
                     size="lg"
                     isLoading={isLoading}
                     loadingMessage="Loading..."
-                    disabled={!methods.formState.isValid}
                 >
                     로그인
                 </LoadingButton>
