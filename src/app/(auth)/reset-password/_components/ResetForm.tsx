@@ -9,7 +9,7 @@ import { CustomInput } from '@/components'
 import LoadingButton from '../../_components/LoadingButton'
 
 const schema = z.object({
-    email: z.string().email(),
+    email: z.string().email('이메일 형식으로 입력해주세요.'),
     code: z.string(),
 })
 
