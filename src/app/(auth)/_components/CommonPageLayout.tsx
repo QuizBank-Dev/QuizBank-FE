@@ -9,7 +9,7 @@ export default function CommonPageLayout({ title, children }: Props) {
     return (
         <>
             {/* 모바일 전용 헤더 */}
-            <MobileHeader title={title} backBtn />
+            <MobileHeader title="QuizBank" backBtn />
 
             {/* 컨탠츠 */}
             <main className="no-scrollbar flex h-full w-full flex-1 items-center justify-center overflow-auto p-4">
