@@ -1,7 +1,8 @@
 import { ProfileImage } from '@/components'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 interface Props {
-    groupId: string
     data: {
         _id: string
         nickname: string
@@ -13,13 +14,9 @@ interface Props {
     isOwner: boolean
 }
 
-export default function GroupMember({
-    groupId,
-    data,
-    status,
-    myId,
-    isOwner,
-}: Props) {
+export default function GroupMember({ data, status, myId, isOwner }: Props) {
+    const path = usePathname()
+
     return (
         <>
             <article className="hidden w-full items-center gap-5 rounded-lg bg-white p-4 text-pc-body-md font-semi-bold shadow-point md:flex">
@@ -38,28 +35,43 @@ export default function GroupMember({
                     {status}
                     <div className="flex gap-2">
                         {data._id === myId && (
-                            <button className="rounded-lg bg-danger-300 px-3 py-2 text-white">
+                            <Link
+                                className="rounded-lg bg-danger-300 px-3 py-2 text-white"
+                                href={`${path}/withdraw`}
+                            >
                                 탈퇴
-                            </button>
+                            </Link>
                         )}
                         {isOwner && status === '그룹원' && (
                             <>
-                                <button className="rounded-lg bg-point-500 px-3 py-2 text-white">
+                                <Link
+                                    className="rounded-lg bg-point-500 px-3 py-2 text-white"
+                                    href={`${path}/change-owner/${data._id}`}
+                                >
                                     위임
-                                </button>
-                                <button className="rounded-lg bg-danger-300 px-3 py-2 text-white">
+                                </Link>
+                                <Link
+                                    className="rounded-lg bg-danger-300 px-3 py-2 text-white"
+                                    href={`${path}/delete-member/${data._id}`}
+                                >
                                     강퇴
-                                </button>
+                                </Link>
                             </>
                         )}
                         {isOwner && status === '가입 요청중' && (
                             <>
-                                <button className="rounded-lg bg-point-500 px-3 py-2 text-white">
+                                <Link
+                                    className="rounded-lg bg-point-500 px-3 py-2 text-white"
+                                    href={`${path}/accept-apply/${data._id}`}
+                                >
                                     수락
-                                </button>
-                                <button className="rounded-lg bg-danger-300 px-3 py-2 text-white">
+                                </Link>
+                                <Link
+                                    className="rounded-lg bg-danger-300 px-3 py-2 text-white"
+                                    href={`${path}/reject-apply/${data._id}`}
+                                >
                                     거절
-                                </button>
+                                </Link>
                             </>
                         )}
                     </div>
@@ -80,28 +92,43 @@ export default function GroupMember({
                     </div>
                     <div className="flex gap-4 text-mobile-body-md">
                         {data._id === myId && (
-                            <button className="rounded-lg bg-danger-300 px-3 py-2 text-white">
+                            <Link
+                                className="rounded-lg bg-danger-300 px-3 py-2 text-white"
+                                href={`${path}/withdraw`}
+                            >
                                 탈퇴
-                            </button>
+                            </Link>
                         )}
                         {isOwner && status === '그룹원' && (
                             <>
-                                <button className="rounded-lg bg-point-500 px-3 py-2 text-white">
+                                <Link
+                                    className="rounded-lg bg-point-500 px-3 py-2 text-white"
+                                    href={`${path}/change-owner/${data._id}`}
+                                >
                                     위임
-                                </button>
-                                <button className="rounded-lg bg-danger-300 px-3 py-2 text-white">
+                                </Link>
+                                <Link
+                                    className="rounded-lg bg-danger-300 px-3 py-2 text-white"
+                                    href={`${path}/delete-member/${data._id}`}
+                                >
                                     강퇴
-                                </button>
+                                </Link>
                             </>
                         )}
                         {isOwner && status === '가입 요청중' && (
                             <>
-                                <button className="rounded-lg bg-point-500 px-3 py-2 text-white">
+                                <Link
+                                    className="rounded-lg bg-point-500 px-3 py-2 text-white"
+                                    href={`${path}/accept-apply/${data._id}`}
+                                >
                                     수락
-                                </button>
-                                <button className="rounded-lg bg-danger-300 px-3 py-2 text-white">
+                                </Link>
+                                <Link
+                                    className="rounded-lg bg-danger-300 px-3 py-2 text-white"
+                                    href={`${path}/reject-apply/${data._id}`}
+                                >
                                     거절
-                                </button>
+                                </Link>
                             </>
                         )}
                     </div>

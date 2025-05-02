@@ -1,7 +1,17 @@
 import Link from 'next/link'
 import EndDateEdit from './EndDateEdit'
 
-export default function EndDateSection({ endDate }: { endDate: string }) {
+interface Props {
+    endDate: string
+    groupId: string
+    quizbookId: string
+}
+
+export default function EndDateSection({
+    endDate,
+    groupId,
+    quizbookId,
+}: Props) {
     return (
         <section className="flex flex-col gap-2 font-semi-bold">
             <span className="text-mobile-body-md text-gray-600 md:text-pc-body-md">
@@ -11,7 +21,7 @@ export default function EndDateSection({ endDate }: { endDate: string }) {
                 <EndDateEdit endDate={endDate} />
                 <Link
                     className="btn-solid btn-mobile-sm md:btn-pc-sm"
-                    href={''}
+                    href={`/group/${groupId}/quizbook/${quizbookId}/delete`}
                 >
                     선정해제
                 </Link>

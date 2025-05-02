@@ -80,7 +80,13 @@ const quizList: Props['quizList'][number][] = [
     },
 ]
 
-export default function GroupQuizbookDetailPage() {
+export default async function GroupQuizbookDetailPage({
+    params,
+}: Readonly<{
+    params: Promise<{ groupId: string; quizbookId: string }>
+}>) {
+    const { groupId, quizbookId } = await params
+
     return (
         <>
             {/* 모바일 전용 헤더 */}
@@ -100,7 +106,11 @@ export default function GroupQuizbookDetailPage() {
                         title="프론트엔드 CS 면접 기초 문제 모음"
                         category="카테고리"
                     />
-                    <EndDateSection endDate="2025-03-21" />
+                    <EndDateSection
+                        endDate="2025-03-21"
+                        groupId={groupId}
+                        quizbookId={quizbookId}
+                    />
                     <StudyStatus
                         scoreList={scoreList}
                         memberList={memberList}

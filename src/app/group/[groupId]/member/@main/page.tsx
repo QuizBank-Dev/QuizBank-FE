@@ -1,13 +1,7 @@
 import MobileHeader from '@/components/MobileHeader'
 import GroupMemberList from './_components/GroupMemberList'
 
-export default async function GroupMemberPage({
-    params,
-}: Readonly<{
-    params: Promise<{ groupId: string }>
-}>) {
-    const { groupId } = await params
-
+export default function GroupMemberPage() {
     return (
         <>
             {/* 모바일 전용 헤더 */}
@@ -19,7 +13,7 @@ export default async function GroupMemberPage({
                     <h2 className="hidden text-pc-title-sm font-extra-bold text-point-900 md:block">
                         그룹원 관리
                     </h2>
-                    <GroupMemberList groupId={groupId} />
+                    <GroupMemberList />
                 </div>
             </main>
         </>

@@ -10,6 +10,8 @@ import {
 import UserIcon from '@/assets/svgs/user.svg'
 import { useState } from 'react'
 import GroupMember from './GroupMember'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 const dummyData = {
     _id: '65e8a5d6fc13ae5e7f000002',
@@ -59,8 +61,9 @@ const dummyData = {
     createdAt: '2025-03-30',
 }
 
-export default function GroupMemberList({ groupId }: { groupId: string }) {
+export default function GroupMemberList() {
     const [status, setStatus] = useState('member')
+    const path = usePathname()
 
     return (
         <section className="mb-4 flex flex-col gap-4">
@@ -86,14 +89,12 @@ export default function GroupMemberList({ groupId }: { groupId: string }) {
                         </div>
                     </div>
                 </div>
-                <button
+                <Link
                     className="btn-solid btn-mobile-sm md:btn-pc-md"
-                    onClick={() => {
-                        // 추후 병렬 라우트로 모달 생성
-                    }}
+                    href={`${path}/invite`}
                 >
                     그룹 초대
-                </button>
+                </Link>
             </div>
             <div className="hidden w-full items-center gap-5 rounded-lg bg-point-100 px-4 py-[10px] text-pc-body-md font-semi-bold text-point-700 md:flex">
                 <div className="h-8 w-8" />
@@ -109,7 +110,6 @@ export default function GroupMemberList({ groupId }: { groupId: string }) {
             ).map((data, index) => (
                 <GroupMember
                     key={data._id}
-                    groupId={groupId}
                     data={data}
                     status={
                         status === 'member'

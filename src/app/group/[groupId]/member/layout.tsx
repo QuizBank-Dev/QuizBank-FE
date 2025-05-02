@@ -1,6 +1,4 @@
-import MobileBottomNav from '@/components/MobileBottomNav'
-
-export default function GroupMobileLayout({
+export default function GroupMemberLayout({
     main,
     modal,
 }: Readonly<{
@@ -11,9 +9,6 @@ export default function GroupMobileLayout({
         <>
             {/* 컨탠츠 */}
             {main}
-
-            {/* 모바일 전용 바텀 Nav */}
-            <MobileBottomNav />
 
             {modal}
         </>
