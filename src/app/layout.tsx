@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
+import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 import { QueryProvider } from './_providers/QueryProvider'
 import { UserPrefetcher } from './_providers/UserPrefetcher'
@@ -26,7 +27,10 @@ export default function RootLayout({
         <html lang="ko" className={`${pretendard.variable} h-full`}>
             <body className={`${pretendard.className} h-full bg-point-50`}>
                 <QueryProvider>
-                    <UserPrefetcher>{children}</UserPrefetcher>
+                    <UserPrefetcher>
+                        {children}
+                        <Toaster />
+                    </UserPrefetcher>
                 </QueryProvider>
             </body>
         </html>
