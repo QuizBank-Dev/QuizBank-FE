@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from 'react'
 import Edit from '@/assets/svgs/edit.svg'
 import clsx from 'clsx'
-import ProfileImage from './ProfileImage'
+import ProfileImage from '../../../../../components/ProfileImage'
 
 interface EditableProfileImageProps {
     size: number
