@@ -16,7 +16,7 @@ export default function MyInfoMenu() {
                 <Sidebar.Item
                     icon={<BadgeSvg className="size-5" />}
                     text="보유 뱃지"
-                    href="#"
+                    href="/my-page/info/badge"
                 />
             </Sidebar.Group>
             <Sidebar.Group>

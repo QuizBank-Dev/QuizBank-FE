@@ -27,7 +27,7 @@ export default function MyPageSidebar({ className }: Props) {
                 <Sidebar.Group
                     className={clsx(
                         'hidden',
-                        pathname === '/my-page/info' && 'md:!block',
+                        pathname.startsWith('/my-page/info') && 'md:!block',
                     )}
                 >
                     <Sidebar.Item
