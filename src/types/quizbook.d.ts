@@ -18,4 +18,6 @@ export interface Quizbook<T = unknown> {
         profileImg?: string
         nickname: string
     }
+    isLiked: boolean
+    isStudied: boolean
 }
