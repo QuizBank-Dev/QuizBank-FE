@@ -9,18 +9,27 @@ import SubscriptionSvg from '@/assets/svgs/subscription.svg'
 import NotebookSvg from '@/assets/svgs/notebook.svg'
 import CommentSvg from '@/assets/svgs/comment.svg'
 
-export default function MyPageSidebar() {
+interface Props {
+    className?: string
+}
+
+export default function MyPageSidebar({ className }: Props) {
     const pathname = usePathname()
 
     return (
         <div
             className={clsx(
-                'hidden w-full md:block md:w-[230px]',
-                pathname === '/my-page/info' && '!block',
+                'hidden w-full md:order-first md:block md:w-[230px]',
+                className,
             )}
         >
             <Sidebar gap={4}>
-                <Sidebar.Group className="hidden md:block">
+                <Sidebar.Group
+                    className={clsx(
+                        'hidden',
+                        pathname === '/my-page/info' && 'md:!block',
+                    )}
+                >
                     <Sidebar.Item
                         icon={<UserSvg className="size-5" />}
                         text="내 정보"
