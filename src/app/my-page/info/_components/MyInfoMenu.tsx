@@ -23,7 +23,7 @@ export default function MyInfoMenu() {
                 <Sidebar.Item
                     icon={<PasswordSvg className="size-5" />}
                     text="비밀번호 변경"
-                    href="#"
+                    href="/my-page/info/change-password"
                 />
                 <Sidebar.Item
                     icon={<CategorySvg className="size-5" />}
