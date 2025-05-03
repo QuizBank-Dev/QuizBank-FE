@@ -20,3 +20,8 @@ export interface CurrentUser extends User {
 export interface OtherUser extends User {
     follower: string[]
 }
+
+/**
+ * 팔로워
+ */
+export type Follower = Pick<User, '_id' | 'nickname' | 'profileImg'>
