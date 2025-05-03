@@ -11,11 +11,10 @@ import CommentSvg from '@/assets/svgs/comment.svg'
 
 interface Props {
     className?: string
+    showFirstMenu?: boolean
 }
 
-export default function MyPageSidebar({ className }: Props) {
-    const pathname = usePathname()
-
+export default function MyPageSidebar({ className, showFirstMenu }: Props) {
     return (
         <div
             className={clsx(
@@ -25,10 +24,7 @@ export default function MyPageSidebar({ className }: Props) {
         >
             <Sidebar gap={4}>
                 <Sidebar.Group
-                    className={clsx(
-                        'hidden',
-                        pathname.startsWith('/my-page/info') && 'md:!block',
-                    )}
+                    className={clsx('hidden', showFirstMenu && 'md:!block')}
                 >
                     <Sidebar.Item
                         icon={<UserSvg className="size-5" />}

@@ -17,7 +17,7 @@ export default function CommonPageLayout({ title, children }: Props) {
                     </h2>
                     {children}
                 </main>
-                <MyPageSidebar />
+                <MyPageSidebar showFirstMenu={true} />
             </div>
         </>
     )
