@@ -2,9 +2,13 @@ import {
     QueryClient,
     isServer,
     defaultShouldDehydrateQuery,
+    QueryCache,
 } from '@tanstack/react-query'
+import { toast } from 'sonner'
 
 let browserQueryClient: QueryClient | undefined = undefined
+
+const isClient = typeof window !== 'undefined'
 
 const makeQueryClient = () => {
     return new QueryClient({
@@ -16,16 +20,23 @@ const makeQueryClient = () => {
                     query.state.status === 'pending',
             },
         },
+        queryCache: new QueryCache({
+            onError: (error, query) => {
+                const meta = query?.meta as Record<string, boolean>
+                if (isClient && !meta?.ignoreGlobalError) {
+                    toast(error.message)
+                }
+            },
+        }),
     })
 }
 
 export const getQueryClient = () => {
-    if (isServer) {
-        // 서버에서는 요청마다 새로 생성
-        return makeQueryClient()
-    } else {
+    if (isClient && !browserQueryClient) {
         // 브라우저에서는 최초 한 번만 생성
-        if (!browserQueryClient) browserQueryClient = makeQueryClient()
-        return browserQueryClient
+        browserQueryClient = makeQueryClient()
     }
+    return isServer || !browserQueryClient
+        ? makeQueryClient()
+        : browserQueryClient
 }
