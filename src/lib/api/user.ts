@@ -9,7 +9,7 @@ import { CurrentUser } from '@/types/user'
 export const getCurrentUser = async (cookie: string = '') => {
     // TODO API 호출 방식 수정 필요
     const res = await axios.get<{ result: CurrentUser | null }>(
-        `${process.env.NEXT_PUBLIC_API_URL}v1/user/me`,
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/user/me`,
         {
             withCredentials: true,
             headers: isServer
