@@ -1,5 +1,3 @@
-'use client'
-
 import BottomHome from '@/assets/svgs/bottom-home.svg'
 import BottomQuizbook from '@/assets/svgs/bottom-quizbook.svg'
 import BottomGroup from '@/assets/svgs/bottom-group.svg'
@@ -13,8 +11,6 @@ interface Prop {
 
 export default function MobileBottomNavRoot({ children }: Prop) {
     const isCustom = !!children
-
-    // 추후 인증 로직 및 컨택스트 추가
 
     return (
         <nav className="flex w-full justify-center border-t-[0.25px] border-point-100 bg-transparent text-point-100 md:hidden">
