@@ -1,6 +1,5 @@
 import {
     QueryClient,
-    isServer,
     defaultShouldDehydrateQuery,
     QueryCache,
 } from '@tanstack/react-query'
@@ -36,7 +35,5 @@ export const getQueryClient = () => {
         // 브라우저에서는 최초 한 번만 생성
         browserQueryClient = makeQueryClient()
     }
-    return isServer || !browserQueryClient
-        ? makeQueryClient()
-        : browserQueryClient
+    return !browserQueryClient ? makeQueryClient() : browserQueryClient
 }
