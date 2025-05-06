@@ -14,7 +14,9 @@ export default function MobileHeaderRoot({ title, backBtn, children }: Props) {
             {/* 중앙 제목 */}
             <h1 className="text-mobile-title-sm font-extra-bold">{title}</h1>
             {/* 오른쪽 공간 div */}
-            <div className="w-16">{children}</div>
+            <div className="flex w-16 items-center justify-end gap-4">
+                {children}
+            </div>
         </header>
     )
 }
