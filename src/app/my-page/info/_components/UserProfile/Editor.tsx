@@ -74,7 +74,7 @@ export default function Editor({ onCancelEditMode }: Props) {
         if (result === 'OK') {
             // 가입 완료 처리
             toast('저장되었습니다.')
-            // onCancelEditMode()
+            onCancelEditMode()
         } else {
             // 가입 실패 처리
             toast('ERROR')
@@ -90,7 +90,7 @@ export default function Editor({ onCancelEditMode }: Props) {
                 introduce: user.introduce,
             })
         }
-    }, [methods, user])
+    }, [methods])
 
     if (!user) {
         return null
