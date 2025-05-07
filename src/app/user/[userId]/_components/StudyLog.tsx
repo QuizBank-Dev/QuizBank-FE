@@ -1,20 +1,17 @@
 import { AnnualStudyHeatmap, WeeklyStudyTracker } from '@/components'
+import dayjs from '@/utils/date'
 
 const weeklyLog = [
     {
-        date: '2025-04-12',
+        date: dayjs().subtract(3, 'day').format('YYYY-MM-DD'),
         solvedCount: 2,
     },
     {
-        date: '2025-04-13',
+        date: dayjs().subtract(2, 'day').format('YYYY-MM-DD'),
         solvedCount: 2,
     },
     {
-        date: '2025-04-14',
-        solvedCount: 2,
-    },
-    {
-        date: '2025-04-15',
+        date: dayjs().subtract(1, 'day').format('YYYY-MM-DD'),
         solvedCount: 2,
     },
 ]
