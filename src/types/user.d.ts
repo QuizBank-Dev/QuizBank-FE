@@ -25,3 +25,8 @@ export interface OtherUser extends User {
  * 팔로워
  */
 export type Follower = Pick<User, '_id' | 'nickname' | 'profileImg'>
+
+/**
+ * 작성자
+ */
+export type Author = Pick<User, '_id' | 'nickname' | 'profileImg'>
