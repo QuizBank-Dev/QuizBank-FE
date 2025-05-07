@@ -9,30 +9,6 @@ export default function BadgeList() {
             {badges.map((badge) => (
                 <BadgeItem key={badge.title} {...badge} />
             ))}
-            {badges.map((badge) => (
-                <BadgeItem key={badge.title} {...badge} />
-            ))}
-            {badges.map((badge) => (
-                <BadgeItem key={badge.title} {...badge} />
-            ))}
-            {badges.map((badge) => (
-                <BadgeItem key={badge.title} {...badge} />
-            ))}
-            {badges.map((badge) => (
-                <BadgeItem key={badge.title} {...badge} />
-            ))}
-            {badges.map((badge) => (
-                <BadgeItem key={badge.title} {...badge} />
-            ))}
-            {badges.map((badge) => (
-                <BadgeItem key={badge.title} {...badge} />
-            ))}
-            {badges.map((badge) => (
-                <BadgeItem key={badge.title} {...badge} />
-            ))}
-            {badges.map((badge) => (
-                <BadgeItem key={badge.title} {...badge} />
-            ))}
         </ul>
     )
 }
