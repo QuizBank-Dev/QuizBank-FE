@@ -1,8 +1,8 @@
+import Link from 'next/link'
 import CommonPageLayout from '../_components/CommonPageLayout'
 import MyPageSidebar from '../_components/MyPageSidebar'
 import UserProfile from './_components/UserProfile'
 import MyInfoMenu from './_components/MyInfoMenu'
-import Link from 'next/link'
 
 export default function Page() {
     return (

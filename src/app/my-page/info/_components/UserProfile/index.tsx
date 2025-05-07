@@ -1,8 +1,8 @@
 'use client'
 
-import Viewer from './Viewer'
 import { useState } from 'react'
-import Editor from '@/app/my-page/info/_components/UserProfile/Editor'
+import Viewer from './Viewer'
+import Editor from './Editor'
 
 export default function UserProfile() {
     const [isEditMode, setIsEditMode] = useState(false)

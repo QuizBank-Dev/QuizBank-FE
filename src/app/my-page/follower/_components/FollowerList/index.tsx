@@ -1,8 +1,8 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import FollowerItem from '@/app/my-page/follower/_components/FollowerList/FollowerItem'
 import { Follower } from '@/types/user'
+import FollowerItem from './FollowerItem'
 
 interface Props {
     followerList: Record<string, Follower[]>
