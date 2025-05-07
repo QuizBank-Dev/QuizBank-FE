@@ -11,8 +11,8 @@ export const useCurrentUser = () => {
     return useQuery<QueryType>({
         queryKey: QueryKey.user.DEFAULT,
         queryFn: () => getCurrentUser(),
-        staleTime: 1000 * 60 * 10,
-        gcTime: 1000 * 60 * 60,
+        staleTime: 1000 * 60 * 60, // 1시간
+        gcTime: 1000 * 60 * 60 * 10, // 10시간
         retry: 0,
         meta: {
             ignoreGlobalError: true,
