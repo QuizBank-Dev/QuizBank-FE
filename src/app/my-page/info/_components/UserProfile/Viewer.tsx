@@ -1,14 +1,21 @@
 import { ProfileImage } from '@/components'
-import { useCurrentUser } from '@/hooks/queries'
 import clsx from 'clsx'
 
 interface Props {
     onEditMode: () => void
 }
 
-export default function Viewer({ onEditMode }: Props) {
-    const { data: user } = useCurrentUser()
+const user = {
+    _id: '1',
+    nickname: 'example',
+    profileImg: '',
+    introduce: '안녕하세요',
+    category: ['자료구조'],
+    experience: 0,
+    isOAuthAccount: false,
+}
 
+export default function Viewer({ onEditMode }: Props) {
     if (!user) {
         return null
     }

@@ -1,15 +1,22 @@
 'use client'
 
-import { useCurrentUser } from '@/hooks/queries'
 import Sidebar from '@/components/Sidebar'
 
 import BadgeSvg from '@/assets/svgs/badge.svg'
 import PasswordSvg from '@/assets/svgs/password.svg'
 import CategorySvg from '@/assets/svgs/category.svg'
 
-export default function MyInfoMenu() {
-    const { data: user } = useCurrentUser()
+const user = {
+    _id: '1',
+    nickname: 'example',
+    profileImg: '',
+    introduce: '안녕하세요',
+    category: ['자료구조'],
+    experience: 0,
+    isOAuthAccount: false,
+}
 
+export default function MyInfoMenu() {
     return (
         <Sidebar gap={4}>
             <Sidebar.Group>

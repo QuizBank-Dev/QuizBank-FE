@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { useCurrentUser } from '@/hooks/queries'
 import EditProfileImage from './EditProfileImage'
 import { FormProvider, useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -10,6 +9,16 @@ import { toast } from 'sonner'
 
 interface Props {
     onCancelEditMode: () => void
+}
+
+const user = {
+    _id: '1',
+    nickname: 'example',
+    profileImg: '',
+    introduce: '안녕하세요',
+    category: ['자료구조'],
+    experience: 0,
+    isOAuthAccount: false,
 }
 
 const schema = z.object({
@@ -25,7 +34,6 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export default function Editor({ onCancelEditMode }: Props) {
-    const { data: user } = useCurrentUser()
     const [isLoading, setIsLoading] = useState(false)
     const methods = useForm<FormData>({
         resolver: zodResolver(schema),
