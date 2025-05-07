@@ -2,21 +2,37 @@
 
 import Notification from '@/assets/svgs/notification.svg'
 import User from '@/assets/svgs/user.svg'
+import { useCurrentUser } from '@/hooks/queries'
+import clsx from 'clsx'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import LoopAnimation from '../LoopAnimation'
 
 export default function UserMenu() {
-    // 추후 인증 로직 추가 및 조건부 랜더링
+    const { data: user, isLoading } = useCurrentUser()
 
     const router = useRouter()
 
+    if (!user)
+        return (
+            <button
+                className={clsx(
+                    'btn-solid btn-pc-lg',
+                    isLoading && 'btn-loading',
+                )}
+                disabled={isLoading}
+                onClick={() => router.push('/login')}
+            >
+                {isLoading && <LoopAnimation />}
+                {isLoading ? 'Loading...' : '로그인'}
+            </button>
+        )
+
     return (
         <div className="flex items-center gap-4">
-            <button
-                className="btn-outline btn-pc-lg"
-                onClick={() => router.push('/study-status')}
-            >
+            <Link className="btn-outline btn-pc-lg" href={'/study-status'}>
                 학습현황
-            </button>
+            </Link>
             <Notification
                 className="size-6 cursor-pointer"
                 onClick={() => router.push('/notification')}
