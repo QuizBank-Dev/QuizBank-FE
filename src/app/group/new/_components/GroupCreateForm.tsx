@@ -56,6 +56,7 @@ export default function GroupCreateForm() {
                         name="description"
                         label="그룹 소개(50자 이하)"
                         placeholder="그룹 소개를 입력해주세요"
+                        area={true}
                         style="solid"
                         disabled={isLoading}
                     />
