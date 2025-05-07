@@ -6,6 +6,9 @@ import { FormProvider, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import { createGroup } from '@/lib/api/group'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 const schema = z.object({
     name: z
@@ -18,22 +21,26 @@ const schema = z.object({
         .max(50, { message: '그룹 소개는 50자 이하로 해주세요' }),
 })
 
-type FormData = z.infer<typeof schema>
+export type CreateGroupFormData = z.infer<typeof schema>
 
 export default function GroupCreateForm() {
     const [isLoading, setIsLoading] = useState(false)
-    const methods = useForm<FormData>({
+    const methods = useForm<CreateGroupFormData>({
         resolver: zodResolver(schema),
         mode: 'onChange',
     })
+    const router = useRouter()
 
-    const handleFormSubmit = async (data: FormData) => {
-        // 추후 로직 수정
+    const handleFormSubmit = async (data: CreateGroupFormData) => {
         setIsLoading(true)
-        setTimeout(() => {
-            console.log('Form Data:', data)
-            setIsLoading(false)
-        }, 2000)
+        await createGroup(data)
+            .then((res) => {
+                router.push(`/group/${res.data.result._id}/info`)
+            })
+            .catch((error) => {
+                setIsLoading(false)
+                toast(error.response.data.message)
+            })
     }
 
     return (
