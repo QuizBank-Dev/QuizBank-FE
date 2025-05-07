@@ -1,6 +1,5 @@
 'use client'
 
-import { Quizbook } from '@/types/quizbook'
 import { useRouter } from 'next/navigation'
 import {
     Select,
@@ -11,65 +10,114 @@ import {
 } from '@/components/ui/select'
 import { QuizbookCard } from '@/components'
 import { QuizbookCardStatus } from '@/constants/common/quizbookBadge'
+import { Quizbook } from '@/types/quizbook'
+
+const quizbookList: Quizbook[] = [
+    {
+        _id: '67fdc5ac1e49a2871aeb6657',
+        title: '면접 대비 CS 문제집',
+        description: '면접 대비하는 문제입니다.',
+        category: '웹 개발',
+        quizList: [
+            '67fdc5ac1e49a2871aeb6651',
+            '67fdc5ac1e49a2871aeb6652',
+            '67fdc5ac1e49a2871aeb6653',
+        ],
+        solvedCount: 3,
+        solvedScore: 40,
+        reviewCount: 1,
+        reviewScore: 4,
+        reviewRating: 4,
+        author: {
+            _id: '1',
+            nickname: '나',
+            profileImg: '',
+        },
+        createdAt: '2025-04-15T02:34:20.113Z',
+        updatedAt: '2025-04-15T08:24:44.912Z',
+        isLiked: false,
+        isStudied: true,
+    },
+    {
+        _id: '67fdc5ac1e49a2871aeb6658',
+        title: '면접 대비 CS 문제집',
+        description: '면접 대비하는 문제입니다.',
+        category: '웹 개발',
+        quizList: [
+            '67fdc5ac1e49a2871aeb6651',
+            '67fdc5ac1e49a2871aeb6652',
+            '67fdc5ac1e49a2871aeb6653',
+        ],
+        solvedCount: 3,
+        solvedScore: 40,
+        reviewCount: 1,
+        reviewScore: 4,
+        reviewRating: 4,
+        author: {
+            _id: '1',
+            nickname: '나',
+            profileImg: '',
+        },
+        createdAt: '2025-04-15T02:34:20.113Z',
+        updatedAt: '2025-04-15T08:24:44.912Z',
+        isLiked: false,
+        isStudied: false,
+    },
+    {
+        _id: '67fdc5ac1e49a2871aeb6659',
+        title: '면접 대비 CS 문제집',
+        description: '면접 대비하는 문제입니다.',
+        category: '웹 개발',
+        quizList: [
+            '67fdc5ac1e49a2871aeb6651',
+            '67fdc5ac1e49a2871aeb6652',
+            '67fdc5ac1e49a2871aeb6653',
+        ],
+        solvedCount: 3,
+        solvedScore: 234,
+        reviewCount: 1,
+        reviewScore: 4,
+        reviewRating: 4,
+        author: {
+            _id: '1',
+            nickname: '나',
+            profileImg: '',
+        },
+        createdAt: '2025-04-15T02:34:20.113Z',
+        updatedAt: '2025-04-15T08:24:44.912Z',
+        isLiked: true,
+        isStudied: true,
+    },
+    {
+        _id: '67fdc5ac1e49a2871aeb6660',
+        title: '면접 대비 CS 문제집',
+        description: '면접 대비하는 문제입니다.',
+        category: '웹 개발',
+        quizList: [
+            '67fdc5ac1e49a2871aeb6651',
+            '67fdc5ac1e49a2871aeb6652',
+            '67fdc5ac1e49a2871aeb6653',
+        ],
+        solvedCount: 3,
+        solvedScore: 123,
+        reviewCount: 1,
+        reviewScore: 4,
+        reviewRating: 4,
+        author: {
+            _id: '1',
+            nickname: '나',
+            profileImg: '',
+        },
+        createdAt: '2025-04-15T02:34:20.113Z',
+        updatedAt: '2025-04-15T08:24:44.912Z',
+        isLiked: true,
+        isStudied: false,
+    },
+]
 
 export default function QuizbookList() {
     const router = useRouter()
-    const quizbookList: Quizbook[] = [
-        {
-            _id: '1',
-            title: '네트워크 마스터를 위한 OX 퀴즈',
-            category: '네트워크',
-            description:
-                '네트워크 기초부터 HTTP와 HTTPS의 차이를 학습할 수 있는 문제집입니다.',
-            solvedCount: 300,
-            solvedRate: 75,
-            author: {
-                nickname: '나',
-                profileImg: '',
-            },
-            quizList: Array.from({ length: 10 }),
-            reviewRate: 4.3,
-            reviewCount: 100,
-            isStudied: true,
-            isLiked: true,
-        },
-        {
-            _id: '2',
-            title: '네트워크 마스터를 위한 OX 퀴즈',
-            category: '네트워크',
-            description:
-                '네트워크 기초부터 HTTP와 HTTPS의 차이를 학습할 수 있는 문제집입니다.',
-            solvedCount: 300,
-            solvedRate: 75,
-            author: {
-                nickname: '나',
-                profileImg: '',
-            },
-            quizList: Array.from({ length: 10 }),
-            reviewRate: 4.3,
-            reviewCount: 100,
-            isStudied: false,
-            isLiked: true,
-        },
-        {
-            _id: '3',
-            title: '네트워크 마스터를 위한 OX 퀴즈',
-            category: '네트워크',
-            description:
-                '네트워크 기초부터 HTTP와 HTTPS의 차이를 학습할 수 있는 문제집입니다.',
-            solvedCount: 300,
-            solvedRate: 75,
-            author: {
-                nickname: '나',
-                profileImg: '',
-            },
-            quizList: Array.from({ length: 10 }),
-            reviewRate: 4.3,
-            reviewCount: 100,
-            isStudied: true,
-            isLiked: true,
-        },
-    ]
+
     return (
         <>
             <header className="flex items-center justify-between">
