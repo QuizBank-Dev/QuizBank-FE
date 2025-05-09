@@ -38,7 +38,9 @@ export default function GroupInfo() {
     })
     const { groupId } = useParams()
     const { data, isLoading } = useGroupQuery(groupId as string)
-    const { mutate, isPending } = usePatchGroup(groupId as string)
+    const { mutate, isPending } = usePatchGroup(groupId as string, () => {
+        setIsChangeMode(false)
+    })
     const { data: userData } = useCurrentUser()
 
     const { reset } = methods
@@ -51,7 +53,6 @@ export default function GroupInfo() {
 
     const handleFormSubmit = (data: GroupInfoFormData) => {
         mutate(data)
-        setIsChangeMode(false)
     }
     const handleCancel = () => {
         reset(backUp)
@@ -88,6 +89,7 @@ export default function GroupInfo() {
                                     : '잠시만 기다려주세요...'
                             }
                             style="solid"
+                            area={true}
                             disabled={isLoading || isPending || !isChangeMode}
                         />
                         <div className="flex w-full gap-4 pb-4">

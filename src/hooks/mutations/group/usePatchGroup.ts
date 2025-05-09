@@ -7,7 +7,10 @@ import { toast } from 'sonner'
 /**
  * 그룹 정보를 수정하는 mutation
  */
-export const usePatchGroup = (groupId: string) => {
+export const usePatchGroup = (
+    groupId: string,
+    onSuccessCallback?: () => void,
+) => {
     const queryClient = useQueryClient()
 
     return useMutation({
@@ -21,6 +24,7 @@ export const usePatchGroup = (groupId: string) => {
                     description: variables.description,
                 }
             })
+            onSuccessCallback?.()
             toast('그룹 정보 수정이 완료되었습니다!')
         },
     })
