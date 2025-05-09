@@ -18,7 +18,7 @@ const schema = z.object({
         .max(50, { message: '그룹 소개는 50자 이하로 해주세요' }),
 })
 
-type FormData = z.infer<typeof schema>
+export type GroupInfoFormData = z.infer<typeof schema>
 
 export default function GroupInfo() {
     const [isLoading, setIsLoading] = useState(false)
@@ -27,7 +27,7 @@ export default function GroupInfo() {
         name: '',
         description: '',
     })
-    const methods = useForm<FormData>({
+    const methods = useForm<GroupInfoFormData>({
         resolver: zodResolver(schema),
         mode: 'onChange',
         defaultValues: backUp,
@@ -46,7 +46,7 @@ export default function GroupInfo() {
         })
     }, [reset, setBackUp])
 
-    const handleFormSubmit = async (data: FormData) => {
+    const handleFormSubmit = async (data: GroupInfoFormData) => {
         // 추후 로직 수정
         setIsLoading(true)
         setTimeout(() => {
