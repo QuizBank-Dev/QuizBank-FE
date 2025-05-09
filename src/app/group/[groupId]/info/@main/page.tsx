@@ -4,7 +4,7 @@ import GroupChatIcon from '@/assets/svgs/group-chat.svg'
 import MemberIcon from '@/assets/svgs/member.svg'
 import Sidebar from '@/components/Sidebar'
 import GroupInfo from './_components/GroupInfo'
-import Link from 'next/link'
+import DeleteBtn from './_components/DeleteBtn'
 
 export default async function GroupInfoPage({
     params,
@@ -47,12 +47,7 @@ export default async function GroupInfoPage({
                         </Sidebar>
                     </div>
                 </div>
-                <Link
-                    href={`/group/${groupId}/info/delete`}
-                    className="text-mobile-body-sm font-regular text-gray-500 underline md:text-pc-body-sm"
-                >
-                    그룹 삭제
-                </Link>
+                <DeleteBtn />
             </main>
         </>
     )
