@@ -5,12 +5,10 @@ import ScoreTag from './ScoreTag'
 import QuestionSvg from '@/assets/svgs/question.svg'
 import LeftArrowSvg from '@/assets/svgs/left-arrow.svg'
 import RightArrowSvg from '@/assets/svgs/right-arrow.svg'
+import { Quiz } from '@/types/quiz'
 
 interface QuestionCardProps {
-    quiz: {
-        type: '객관식' | '주관식' | '서술형' | 'ox'
-        question: string
-    } // 나중에 API 데이터 응답 타입으로 변경
+    quiz: Quiz
     curIdx: number
     totalIdx: number
     onPrev: () => void
@@ -25,8 +23,8 @@ export default function QuestionCard({
     onNext,
 }: QuestionCardProps) {
     return (
-        <article className="relative pb-[100px] md:pb-[200px]">
-            <div className="min-h-[175px] rounded-lg bg-point-500 md:min-h-[300px]" />
+        <article className="relative pb-[125px] md:pb-[200px]">
+            <div className="min-h-[200px] rounded-lg bg-point-500 md:min-h-[300px]" />
             <div className="absolute top-[75px] w-full px-[16px] md:top-[100px] md:px-[32px]">
                 <div className="relative">
                     {/* 모바일 용 도넛 */}
@@ -58,30 +56,41 @@ export default function QuestionCard({
                     </div>
 
                     {/* 카드 영역 */}
-                    <div className="flex max-h-[200px] min-h-[200px] flex-col rounded-lg bg-white px-[16px] py-[16px] shadow-point md:max-h-[400px] md:min-h-[400px] md:px-[32px]">
+                    <div className="flex max-h-[250px] min-h-[250px] flex-col rounded-lg bg-white px-[16px] py-[16px] shadow-point md:max-h-[400px] md:min-h-[400px] md:px-[32px]">
                         <div className="mb-[8px] md:mb-[32px]">
                             <ScoreTag type={quiz.type} />
                         </div>
                         <div className="custom-scrollbar grid flex-1 place-items-center overflow-y-auto">
-                            <p className="whitespace-pre-line break-words text-center text-mobile-body-lg font-semi-bold md:text-pc-body-lg">
+                            <p
+                                style={{ overflowWrap: 'anywhere' }}
+                                className="whitespace-pre-line break-words text-center text-mobile-body-lg font-semi-bold md:text-pc-body-lg"
+                            >
                                 {quiz.question}
                             </p>
                         </div>
                         <div className="flex items-center justify-between pt-[8px] text-point-200">
-                            <button
-                                className="flex items-center justify-center text-mobile-body-lg hover:text-point-500 md:text-pc-body-lg"
-                                onClick={onPrev}
-                            >
-                                <LeftArrowSvg className="h-[20px] w-[20px]" />
-                                이전
-                            </button>
-                            <button
-                                className="flex items-center justify-center text-mobile-body-lg hover:text-point-500 md:text-pc-body-lg"
-                                onClick={onNext}
-                            >
-                                다음
-                                <RightArrowSvg className="h-[20px] w-[20px]" />
-                            </button>
+                            {curIdx <= 1 ? (
+                                <div />
+                            ) : (
+                                <button
+                                    className="flex items-center justify-center text-mobile-body-lg hover:text-point-500 md:text-pc-body-lg"
+                                    onClick={onPrev}
+                                >
+                                    <LeftArrowSvg className="h-[20px] w-[20px]" />
+                                    이전
+                                </button>
+                            )}
+                            {totalIdx <= curIdx ? (
+                                <div />
+                            ) : (
+                                <button
+                                    className="flex items-center justify-center text-mobile-body-lg hover:text-point-500 md:text-pc-body-lg"
+                                    onClick={onNext}
+                                >
+                                    다음
+                                    <RightArrowSvg className="h-[20px] w-[20px]" />
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
