@@ -1,8 +1,12 @@
 'use client'
 
 import { CustomInput, LoopAnimation, ProfileImage } from '@/components'
+import { useGroupQuery } from '@/hooks/queries'
+import { extractKSTDateOnly } from '@/utils/date/dateOnly'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -32,19 +36,16 @@ export default function GroupInfo() {
         mode: 'onChange',
         defaultValues: backUp,
     })
+    const { groupId } = useParams()
+    const { data } = useGroupQuery(groupId as string)
 
     const { reset } = methods
 
     useEffect(() => {
-        reset({
-            name: '봄바르딜로 크로커딜로',
-            description: '퉁퉁퉁퉁퉁퉁 사후르',
-        })
-        setBackUp({
-            name: '봄바르딜로 크로커딜로',
-            description: '퉁퉁퉁퉁퉁퉁 사후르',
-        })
-    }, [reset, setBackUp])
+        if (!data) return
+        reset({ name: data.name, description: data.description })
+        setBackUp({ name: data.name, description: data.description })
+    }, [reset, setBackUp, data])
 
     const handleFormSubmit = async (data: GroupInfoFormData) => {
         // 추후 로직 수정
@@ -73,7 +74,11 @@ export default function GroupInfo() {
                             id="name"
                             name="name"
                             label="그룹 이름"
-                            placeholder="그룹 이름을 입력해주세요"
+                            placeholder={
+                                data
+                                    ? '그룹 이름을 입력해주세요'
+                                    : '잠시만 기다려주세요...'
+                            }
                             style="solid"
                             disabled={isLoading || !isChangeMode}
                         />
@@ -81,7 +86,11 @@ export default function GroupInfo() {
                             id="description"
                             name="description"
                             label="그룹 소개(50자 이하)"
-                            placeholder="그룹 소개를 입력해주세요"
+                            placeholder={
+                                data
+                                    ? '그룹 소개를 입력해주세요'
+                                    : '잠시만 기다려주세요...'
+                            }
                             style="solid"
                             disabled={isLoading || !isChangeMode}
                         />
@@ -90,19 +99,30 @@ export default function GroupInfo() {
                                 <span className="text-mobile-body-sm font-regular text-gray-500 md:text-pc-body-sm">
                                     그룹장
                                 </span>
-                                <div className="flex cursor-pointer items-center gap-2">
-                                    <ProfileImage size={32} profileImg={''} />
+                                <Link
+                                    href={`/user/${data?.admin._id}`}
+                                    className="flex cursor-pointer items-center gap-2"
+                                >
+                                    {data && (
+                                        <ProfileImage
+                                            size={32}
+                                            profileImg={`${data?.admin.profileImg}`}
+                                        />
+                                    )}
                                     <span className="text-mobile-body-md font-semi-bold md:text-pc-body-md">
-                                        닉네임
+                                        {data?.admin.nickname ||
+                                            '잠시만 기다려주세요...'}
                                     </span>
-                                </div>
+                                </Link>
                             </div>
                             <div className="flex flex-1 flex-col items-start gap-1">
                                 <span className="text-mobile-body-sm font-regular text-gray-500 md:text-pc-body-sm">
                                     그룹 생성일
                                 </span>
                                 <span className="text-mobile-body-md font-semi-bold md:text-pc-body-md">
-                                    2025-03-21
+                                    {data
+                                        ? extractKSTDateOnly(data.createdAt)
+                                        : '잠시만 기다려주세요...'}
                                 </span>
                             </div>
                         </div>
@@ -132,6 +152,7 @@ export default function GroupInfo() {
                         <button
                             className="btn-solid btn-mobile-lg w-full flex-1 md:btn-pc-lg"
                             onClick={() => setIsChangeMode(true)}
+                            disabled={!data}
                         >
                             수정하기
                         </button>
