@@ -35,7 +35,7 @@ export default function GroupCreateForm() {
         setIsLoading(true)
         await postGroup(data)
             .then((res) => {
-                router.push(`/group/${res.data.result._id}/info`)
+                router.push(`/group/${res._id}/info`)
             })
             .catch((error) => {
                 setIsLoading(false)
