@@ -6,6 +6,6 @@ import axiosInstance from '../base'
  * @param groupId 수정하고자 하는 그룹의 ID
  * @param data 그룹 정보 수정 내용
  */
-export const patchGroup = (groupId: string, data: GroupInfoFormData) => {
-    return axiosInstance.patch(`/v1/group/${groupId}`, data)
+export const patchGroup = async (groupId: string, data: GroupInfoFormData) => {
+    await axiosInstance.patch(`/v1/group/${groupId}`, data)
 }
