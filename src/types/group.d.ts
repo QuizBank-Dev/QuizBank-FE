@@ -1,4 +1,4 @@
-export interface Group {
+export interface GroupCard {
     _id: string
     name: string
     description: string
@@ -9,4 +9,29 @@ export interface Group {
     }
     memberCount: number
     chatRoom?: string
+}
+
+export interface Group {
+    _id: string
+    name: string
+    description: string
+    admin: {
+        _id: string
+        nickname: string
+        profileImg: string
+    }
+    memberList: {
+        _id: string
+        nickname: string
+        profileImg: string
+        email: string
+    }[]
+    applyingUserList: {
+        _id: string
+        nickname: string
+        profileImg: string
+        email: string
+    }[]
+    chatRoom: string
+    createdAt: string
 }
