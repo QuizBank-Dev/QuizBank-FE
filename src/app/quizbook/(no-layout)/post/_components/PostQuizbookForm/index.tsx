@@ -48,7 +48,7 @@ export default function PostQuizbookForm() {
         <FormProvider {...methods}>
             <form
                 id="post-quizbook-form"
-                className="flex min-h-0 flex-1 flex-col gap-[8px]"
+                className="flex flex-1 flex-col gap-[8px]"
                 onSubmit={handleSubmit(onSubmit)}
             >
                 {/* 카테고리 영역 */}
@@ -75,11 +75,11 @@ export default function PostQuizbookForm() {
                 />
 
                 {/* 추가 카드 리스트 영역 */}
-                <div className="flex w-full flex-1 flex-col gap-1 overflow-hidden">
+                <div className="flex w-full flex-1 flex-col gap-1">
                     <span className="text-mobile-body-sm font-regular text-gray-500 md:text-pc-body-sm">
-                        {`추가된 문제(총 ${quizList.length})`}
+                        {`추가된 문제 (총 ${quizList.length})`}
                     </span>
-                    <div className="custom-scrollbar flex w-full flex-1 flex-col gap-[8px] overflow-y-auto px-[8px] pl-0 md:px-[16px] md:pl-0">
+                    <div className="flex w-full flex-1 flex-col gap-[8px] px-[8px] pl-0 md:px-[16px] md:pl-0">
                         {quizList.map((quiz, idx) => (
                             <AddedQuiz
                                 key={`${quiz}-${idx}`}
