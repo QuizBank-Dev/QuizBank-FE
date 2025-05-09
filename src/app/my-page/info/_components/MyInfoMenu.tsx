@@ -27,11 +27,13 @@ export default function MyInfoMenu() {
                 />
             </Sidebar.Group>
             <Sidebar.Group>
-                <Sidebar.Item
-                    icon={<PasswordSvg className="size-5" />}
-                    text="비밀번호 변경"
-                    href="/my-page/info/change-password"
-                />
+                {!user.isOAuthAccount && (
+                    <Sidebar.Item
+                        icon={<PasswordSvg className="size-5" />}
+                        text="비밀번호 변경"
+                        href="/my-page/info/change-password"
+                    />
+                )}
                 <Sidebar.Item
                     icon={<CategorySvg className="size-5" />}
                     text="선호 카테고리"
