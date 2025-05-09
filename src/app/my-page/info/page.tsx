@@ -13,7 +13,7 @@ export default function Page() {
             <div className="text-center">
                 <Link
                     className="text-mobile-body-sm text-gray-500 underline md:text-pc-body-sm"
-                    href="#"
+                    href="/my-page/info/withdraw"
                 >
                     회원탈퇴
                 </Link>
