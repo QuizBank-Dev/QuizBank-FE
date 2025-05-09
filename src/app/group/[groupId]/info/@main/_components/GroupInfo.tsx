@@ -1,7 +1,8 @@
 'use client'
 
 import { CustomInput, LoopAnimation, ProfileImage } from '@/components'
-import { useGroupQuery } from '@/hooks/queries'
+import { usePatchGroup } from '@/hooks/mutations'
+import { useCurrentUser, useGroupQuery } from '@/hooks/queries'
 import { extractKSTDateOnly } from '@/utils/date/dateOnly'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
@@ -25,7 +26,6 @@ const schema = z.object({
 export type GroupInfoFormData = z.infer<typeof schema>
 
 export default function GroupInfo() {
-    const [isLoading, setIsLoading] = useState(false)
     const [isChangeMode, setIsChangeMode] = useState(false)
     const [backUp, setBackUp] = useState({
         name: '',
@@ -37,7 +37,9 @@ export default function GroupInfo() {
         defaultValues: backUp,
     })
     const { groupId } = useParams()
-    const { data } = useGroupQuery(groupId as string)
+    const { data, isLoading } = useGroupQuery(groupId as string)
+    const { mutate, isPending } = usePatchGroup(groupId as string)
+    const { data: userData } = useCurrentUser()
 
     const { reset } = methods
 
@@ -47,15 +49,9 @@ export default function GroupInfo() {
         setBackUp({ name: data.name, description: data.description })
     }, [reset, setBackUp, data])
 
-    const handleFormSubmit = async (data: GroupInfoFormData) => {
-        // 추후 로직 수정
-        setIsLoading(true)
-        setTimeout(() => {
-            console.log('Form Data:', data)
-            setIsLoading(false)
-            setBackUp(data)
-            setIsChangeMode(false)
-        }, 2000)
+    const handleFormSubmit = (data: GroupInfoFormData) => {
+        mutate(data)
+        setIsChangeMode(false)
     }
     const handleCancel = () => {
         reset(backUp)
@@ -80,7 +76,7 @@ export default function GroupInfo() {
                                     : '잠시만 기다려주세요...'
                             }
                             style="solid"
-                            disabled={isLoading || !isChangeMode}
+                            disabled={isLoading || isPending || !isChangeMode}
                         />
                         <CustomInput
                             id="description"
@@ -92,7 +88,7 @@ export default function GroupInfo() {
                                     : '잠시만 기다려주세요...'
                             }
                             style="solid"
-                            disabled={isLoading || !isChangeMode}
+                            disabled={isLoading || isPending || !isChangeMode}
                         />
                         <div className="flex w-full gap-4 pb-4">
                             <div className="flex flex-1 flex-col items-start gap-1">
@@ -127,36 +123,41 @@ export default function GroupInfo() {
                             </div>
                         </div>
                     </div>
-                    {isChangeMode ? (
-                        <div className="flex w-full gap-[10px]">
+                    {data?.admin._id === userData?._id &&
+                        (isChangeMode ? (
+                            <div className="flex w-full gap-[10px]">
+                                <button
+                                    disabled={isLoading || isPending}
+                                    className="btn-outline btn-mobile-lg flex-1 md:btn-pc-lg"
+                                    onClick={handleCancel}
+                                >
+                                    취소
+                                </button>
+                                <button
+                                    type="submit"
+                                    disabled={isLoading || isPending}
+                                    className={clsx(
+                                        'btn-solid btn-mobile-lg flex-1 md:btn-pc-lg',
+                                        isLoading && 'btn-loading',
+                                    )}
+                                >
+                                    {(isLoading || isPending) && (
+                                        <LoopAnimation />
+                                    )}
+                                    {isLoading || isPending
+                                        ? 'Loading...'
+                                        : '저장'}
+                                </button>
+                            </div>
+                        ) : (
                             <button
-                                disabled={isLoading}
-                                className="btn-outline btn-mobile-lg flex-1 md:btn-pc-lg"
-                                onClick={handleCancel}
+                                className="btn-solid btn-mobile-lg w-full flex-1 md:btn-pc-lg"
+                                onClick={() => setIsChangeMode(true)}
+                                disabled={!data}
                             >
-                                취소
+                                수정하기
                             </button>
-                            <button
-                                type="submit"
-                                disabled={isLoading}
-                                className={clsx(
-                                    'btn-solid btn-mobile-lg flex-1 md:btn-pc-lg',
-                                    isLoading && 'btn-loading',
-                                )}
-                            >
-                                {isLoading && <LoopAnimation />}
-                                {isLoading ? 'Loading...' : '저장'}
-                            </button>
-                        </div>
-                    ) : (
-                        <button
-                            className="btn-solid btn-mobile-lg w-full flex-1 md:btn-pc-lg"
-                            onClick={() => setIsChangeMode(true)}
-                            disabled={!data}
-                        >
-                            수정하기
-                        </button>
-                    )}
+                        ))}
                 </form>
             </FormProvider>
         </section>
