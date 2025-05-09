@@ -1,9 +1,9 @@
-import { Quiz } from '@/types/quiz'
+import { PostQuiz } from '@/types/quiz'
 import { create } from 'zustand'
 
 interface PostQuizbookStore {
-    quizList: Quiz[]
-    addQuiz: (quiz: Quiz) => void
+    quizList: PostQuiz[]
+    addQuiz: (quiz: PostQuiz) => void
     removeQuiz: (idx: number) => void
     resetQuizList: () => void
 }
