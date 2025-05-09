@@ -1,21 +1,16 @@
 'use client'
 
 import { LoopAnimation, Modal } from '@/components'
+import { useDeleteGroup } from '@/hooks/mutations/group/useDeleteGroup'
 import clsx from 'clsx'
 import { useParams } from 'next/navigation'
-import { useState } from 'react'
 
 export default function DeleteGroupModal() {
-    const [isLoading, setIsLoading] = useState(false)
-    const params = useParams()
+    const { groupId } = useParams()
+    const { mutate, isPending } = useDeleteGroup(groupId as string)
 
     const handleClick = () => {
-        // 추후 로직 수정
-        setIsLoading(true)
-        setTimeout(() => {
-            console.log(1)
-            setIsLoading(false)
-        }, 2000)
+        mutate()
     }
 
     return (
@@ -24,18 +19,18 @@ export default function DeleteGroupModal() {
                 <div className="flex w-full flex-col items-center gap-2 rounded-lg border-2 border-gray-200 bg-point-50 p-4 text-mobile-body-md font-semi-bold text-gray-500 md:p-8 md:text-pc-body-md">
                     <span>해당 그룹을 삭제하시겠습니까?</span>
                     <span>한번 삭제하면</span>
-                    <span>복구할 수 없습니다!</span>
+                    <span className="text-danger-300">복구할 수 없습니다!</span>
                 </div>
                 <button
-                    disabled={isLoading}
+                    disabled={isPending}
                     className={clsx(
                         'btn-solid btn-mobile-md bg-danger-300 md:btn-pc-md',
-                        isLoading && 'btn-loading',
+                        isPending && 'btn-loading',
                     )}
                     onClick={handleClick}
                 >
-                    {isLoading && <LoopAnimation />}
-                    {isLoading ? 'Loading...' : '삭제'}
+                    {isPending && <LoopAnimation />}
+                    {isPending ? 'Loading...' : '삭제'}
                 </button>
             </div>
         </Modal>
