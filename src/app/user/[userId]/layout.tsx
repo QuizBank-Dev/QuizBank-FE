@@ -1,0 +1,12 @@
+import DesktopHeader from '@/components/DesktopHeader'
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+    return (
+        <div className="no-scrollbar flex h-full flex-col items-center overflow-auto bg-point-50 text-gray-900">
+            {/* 데스크탑 전용 헤더 */}
+            <DesktopHeader />
+
+            {children}
+        </div>
+    )
+}

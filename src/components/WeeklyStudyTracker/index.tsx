@@ -6,7 +6,7 @@ import WeekNavigator from './WeekNavigator'
 import DayTracker from './DayTracker'
 
 interface Props {
-    data: { date: string; count: number }[]
+    data: { date: string; solvedCount: number }[]
 }
 
 export default function WeeklyStudyTracker({ data }: Props) {
