@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { QueryKey } from '@/constants/common/queryKey'
 import { getCurrentUser } from '@/lib/api/user'
+import { StaleTime } from '@/constants/common/staleTime'
+import { GcTime } from '@/constants/common/gcTime'
 
 type QueryType = Awaited<ReturnType<typeof getCurrentUser>>
 
@@ -11,8 +13,8 @@ export const useCurrentUser = () => {
     return useQuery<QueryType>({
         queryKey: QueryKey.user.DEFAULT,
         queryFn: () => getCurrentUser(),
-        staleTime: 1000 * 60 * 60, // 1시간
-        gcTime: 1000 * 60 * 60 * 10, // 10시간
+        staleTime: StaleTime.DEFAULT,
+        gcTime: GcTime.DEFAULT,
         retry: 0,
         meta: {
             ignoreGlobalError: true,

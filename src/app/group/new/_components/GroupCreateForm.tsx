@@ -6,9 +6,9 @@ import { FormProvider, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
-import { createGroup } from '@/lib/api/group'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { postGroup } from '@/lib/api'
 
 const schema = z.object({
     name: z
@@ -33,9 +33,9 @@ export default function GroupCreateForm() {
 
     const handleFormSubmit = async (data: CreateGroupFormData) => {
         setIsLoading(true)
-        await createGroup(data)
+        await postGroup(data)
             .then((res) => {
-                router.push(`/group/${res.data.result._id}/info`)
+                router.push(`/group/${res._id}/info`)
             })
             .catch((error) => {
                 setIsLoading(false)
