@@ -18,7 +18,6 @@ export default function OXAnswerCard({ answer, correct }: Props) {
                         key={opt}
                         className={clsx(
                             'flex-1 rounded-lg border-2 text-center text-[64px] font-semi-bold md:text-[128px]',
-                            'hover:bg-gray-50 active:bg-gray-50',
                             opt === 'O' ? 'text-point-200' : 'text-danger-300',
                             {
                                 'border-point-500': isCorrect,
