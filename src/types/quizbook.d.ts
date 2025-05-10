@@ -1,4 +1,5 @@
 import { QUIZBOOK_CATEGORY } from '@/constants/quizbook'
+import { Author } from '@/types/user'
 
 export type QuizbookCategoryType =
     (typeof QUIZBOOK_CATEGORY)[keyof typeof QUIZBOOK_CATEGORY]

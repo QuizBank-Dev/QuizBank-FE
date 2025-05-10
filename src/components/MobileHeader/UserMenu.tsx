@@ -1,24 +1,43 @@
 'use client'
 
-import Notification from '@/assets/svgs/notification.svg'
-import User from '@/assets/svgs/user.svg'
+import LoginIcon from '@/assets/svgs/login.svg'
+import NotificationIcon from '@/assets/svgs/notification.svg'
+import UserIcon from '@/assets/svgs/user.svg'
+import { useCurrentUser } from '@/hooks/queries'
 import { useRouter } from 'next/navigation'
+import LoopAnimation from '../LoopAnimation'
 
 export default function UserMenu() {
-    // 추후 인증 로직 추가 및 조건부 랜더링
+    const { data: user, isLoading } = useCurrentUser()
 
     const router = useRouter()
 
+    if (!user)
+        return (
+            <>
+                {isLoading ? (
+                    <div className="size-6 animate-spin">
+                        <LoopAnimation />
+                    </div>
+                ) : (
+                    <LoginIcon
+                        className="size-6 cursor-pointer"
+                        onClick={() => router.push('/login')}
+                    />
+                )}
+            </>
+        )
+
     return (
-        <div className="flex items-center justify-end gap-4">
-            <Notification
+        <>
+            <NotificationIcon
                 className="size-6 cursor-pointer"
                 onClick={() => router.push('/notification')}
             />
-            <User
+            <UserIcon
                 className="size-6 cursor-pointer"
                 onClick={() => router.push('/my-page')}
             />
-        </div>
+        </>
     )
 }

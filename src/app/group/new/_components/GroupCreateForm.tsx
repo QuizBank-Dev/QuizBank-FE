@@ -6,6 +6,9 @@ import { FormProvider, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
+import { postGroup } from '@/lib/api'
 
 const schema = z.object({
     name: z
@@ -18,22 +21,26 @@ const schema = z.object({
         .max(50, { message: '그룹 소개는 50자 이하로 해주세요' }),
 })
 
-type FormData = z.infer<typeof schema>
+export type CreateGroupFormData = z.infer<typeof schema>
 
 export default function GroupCreateForm() {
     const [isLoading, setIsLoading] = useState(false)
-    const methods = useForm<FormData>({
+    const methods = useForm<CreateGroupFormData>({
         resolver: zodResolver(schema),
         mode: 'onChange',
     })
+    const router = useRouter()
 
-    const handleFormSubmit = async (data: FormData) => {
-        // 추후 로직 수정
+    const handleFormSubmit = async (data: CreateGroupFormData) => {
         setIsLoading(true)
-        setTimeout(() => {
-            console.log('Form Data:', data)
-            setIsLoading(false)
-        }, 2000)
+        await postGroup(data)
+            .then((res) => {
+                router.push(`/group/${res._id}/info`)
+            })
+            .catch((error) => {
+                setIsLoading(false)
+                toast(error.response.data.message)
+            })
     }
 
     return (
@@ -49,7 +56,6 @@ export default function GroupCreateForm() {
                         label="그룹 이름"
                         placeholder="그룹 이름을 입력해주세요"
                         style="solid"
-                        error={methods.formState.errors.name?.message}
                         disabled={isLoading}
                     />
                     <CustomInput
@@ -57,8 +63,8 @@ export default function GroupCreateForm() {
                         name="description"
                         label="그룹 소개(50자 이하)"
                         placeholder="그룹 소개를 입력해주세요"
+                        area={true}
                         style="solid"
-                        error={methods.formState.errors.description?.message}
                         disabled={isLoading}
                     />
                 </div>
