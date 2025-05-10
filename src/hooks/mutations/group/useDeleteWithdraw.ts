@@ -1,4 +1,4 @@
-import { deleteWithdraw } from '@/lib/api/group/deleteWithdraw'
+import { deleteWithdraw } from '@/lib/api'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
