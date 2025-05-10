@@ -1,11 +1,11 @@
 'use client'
 
-import { Quiz, QuizWithAnswer } from '@/types/quiz'
+import { Quiz } from '@/types/quiz'
 import QuizListItem from './QuizListItem'
 import { getAnswerStore, getQuestionStore } from '@/store/quizbook'
 
 interface Props {
-    quizList: Quiz[] | QuizWithAnswer[]
+    quizList: Quiz[]
     quizbookId: string
 }
 

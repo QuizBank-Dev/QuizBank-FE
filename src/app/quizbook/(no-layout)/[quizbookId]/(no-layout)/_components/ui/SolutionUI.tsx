@@ -2,14 +2,14 @@
 
 import { QuestionCard, SolvedCard } from '@/components/study'
 import { getQuestionStore } from '@/store/quizbook'
-import { QuizWithAnswer } from '@/types/quiz'
+import { Quiz } from '@/types/quiz'
 import { useSearchParams } from 'next/navigation'
 import { Quizbook } from '@/types/quizbook'
 import ListAside from './ListAside'
 import CommentAside from './CommentAside'
 
 interface Props {
-    quizbook: Quizbook<QuizWithAnswer>
+    quizbook: Quizbook<Quiz>
 }
 
 export default function SolutionUI({ quizbook }: Props) {
@@ -31,12 +31,7 @@ export default function SolutionUI({ quizbook }: Props) {
                     onPrev={prev}
                 />
                 <div className="px-[16px] md:px-[32px]">
-                    <SolvedCard
-                        type={curQuiz.type}
-                        role="ai"
-                        correct={curQuiz.answer}
-                        optionList={curQuiz.optionList}
-                    />
+                    <SolvedCard role="ai" quiz={curQuiz} />
                 </div>
             </section>
             <button className="text-mobile-body-sm font-semi-bold text-point-500 md:text-pc-body-sm">
