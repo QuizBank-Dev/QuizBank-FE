@@ -35,7 +35,7 @@ export default function QuestionCard({
             )}
         >
             {background !== false && (
-                <div className="min-h-[200px] rounded-lg bg-point-500 md:min-h-[300px]" />
+                <div className="min-h-[200px] rounded-bl-lg rounded-br-lg bg-point-500 md:min-h-[300px]" />
             )}
             <div
                 className={clsx(
