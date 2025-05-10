@@ -70,7 +70,7 @@ export default function ListAside({ quizbook }: Props) {
                                 <CloseSvg className="size-6" />
                             </button>
                         </div>
-                        <Sheet.Scroller>
+                        <Sheet.Scroller className="no-scrollbar">
                             <QuizList
                                 quizList={quizbook.quizList}
                                 quizbookId={quizbook._id}

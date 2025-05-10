@@ -157,7 +157,7 @@ export default function CommentAside({ quizbook }: Props) {
                         </div>
 
                         {/* 댓글 영역 */}
-                        <Sheet.Scroller className="flex-1">
+                        <Sheet.Scroller className="no-scrollbar flex-1">
                             {mode === 'list' && (
                                 <CommentList
                                     commentList={commentData}

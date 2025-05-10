@@ -46,7 +46,7 @@ export default async function Page({ params }: Props) {
     const { quizbookId } = await params
 
     return (
-        <div className="flex h-full flex-1 flex-col bg-white">
+        <div className="no-scrollbar flex flex-1 flex-col overflow-y-auto">
             <StudyUI quizbook={quizbookData} />
         </div>
     )

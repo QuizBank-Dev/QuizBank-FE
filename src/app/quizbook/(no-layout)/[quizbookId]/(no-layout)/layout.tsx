@@ -57,9 +57,11 @@ export default async function Layout({ params, children }: Props) {
             <MobileHeader backBtn={true} title={quizbook.title}>
                 <StudyMenuBtn />
             </MobileHeader>
-            <main className="flex flex-1 justify-center overflow-hidden md:overflow-visible">
-                <div className="flex w-full max-w-[1024px] flex-1 flex-col overflow-y-auto md:flex-row">
-                    <div className="relative flex-1">{children}</div>
+            <main className="flex flex-1 justify-center overflow-hidden">
+                <div className="flex w-full max-w-[1024px] flex-1 flex-col md:flex-row">
+                    <div className="relative flex min-h-0 flex-1 flex-col bg-white">
+                        {children}
+                    </div>
                     <DesktopMenu quizbookId={quizbook._id} />
                 </div>
             </main>
