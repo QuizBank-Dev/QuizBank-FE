@@ -50,24 +50,24 @@ export default function SolvedCard({ data, role, quiz }: Props) {
         <article className="flex max-h-[250px] min-h-[250px] flex-col gap-[8px] rounded-lg bg-white p-[16px] shadow-point md:max-h-[400px] md:min-h-[400px] md:p-[32px]">
             {/* 상단 타이틀 */}
             {role === 'user' && data ? (
-                <div className="flex items-center">
+                <div className="flex items-center gap-[16px] md:gap-[32px]">
                     <div className="w-[35px]" />
-                    <h3 className="text-pc-mobile-lg flex flex-1 items-center justify-center gap-[4px] font-semi-bold md:text-pc-body-lg">
+                    <h3 className="flex flex-1 items-center justify-center gap-[4px] text-mobile-body-lg font-semi-bold md:text-pc-body-lg">
                         <div className="flex items-center gap-[8px]">
                             {/* 프로필 이미지 */}
                             <div className="h-[32px] w-[32px] rounded-full bg-gray-300" />
-                            <span className="text-point-500">
+                            <span className="line-clamp-1 text-point-500">
                                 {data.owner.nickname}
                             </span>
                         </div>
-                        님의 답안
+                        <span className="shrink-0">님의 답안</span>
                     </h3>
                     <span className="w-[35px] text-center text-mobile-body-md font-semi-bold md:text-pc-body-md">
                         {data.score}점
                     </span>
                 </div>
             ) : (
-                <div className="text-pc-mobile-lg flex items-center justify-center gap-[4px] font-semi-bold md:text-pc-body-lg">
+                <div className="flex items-center justify-center gap-[4px] text-mobile-body-lg font-semi-bold md:text-pc-body-lg">
                     <span className="text-point-500">AI</span>
                     <span>답안</span>
                 </div>
