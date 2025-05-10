@@ -23,7 +23,7 @@
         "react-calendar-heatmap": "^1.10.0",
         "react-dom": "^19.0.0",
         "react-hook-form": "^7.54.2",
-        "react-modal-sheet": "^4.0.1",
+        "react-modal-sheet": "^4.4.0",
         "socket.io-client": "^4.8.1",
         "tailwind-merge": "^3.2.0",
         "tailwindcss-animate": "^1.0.7",
