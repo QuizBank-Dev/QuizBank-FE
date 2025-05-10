@@ -8,62 +8,26 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import UserIcon from '@/assets/svgs/user.svg'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import GroupMember from './GroupMember'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-
-const dummyData = {
-    _id: '65e8a5d6fc13ae5e7f000002',
-    name: '서울 강남 cs 공부 스터디',
-    description: '서울에 사는 컴공 취준생들의 cs 공부 스터디 그룹입니다.',
-    admin: {
-        _id: '1',
-        nickname: '쭈니',
-        profileImg: '',
-        email: 'test11111@naver.com',
-    },
-    memberList: [
-        {
-            _id: '1',
-            nickname: '쭈니',
-            profileImg: '',
-            email: 'test11111@naver.com',
-        },
-        {
-            _id: '2',
-            nickname: '쭈니2',
-            profileImg: '',
-            email: 'test22222@naver.com',
-        },
-        {
-            _id: '3',
-            nickname: '쭈니3',
-            profileImg: '',
-            email: 'test33333@naver.com',
-        },
-    ],
-    applyingUserList: [
-        {
-            _id: '4',
-            nickname: '쭈니4',
-            profileImg: '',
-            email: 'test44444@naver.com',
-        },
-        {
-            _id: '5',
-            nickname: '쭈니5',
-            profileImg: '',
-            email: 'test55555@naver.com',
-        },
-    ],
-    chatRoom: '65e8a5d6fc13ae5e7f000002',
-    createdAt: '2025-03-30',
-}
+import { useParams, usePathname, useRouter } from 'next/navigation'
+import { useCurrentUser, useGroupQuery } from '@/hooks/queries'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export default function GroupMemberList() {
     const [status, setStatus] = useState('member')
     const path = usePathname()
+    const { groupId } = useParams()
+    const router = useRouter()
+    const { data: groupData, error } = useGroupQuery(groupId as string)
+    const { data: userData } = useCurrentUser()
+
+    useEffect(() => {
+        if (error) {
+            router.push('/group')
+        }
+    }, [error, router])
 
     return (
         <section className="mb-4 flex flex-col gap-4">
@@ -75,17 +39,15 @@ export default function GroupMemberList() {
                         </SelectTrigger>
                         <SelectContent>
                             <SelectItem value="member">그룹원</SelectItem>
-                            <SelectItem value="applying">
-                                가입 요청중
-                            </SelectItem>
+                            <SelectItem value="applying">가입 요청</SelectItem>
                         </SelectContent>
                     </Select>
                     <div className="flex items-center gap-1">
                         <UserIcon className="size-5 text-point-200" />
                         <div className="text-mobile-body-md font-semi-bold md:text-pc-body-md">
                             {status === 'member'
-                                ? dummyData.memberList.length
-                                : dummyData.applyingUserList.length}
+                                ? groupData?.memberList.length
+                                : groupData?.applyingUserList.length}
                         </div>
                     </div>
                 </div>
@@ -100,28 +62,36 @@ export default function GroupMemberList() {
                 <div className="h-8 w-8" />
                 <span className="flex-[2]">닉네임</span>
                 <div className="h-8 border-1 border-white" />
-                <span className="flex-[4]">이메일</span>
+                <span className="flex-[4]">ID</span>
                 <div className="h-8 border-1 border-white" />
                 <span className="flex-[7]">역할</span>
             </div>
-            {(status === 'member'
-                ? dummyData.memberList
-                : dummyData.applyingUserList
-            ).map((data, index) => (
-                <GroupMember
-                    key={data._id}
-                    data={data}
-                    status={
-                        status === 'member'
-                            ? index === 0
-                                ? '방장'
-                                : '그룹원'
-                            : '가입 요청중'
-                    }
-                    myId={'1'}
-                    isOwner={dummyData.admin._id === '1'}
-                />
-            ))}
+            {!groupData || !userData ? (
+                <div className="flex w-full flex-col items-start gap-2 rounded-lg bg-white p-4 shadow-point md:flex-row md:items-center md:gap-5">
+                    <Skeleton className="h-8 w-8 rounded-full" />
+                    <Skeleton className="h-6 w-full rounded-lg" />
+                    <Skeleton className="block h-6 w-full rounded-lg md:hidden" />
+                </div>
+            ) : (
+                (status === 'member'
+                    ? groupData.memberList
+                    : groupData.applyingUserList
+                ).map((data, index) => (
+                    <GroupMember
+                        key={data._id}
+                        data={data}
+                        status={
+                            status === 'member'
+                                ? index === 0
+                                    ? '방장'
+                                    : '그룹원'
+                                : '가입 요청'
+                        }
+                        myId={userData._id}
+                        isOwner={groupData.admin._id === userData._id}
+                    />
+                ))
+            )}
         </section>
     )
 }
