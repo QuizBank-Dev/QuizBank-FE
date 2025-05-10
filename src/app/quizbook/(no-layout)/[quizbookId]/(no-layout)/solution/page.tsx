@@ -1,8 +1,8 @@
-import { QuizWithAnswer } from '@/types/quiz'
+import { Quiz } from '@/types/quiz'
 import { SolutionUI } from '../_components/ui'
 import { Quizbook } from '@/types/quizbook'
 
-export const quizbookData: Quizbook<QuizWithAnswer> = {
+export const quizbookData: Quizbook<Quiz> = {
     _id: '67fdc5ac1e49a2871aeb6657',
     title: '면접 대비 CS 문제집',
     description:
