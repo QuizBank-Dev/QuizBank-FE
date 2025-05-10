@@ -7,10 +7,11 @@ import { extractKSTDateOnly } from '@/utils/date/dateOnly'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import * as z from 'zod'
+import InfoItem from './InfoItem'
 
 const schema = z.object({
     name: z
@@ -37,11 +38,12 @@ export default function GroupInfo() {
         defaultValues: backUp,
     })
     const { groupId } = useParams()
-    const { data, isLoading } = useGroupQuery(groupId as string)
+    const { data, error } = useGroupQuery(groupId as string)
     const { mutate, isPending } = usePatchGroup(groupId as string, () => {
         setIsChangeMode(false)
     })
     const { data: userData } = useCurrentUser()
+    const router = useRouter()
 
     const { reset } = methods
 
@@ -50,6 +52,12 @@ export default function GroupInfo() {
         reset({ name: data.name, description: data.description })
         setBackUp({ name: data.name, description: data.description })
     }, [reset, setBackUp, data])
+
+    useEffect(() => {
+        if (error) {
+            router.push('/group')
+        }
+    }, [error, router])
 
     const handleFormSubmit = (data: GroupInfoFormData) => {
         mutate(data)
@@ -67,31 +75,43 @@ export default function GroupInfo() {
                     className="flex w-full flex-col items-center gap-3"
                 >
                     <div className="flex w-full flex-col gap-4">
-                        <CustomInput
-                            id="name"
-                            name="name"
-                            label="그룹 이름"
-                            placeholder={
-                                data
-                                    ? '그룹 이름을 입력해주세요'
-                                    : '잠시만 기다려주세요...'
-                            }
-                            style="solid"
-                            disabled={isLoading || isPending || !isChangeMode}
-                        />
-                        <CustomInput
-                            id="description"
-                            name="description"
-                            label="그룹 소개(50자 이하)"
-                            placeholder={
-                                data
-                                    ? '그룹 소개를 입력해주세요'
-                                    : '잠시만 기다려주세요...'
-                            }
-                            style="solid"
-                            area={true}
-                            disabled={isLoading || isPending || !isChangeMode}
-                        />
+                        {isChangeMode ? (
+                            <>
+                                <CustomInput
+                                    id="name"
+                                    name="name"
+                                    label="그룹 이름"
+                                    placeholder="그룹 이름을 입력해주세요"
+                                    style="solid"
+                                    disabled={isPending}
+                                />
+                                <CustomInput
+                                    id="description"
+                                    name="description"
+                                    label="그룹 소개(50자 이하)"
+                                    placeholder="그룹 소개를 입력해주세요"
+                                    style="solid"
+                                    area={true}
+                                    disabled={isPending}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <InfoItem
+                                    label="그룹 이름"
+                                    text={
+                                        data?.name || '잠시만 기다려주세요...'
+                                    }
+                                />
+                                <InfoItem
+                                    label="그룹 소개(50자 이하)"
+                                    text={
+                                        data?.description ||
+                                        '잠시만 기다려주세요...'
+                                    }
+                                />
+                            </>
+                        )}
                         <div className="flex w-full gap-4 pb-4">
                             <div className="flex flex-1 flex-col items-start gap-1">
                                 <span className="text-mobile-body-sm font-regular text-gray-500 md:text-pc-body-sm">
@@ -129,7 +149,7 @@ export default function GroupInfo() {
                         (isChangeMode ? (
                             <div className="flex w-full gap-[10px]">
                                 <button
-                                    disabled={isLoading || isPending}
+                                    disabled={isPending}
                                     className="btn-outline btn-mobile-lg flex-1 md:btn-pc-lg"
                                     onClick={handleCancel}
                                 >
@@ -137,18 +157,14 @@ export default function GroupInfo() {
                                 </button>
                                 <button
                                     type="submit"
-                                    disabled={isLoading || isPending}
+                                    disabled={isPending}
                                     className={clsx(
                                         'btn-solid btn-mobile-lg flex-1 md:btn-pc-lg',
-                                        isLoading && 'btn-loading',
+                                        isPending && 'btn-loading',
                                     )}
                                 >
-                                    {(isLoading || isPending) && (
-                                        <LoopAnimation />
-                                    )}
-                                    {isLoading || isPending
-                                        ? 'Loading...'
-                                        : '저장'}
+                                    {isPending && <LoopAnimation />}
+                                    {isPending ? 'Loading...' : '저장'}
                                 </button>
                             </div>
                         ) : (
