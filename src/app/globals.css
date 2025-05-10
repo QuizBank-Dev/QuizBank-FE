@@ -47,15 +47,6 @@
     border-radius: 8px;
 }
 
-/* 스크롤바 none */
-.scrollbar-none::-webkit-scrollbar {
-    display: none;
-}
-.scrollbar-none {
-    -ms-overflow-style: none; /* IE */
-    scrollbar-width: none; /* Firefox */
-}
-
 /* Input 자동 입력시 브라우저 기본 CSS 방지 */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,

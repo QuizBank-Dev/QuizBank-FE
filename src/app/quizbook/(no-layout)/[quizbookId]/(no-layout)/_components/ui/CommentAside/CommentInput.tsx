@@ -51,7 +51,7 @@ export default function CommentInput({ quizId, commentId }: Props) {
                     </div>
                 )}
                 <div
-                    className="scroll scrollbar-none input-solid input-mobile max-h-[100px] min-h-0 flex-1 cursor-text overflow-hidden overflow-y-auto whitespace-pre-wrap break-words md:input-pc"
+                    className="scroll no-scrollbar input-solid input-mobile max-h-[100px] min-h-0 flex-1 cursor-text overflow-hidden overflow-y-auto whitespace-pre-wrap break-words md:input-pc"
                     style={{ overflowWrap: 'anywhere' }}
                     ref={divRef}
                     contentEditable
