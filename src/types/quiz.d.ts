@@ -15,15 +15,11 @@ export type PostQuiz =
     | { type: typeof QUIZ_TYPE.SHORT; question: string; answer: string }
     | { type: typeof QUIZ_TYPE.LONG; question: string; answer: string }
 
-// Quiz 타입 (정답 미포함)
+// Quiz 타입
 export interface Quiz {
     _id: string
     type: QuizType
     question: string
     optionList?: string[]
-}
-
-// Quiz 타입 (정답 포함)
-export interface QuizWithAnswer extends Quiz {
-    answer: string
+    answer?: string
 }
