@@ -1,5 +1,5 @@
 import { QUIZ_TYPE } from '@/constants/quiz'
-import { QuizType } from '@/types/quiz'
+import { Quiz } from '@/types/quiz'
 import OXAnswerCard from './OXAnswerCard'
 import MultipleAnswerCard from './MultipleAnswerCard'
 import ShortAnswerCard from './ShortAnswerCard'
@@ -15,40 +15,35 @@ interface Props {
             profileImg: string
         }
     }
-    type: QuizType
     role: 'ai' | 'user'
-    correct: string
-    optionList?: string[]
+    quiz: Quiz
 }
 
-export default function SolvedCard({
-    data,
-    type,
-    role,
-    correct,
-    optionList,
-}: Props) {
+export default function SolvedCard({ data, role, quiz }: Props) {
     const render = () => {
+        const { type, answer: correct, optionList } = quiz
         switch (type) {
             case QUIZ_TYPE.OX:
                 return (
                     <OXAnswerCard
-                        answer={data ? data.answer : correct}
-                        correct={correct}
+                        answer={data ? data.answer : correct!}
+                        correct={correct!}
                     />
                 )
             case QUIZ_TYPE.MULTIPLE:
                 return (
                     <MultipleAnswerCard
-                        answer={data ? data.answer : correct}
-                        correct={correct}
+                        answer={data ? data.answer : correct!}
+                        correct={correct!}
                         optionList={optionList || []}
                     />
                 )
             case QUIZ_TYPE.SHORT:
-                return <ShortAnswerCard answer={data ? data.answer : correct} />
+                return (
+                    <ShortAnswerCard answer={data ? data.answer : correct!} />
+                )
             case QUIZ_TYPE.LONG:
-                return <LongAnswerCard answer={data ? data.answer : correct} />
+                return <LongAnswerCard answer={data ? data.answer : correct!} />
         }
     }
     return (
