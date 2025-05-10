@@ -3,7 +3,7 @@ import { AddQuizForm } from './_components'
 
 export default function Page() {
     return (
-        <Modal title="퀴즈 추가" closeOnOverlayClick={true}>
+        <Modal title="퀴즈 추가">
             <AddQuizForm />
         </Modal>
     )
