@@ -3,6 +3,7 @@
 import EllipsisVSvg from '@/assets/svgs/elipsis-v.svg'
 import RightArrowSvg from '@/assets/svgs/right-arrow.svg'
 import { Comment } from '@/types/comment'
+import { extractKSTDateOnly } from '@/utils/date/dateOnly'
 import clsx from 'clsx'
 
 interface Props {
@@ -30,7 +31,7 @@ export default function CommentItem({
                             {comment.author.nickname}
                         </span>
                         <span className="text-mobile-body-sm text-gray-500 md:text-pc-body-sm">
-                            {comment.updatedAt}
+                            {extractKSTDateOnly(comment.updatedAt)}
                         </span>
                     </div>
                     <p
