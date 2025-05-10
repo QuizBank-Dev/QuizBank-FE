@@ -53,7 +53,7 @@ export default function SolvedCard({ data, role, quiz }: Props) {
                 <div className="flex items-center">
                     <div className="w-[35px]" />
                     <h3 className="text-pc-mobile-lg flex flex-1 items-center justify-center gap-[4px] font-semi-bold md:text-pc-body-lg">
-                        <div className="flex items-center gap-[4px]">
+                        <div className="flex items-center gap-[8px]">
                             {/* 프로필 이미지 */}
                             <div className="h-[32px] w-[32px] rounded-full bg-gray-300" />
                             <span className="text-point-500">
