@@ -39,10 +39,10 @@ export default function QuestionCard({
             )}
             <div
                 className={clsx(
-                    'absolute w-full px-[16px] md:px-[32px]',
+                    'absolute w-full',
                     background !== false
-                        ? 'top-[75px] md:top-[100px]'
-                        : 'top-[50px] md:top-[75px]',
+                        ? 'top-[75px] px-[16px] md:top-[100px] md:px-[32px]'
+                        : 'top-[50px] px-0 md:top-[75px] md:px-0',
                 )}
             >
                 <div className="relative">
