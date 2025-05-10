@@ -24,7 +24,14 @@ const getAnswerStore = (quizbookId: string) => {
                                 [quizId]: answer,
                             },
                         })),
-                    reset: () => set({ answerMap: {} }),
+                    reset: () => {
+                        set({ answerMap: {} })
+                        if (typeof window !== 'undefined') {
+                            localStorage.removeItem(
+                                `quizbook-answer-list-${quizbookId}`,
+                            )
+                        }
+                    },
                 }),
                 {
                     name: `quizbook-answer-list-${quizbookId}`,

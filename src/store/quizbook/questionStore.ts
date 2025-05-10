@@ -28,7 +28,14 @@ const getQuestionStore = (quizbookId: string) => {
                         set((state) => ({
                             curIdx: Math.max(state.curIdx - 1, 1),
                         })),
-                    reset: () => set({ curIdx: 1 }),
+                    reset: () => {
+                        set({ curIdx: 1 })
+                        if (typeof window !== 'undefined') {
+                            localStorage.removeItem(
+                                `quizbook-question-state-${quizbookId}`,
+                            )
+                        }
+                    },
                 }),
                 { name: `quizbook-question-state-${quizbookId}` },
             ),
