@@ -79,7 +79,7 @@ export default function QuestionCard({
                         <div className="mb-[8px] md:mb-[32px]">
                             <ScoreTag type={quiz.type} />
                         </div>
-                        <div className="custom-scrollbar grid flex-1 place-items-center overflow-y-auto">
+                        <div className="grid flex-1 place-items-center overflow-y-auto">
                             <p
                                 style={{ overflowWrap: 'anywhere' }}
                                 className="whitespace-pre-line break-words text-center text-mobile-body-lg font-semi-bold md:text-pc-body-lg"

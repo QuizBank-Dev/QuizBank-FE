@@ -54,7 +54,7 @@ export default function CustomInput({
                     placeholder={placeholder}
                     disabled={disabled}
                     className={clsx(
-                        'custom-scrollbar input-mobile min-h-[120px] md:input-pc',
+                        'input-mobile min-h-[120px] md:input-pc',
                         baseStyle,
                         errorStyle,
                     )}

@@ -54,7 +54,7 @@ export default function IncludeGroupModal() {
     return (
         <Modal title="문제집을 그룹에 추가" closeOnOverlayClick={true}>
             <div className="flex flex-col items-center gap-4">
-                <div className="custom-scrollbar flex h-[200px] w-full flex-col items-center gap-8 overflow-auto rounded-lg border-2 border-gray-200 bg-point-50 p-4 md:p-8">
+                <div className="flex h-[200px] w-full flex-col items-center gap-8 overflow-auto rounded-lg border-2 border-gray-200 bg-point-50 p-4 md:p-8">
                     {groupList.length === 0 ? (
                         <span className="text-mobile-body-md font-semi-bold text-gray-500 md:text-pc-body-md">
                             소속된 그룹이 없습니다!
