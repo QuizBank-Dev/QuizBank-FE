@@ -1,21 +1,16 @@
 'use client'
 
 import { LoopAnimation, Modal } from '@/components'
+import { useDeleteWithdraw } from '@/hooks/mutations/group/useDeleteWithdraw'
 import clsx from 'clsx'
 import { useParams } from 'next/navigation'
-import { useState } from 'react'
 
 export default function WithdrawModal() {
-    const [isLoading, setIsLoading] = useState(false)
-    const params = useParams()
+    const { groupId } = useParams()
+    const { mutate, isPending } = useDeleteWithdraw(groupId as string)
 
     const handleClick = () => {
-        // 추후 로직 수정
-        setIsLoading(true)
-        setTimeout(() => {
-            console.log(1)
-            setIsLoading(false)
-        }, 2000)
+        mutate()
     }
 
     return (
@@ -26,15 +21,15 @@ export default function WithdrawModal() {
                     <span>탈퇴하시겠습니까?</span>
                 </div>
                 <button
-                    disabled={isLoading}
+                    disabled={isPending}
                     className={clsx(
                         'btn-solid btn-mobile-md bg-danger-300 md:btn-pc-md',
-                        isLoading && 'btn-loading',
+                        isPending && 'btn-loading',
                     )}
                     onClick={handleClick}
                 >
-                    {isLoading && <LoopAnimation />}
-                    {isLoading ? 'Loading...' : '탈퇴'}
+                    {isPending && <LoopAnimation />}
+                    {isPending ? 'Loading...' : '탈퇴'}
                 </button>
             </div>
         </Modal>
