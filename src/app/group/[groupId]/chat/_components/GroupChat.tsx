@@ -132,7 +132,7 @@ export default function GroupChat({ groupId }: { groupId: string }) {
 
     return (
         <section className="flex flex-1 flex-col gap-4 overflow-auto">
-            <div className="custom-scrollbar flex-1 overflow-y-auto rounded-lg border-2 border-point-500 bg-white p-4">
+            <div className="flex-1 overflow-y-auto rounded-lg border-2 border-point-500 bg-white p-4">
                 {dummyDatas.map((data) => (
                     <ChatMessage key={data._id} data={data} />
                 ))}

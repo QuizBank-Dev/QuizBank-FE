@@ -42,7 +42,7 @@ export default function StudyStats({
                     <span className="text-mobile-body-lg md:text-pc-body-lg">
                         그룹 학습 완료율
                     </span>
-                    <div className="custom-scrollbar flex w-full flex-col gap-2 overflow-y-auto pr-4">
+                    <div className="flex w-full flex-col gap-2 overflow-y-auto pr-4">
                         {/* 점수가 있는 유저 먼저 렌더링 */}
                         {scoreList.map((data) => (
                             <div

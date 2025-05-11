@@ -2,13 +2,13 @@
 
 import CloseSvg from '@/assets/svgs/close.svg'
 
-import { Quiz } from '@/types/quiz'
+import { PostQuiz } from '@/types/quiz'
 import AddedQuizField from './AddedQuizField'
 import { QUIZ_TYPE } from '@/constants/quiz'
 import { usePostQuizbookStore } from '@/store/quizbook'
 
 interface Props {
-    quiz: Quiz
+    quiz: PostQuiz
     idx: number
 }
 
@@ -46,7 +46,7 @@ export default function AddedQuiz({ quiz, idx }: Props) {
                         {quiz.answer}
                     </AddedQuizField>
                 )}
-                {quiz.optionList && (
+                {quiz.type === QUIZ_TYPE.MULTIPLE && (
                     <AddedQuizField label="정답">
                         {quiz.optionList.map((option, idx) => (
                             <AddedQuizField

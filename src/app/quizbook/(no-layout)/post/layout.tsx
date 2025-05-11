@@ -23,7 +23,7 @@ export default function Layout({ children, modal }: Props) {
             <MobileHeader title="문제집 생성" backBtn={true} />
 
             {/* 컨텐츠 */}
-            <main className="flex min-h-0 flex-1 flex-col items-center p-[16px]">
+            <main className="flex flex-1 flex-col items-center overflow-auto p-[16px] md:overflow-y-auto">
                 {children}
             </main>
         </div>

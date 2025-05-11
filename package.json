@@ -30,7 +30,7 @@
         "react-day-picker": "^8.10.1",
         "react-dom": "^19.0.0",
         "react-hook-form": "^7.54.2",
-        "react-modal-sheet": "^4.0.1",
+        "react-modal-sheet": "^4.4.0",
         "socket.io-client": "^4.8.1",
         "sonner": "^2.0.3",
         "tailwind-merge": "^3.2.0",

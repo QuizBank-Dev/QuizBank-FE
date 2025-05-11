@@ -82,7 +82,7 @@ export default function Modal({
 
                 <div
                     className={clsx(
-                        'md:custom-scrollbar flex-1 grow overflow-y-auto px-[16px] md:px-[32px]',
+                        'flex-1 grow overflow-y-auto px-[16px] md:px-[32px]',
                         className,
                     )}
                 >

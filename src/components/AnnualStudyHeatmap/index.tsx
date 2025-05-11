@@ -49,7 +49,7 @@ export default function AnnualStudyHeatmap() {
                     disabled={year >= new Date().getFullYear()}
                 />
             </div>
-            <ScrollContainer className="custom-scrollbar cursor-grab select-none overflow-x-scroll pb-[8px]">
+            <ScrollContainer className="cursor-grab select-none overflow-x-scroll pb-[8px]">
                 <HeatmapChart data={data} year={year} onTooltip={setTooltip} />
                 <HeatmapTooltip tooltip={tooltip} />
             </ScrollContainer>
