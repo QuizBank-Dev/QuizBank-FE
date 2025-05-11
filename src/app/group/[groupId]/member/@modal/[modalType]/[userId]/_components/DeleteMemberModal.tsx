@@ -1,21 +1,19 @@
 'use client'
 
 import { LoopAnimation, Modal } from '@/components'
+import { useDeleteMember } from '@/hooks/mutations'
 import clsx from 'clsx'
 import { useParams } from 'next/navigation'
-import { useState } from 'react'
 
 export default function DeleteMemberModal() {
-    const [isLoading, setIsLoading] = useState(false)
-    const params = useParams()
+    const { groupId, userId } = useParams()
+    const { mutate, isPending } = useDeleteMember(
+        groupId as string,
+        userId as string,
+    )
 
     const handleClick = () => {
-        // 추후 로직 수정
-        setIsLoading(true)
-        setTimeout(() => {
-            console.log(1)
-            setIsLoading(false)
-        }, 2000)
+        mutate()
     }
 
     return (
@@ -30,15 +28,15 @@ export default function DeleteMemberModal() {
                     <span>강퇴하시겠습니까?</span>
                 </div>
                 <button
-                    disabled={isLoading}
+                    disabled={isPending}
                     className={clsx(
                         'btn-solid btn-mobile-md bg-danger-300 md:btn-pc-md',
-                        isLoading && 'btn-loading',
+                        isPending && 'btn-loading',
                     )}
                     onClick={handleClick}
                 >
-                    {isLoading && <LoopAnimation />}
-                    {isLoading ? 'Loading...' : '강퇴'}
+                    {isPending && <LoopAnimation />}
+                    {isPending ? 'Loading...' : '강퇴'}
                 </button>
             </div>
         </Modal>
