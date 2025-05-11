@@ -4,12 +4,17 @@ import { LoopAnimation, Modal } from '@/components'
 import { useDeleteGroup } from '@/hooks/mutations'
 import clsx from 'clsx'
 import { useParams } from 'next/navigation'
+import { useState } from 'react'
 
 export default function DeleteGroupModal() {
+    const [loading, setLoading] = useState(false)
     const { groupId } = useParams()
-    const { mutate, isPending } = useDeleteGroup(groupId as string)
+    const { mutate } = useDeleteGroup(groupId as string, () => {
+        setLoading(false)
+    })
 
     const handleClick = () => {
+        setLoading(true)
         mutate()
     }
 
@@ -22,15 +27,15 @@ export default function DeleteGroupModal() {
                     <span className="text-danger-300">복구할 수 없습니다!</span>
                 </div>
                 <button
-                    disabled={isPending}
+                    disabled={loading}
                     className={clsx(
                         'btn-solid btn-mobile-md bg-danger-300 md:btn-pc-md',
-                        isPending && 'btn-loading',
+                        loading && 'btn-loading',
                     )}
                     onClick={handleClick}
                 >
-                    {isPending && <LoopAnimation />}
-                    {isPending ? 'Loading...' : '삭제'}
+                    {loading && <LoopAnimation />}
+                    {loading ? 'Loading...' : '삭제'}
                 </button>
             </div>
         </Modal>
