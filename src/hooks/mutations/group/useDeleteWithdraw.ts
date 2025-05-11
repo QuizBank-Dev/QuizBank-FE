@@ -5,7 +5,10 @@ import { useRouter } from 'next/navigation'
 /**
  * 그룹을 탈퇴하는 mutation
  */
-export const useDeleteWithdraw = (groupId: string) => {
+export const useDeleteWithdraw = (
+    groupId: string,
+    onSuccessCallback?: () => void,
+) => {
     const queryClient = useQueryClient()
     const router = useRouter()
 
@@ -15,6 +18,9 @@ export const useDeleteWithdraw = (groupId: string) => {
         onSuccess: () => {
             queryClient.removeQueries({ queryKey: ['group', groupId] })
             router.push('/group')
+        },
+        onError: () => {
+            onSuccessCallback?.()
         },
     })
 }
