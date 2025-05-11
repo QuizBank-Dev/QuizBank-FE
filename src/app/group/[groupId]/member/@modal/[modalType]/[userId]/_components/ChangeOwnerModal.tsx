@@ -1,21 +1,16 @@
 'use client'
 
 import { LoopAnimation, Modal } from '@/components'
+import { usePatchOwner } from '@/hooks/mutations'
 import clsx from 'clsx'
 import { useParams } from 'next/navigation'
-import { useState } from 'react'
 
 export default function ChangeOwnerModal() {
-    const [isLoading, setIsLoading] = useState(false)
-    const params = useParams()
+    const { groupId, userId } = useParams()
+    const { mutate, isPending } = usePatchOwner(groupId as string)
 
     const handleClick = () => {
-        // 추후 로직 수정
-        setIsLoading(true)
-        setTimeout(() => {
-            console.log(1)
-            setIsLoading(false)
-        }, 2000)
+        mutate(userId as string)
     }
 
     return (
@@ -30,15 +25,15 @@ export default function ChangeOwnerModal() {
                     <span>위임하시겠습니까?</span>
                 </div>
                 <button
-                    disabled={isLoading}
+                    disabled={isPending}
                     className={clsx(
                         'btn-solid btn-mobile-md md:btn-pc-md',
-                        isLoading && 'btn-loading',
+                        isPending && 'btn-loading',
                     )}
                     onClick={handleClick}
                 >
-                    {isLoading && <LoopAnimation />}
-                    {isLoading ? 'Loading...' : '위임'}
+                    {isPending && <LoopAnimation />}
+                    {isPending ? 'Loading...' : '위임'}
                 </button>
             </div>
         </Modal>
