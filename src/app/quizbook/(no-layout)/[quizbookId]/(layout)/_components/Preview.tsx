@@ -1,24 +1,25 @@
 'use client'
 
 import { QuestionCard } from '@/components/study'
+import { QuizType } from '@/types/quiz'
 import { useState } from 'react'
 
 const quizList = [
     {
         _id: '1',
-        type: '주관식',
+        type: '주관식' as QuizType,
         question: 'test1',
         optionList: [],
     },
     {
         _id: '2',
-        type: '서술형',
+        type: '서술형' as QuizType,
         question: 'test2',
         optionList: [],
     },
     {
         _id: '3',
-        type: '주관식',
+        type: '주관식' as QuizType,
         question: 'test3',
         optionList: [],
     },
@@ -45,14 +46,7 @@ export default function Preview() {
             <QuestionCard
                 curIdx={pageNumber + 1}
                 totalIdx={quizList.length}
-                quiz={{
-                    type: quizList[pageNumber].type as
-                        | '주관식'
-                        | '서술형'
-                        | '객관식'
-                        | 'ox',
-                    question: quizList[pageNumber].question,
-                }}
+                quiz={quizList[pageNumber]}
                 background={false}
                 onPrev={onPrevHandler}
                 onNext={onNextHandler}

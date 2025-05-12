@@ -1,6 +1,6 @@
 'use client'
 
-import { QuizbookCard } from '@/components'
+import { QuizbookCard as Card, QuizbookCard } from '@/components'
 import {
     Select,
     SelectContent,
@@ -12,41 +12,108 @@ import { QuizbookCardStatus } from '@/constants/common/quizbookBadge'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import RightArrowIcon from '@/assets/svgs/right-arrow.svg'
+import { Quizbook } from '@/types/quizbook'
 
-const dummyDatas = [
+const quizbookList: Quizbook[] = [
     {
-        group: '65e8a5d6fc13ae5e7f000002',
-        quizbook: {
-            _id: '65e8a5d6fc13ae5e7f000001',
-            title: '알고리즘 문제집',
-            description: '면접 준비용',
-            category: '알고리즘',
-            author: {
-                _id: '유저ID',
-                nickname: '유저 닉네임',
-                profileImg: '',
-            },
-            solvedCount: 100,
-            solvedRate: 85.5,
+        _id: '67fdc5ac1e49a2871aeb6657',
+        title: '면접 대비 CS 문제집',
+        description: '면접 대비하는 문제입니다.',
+        category: '웹 개발',
+        quizList: [
+            '67fdc5ac1e49a2871aeb6651',
+            '67fdc5ac1e49a2871aeb6652',
+            '67fdc5ac1e49a2871aeb6653',
+        ],
+        solvedCount: 3,
+        solvedScore: 40,
+        reviewCount: 1,
+        reviewScore: 4,
+        reviewRating: 4,
+        author: {
+            _id: '67e2e20e5872c849d5dd4b86',
+            nickname: 'test계정',
+            profileImg: '',
         },
-        endedAt: '2025-04-02',
+        createdAt: '2025-04-15T02:34:20.113Z',
+        updatedAt: '2025-04-15T08:24:44.912Z',
+        isLiked: false,
+        isStudied: true,
     },
     {
-        group: '65e8a5d6fc13ae5e7f000002',
-        quizbook: {
-            _id: '65e8a5d6fc13ae5e7f000002',
-            title: '알고리즘 문제집',
-            description: '면접 준비용',
-            category: '알고리즘',
-            author: {
-                _id: '유저ID',
-                nickname: '유저 닉네임',
-                profileImg: '',
-            },
-            solvedCount: 100,
-            solvedRate: 85.5,
+        _id: '67fdc5ac1e49a2871aeb6658',
+        title: '면접 대비 CS 문제집',
+        description: '면접 대비하는 문제입니다.',
+        category: '웹 개발',
+        quizList: [
+            '67fdc5ac1e49a2871aeb6651',
+            '67fdc5ac1e49a2871aeb6652',
+            '67fdc5ac1e49a2871aeb6653',
+        ],
+        solvedCount: 3,
+        solvedScore: 40,
+        reviewCount: 1,
+        reviewScore: 4,
+        reviewRating: 4,
+        author: {
+            _id: '67e2e20e5872c849d5dd4b86',
+            nickname: 'test계정',
+            profileImg: '',
         },
-        endedAt: '2025-04-02',
+        createdAt: '2025-04-15T02:34:20.113Z',
+        updatedAt: '2025-04-15T08:24:44.912Z',
+        isLiked: false,
+        isStudied: false,
+    },
+    {
+        _id: '67fdc5ac1e49a2871aeb6659',
+        title: '면접 대비 CS 문제집',
+        description: '면접 대비하는 문제입니다.',
+        category: '웹 개발',
+        quizList: [
+            '67fdc5ac1e49a2871aeb6651',
+            '67fdc5ac1e49a2871aeb6652',
+            '67fdc5ac1e49a2871aeb6653',
+        ],
+        solvedCount: 3,
+        solvedScore: 40,
+        reviewCount: 1,
+        reviewScore: 4,
+        reviewRating: 4,
+        author: {
+            _id: '67e2e20e5872c849d5dd4b86',
+            nickname: 'test계정',
+            profileImg: '',
+        },
+        createdAt: '2025-04-15T02:34:20.113Z',
+        updatedAt: '2025-04-15T08:24:44.912Z',
+        isLiked: true,
+        isStudied: true,
+    },
+    {
+        _id: '67fdc5ac1e49a2871aeb6660',
+        title: '면접 대비 CS 문제집',
+        description: '면접 대비하는 문제입니다.',
+        category: '웹 개발',
+        quizList: [
+            '67fdc5ac1e49a2871aeb6651',
+            '67fdc5ac1e49a2871aeb6652',
+            '67fdc5ac1e49a2871aeb6653',
+        ],
+        solvedCount: 3,
+        solvedScore: 40,
+        reviewCount: 1,
+        reviewScore: 4,
+        reviewRating: 4,
+        author: {
+            _id: '67e2e20e5872c849d5dd4b86',
+            nickname: 'test계정',
+            profileImg: '',
+        },
+        createdAt: '2025-04-15T02:34:20.113Z',
+        updatedAt: '2025-04-15T08:24:44.912Z',
+        isLiked: true,
+        isStudied: false,
     },
 ]
 
@@ -81,24 +148,17 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                     문제집 추가
                 </button>
             </div>
-            {dummyDatas.map((data) => (
+            {quizbookList.map((quizbook) => (
                 <QuizbookCard
-                    key={data.quizbook._id}
-                    id={data.quizbook._id}
-                    category={data.quizbook.category}
-                    title={data.quizbook.title}
-                    description={data.quizbook.description}
-                    author={{
-                        nickname: data.quizbook.author.nickname,
-                        profileImg: data.quizbook.author.profileImg,
-                    }}
-                    solvedRate={78.5}
-                    solvedCount={36}
+                    key={quizbook._id}
+                    id={quizbook._id}
+                    {...quizbook}
                     badge={{
-                        status: QuizbookCardStatus.COMPLETED,
-                        customText: '완료',
+                        status: quizbook.isStudied
+                            ? QuizbookCardStatus.COMPLETED
+                            : QuizbookCardStatus.BEFORE,
                     }}
-                    onClick={handleQuizbookCardClick}
+                    onClick={() => {}}
                 >
                     <QuizbookCard.Description />
                     <div className="flex w-full items-end justify-between">
@@ -111,9 +171,13 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                         </div>
                     </div>
                     <div className="flex w-full items-end justify-between">
-                        <QuizbookCard.SolvedRate />
+                        <div className="flex gap-2">
+                            <QuizbookCard.SolvedRate />
+                            <QuizbookCard.ReviewRate />
+                            <QuizbookCard.QuizCount />
+                        </div>
                         <Link
-                            href={`/group/${groupId}/quizbook/${data.quizbook._id}`}
+                            href={`/group/${groupId}/quizbook/${quizbook._id}`}
                             className="flex cursor-pointer items-center gap-1 text-point-500"
                         >
                             <span className="text-mobile-body-sm font-semi-bold md:text-pc-body-sm">

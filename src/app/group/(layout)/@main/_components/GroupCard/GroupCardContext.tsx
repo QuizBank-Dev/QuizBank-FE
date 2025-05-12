@@ -1,9 +1,9 @@
 'use client'
 
+import { GroupCard } from '@/types/group'
 import { createContext, useContext } from 'react'
-import { Group } from '@/types/group'
 
-export type GroupCardContextProps = Partial<Group>
+export type GroupCardContextProps = Partial<GroupCard>
 
 export const GroupCardContext = createContext<GroupCardContextProps | null>(
     null,
