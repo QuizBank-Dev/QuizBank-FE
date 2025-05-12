@@ -118,7 +118,11 @@ export default function GroupInfo() {
                                     그룹장
                                 </span>
                                 <Link
-                                    href={`/user/${data?.admin._id}`}
+                                    href={
+                                        data?.admin._id === userData?._id
+                                            ? '/my-page/info'
+                                            : `/user/${data?.admin._id}`
+                                    }
                                     className="flex cursor-pointer items-center gap-2"
                                 >
                                     {data && (

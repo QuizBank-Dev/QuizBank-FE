@@ -1,11 +1,11 @@
-import { deleteGroup } from '@/lib/api'
+import { deleteWithdraw } from '@/lib/api'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 
 /**
- * 그룹을 삭제하는 mutation
+ * 그룹을 탈퇴하는 mutation
  */
-export const useDeleteGroup = (
+export const useDeleteWithdraw = (
     groupId: string,
     onSuccessCallback?: () => void,
 ) => {
@@ -13,7 +13,7 @@ export const useDeleteGroup = (
     const router = useRouter()
 
     return useMutation({
-        mutationFn: () => deleteGroup(groupId),
+        mutationFn: () => deleteWithdraw(groupId),
         retry: 0,
         onSuccess: () => {
             queryClient.removeQueries({ queryKey: ['group', groupId] })
