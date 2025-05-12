@@ -8,10 +8,10 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import UserIcon from '@/assets/svgs/user.svg'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import GroupMember from './GroupMember'
 import Link from 'next/link'
-import { useParams, usePathname, useRouter } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGroupQuery } from '@/hooks/queries/group'
 import { useCurrentUser } from '@/hooks/queries/user'
@@ -20,15 +20,8 @@ export default function GroupMemberList() {
     const [status, setStatus] = useState('member')
     const path = usePathname()
     const { groupId } = useParams()
-    const router = useRouter()
-    const { data: groupData, error } = useGroupQuery(groupId as string)
+    const { data: groupData } = useGroupQuery(groupId as string)
     const { data: userData } = useCurrentUser()
-
-    useEffect(() => {
-        if (error) {
-            router.push('/group')
-        }
-    }, [error, router])
 
     return (
         <section className="mb-4 flex flex-col gap-4">

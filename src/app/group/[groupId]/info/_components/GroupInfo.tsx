@@ -6,7 +6,7 @@ import { extractKSTDateOnly } from '@/utils/date/dateOnly'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -40,12 +40,11 @@ export default function GroupInfo() {
         defaultValues: backUp,
     })
     const { groupId } = useParams()
-    const { data, error } = useGroupQuery(groupId as string)
+    const { data } = useGroupQuery(groupId as string)
     const { mutate, isPending } = usePatchGroup(groupId as string, () => {
         setIsChangeMode(false)
     })
     const { data: userData } = useCurrentUser()
-    const router = useRouter()
 
     const { reset } = methods
 
@@ -54,12 +53,6 @@ export default function GroupInfo() {
         reset({ name: data.name, description: data.description })
         setBackUp({ name: data.name, description: data.description })
     }, [reset, setBackUp, data])
-
-    useEffect(() => {
-        if (error) {
-            router.push('/group')
-        }
-    }, [error, router])
 
     const handleFormSubmit = (data: GroupInfoFormData) => {
         mutate(data)
