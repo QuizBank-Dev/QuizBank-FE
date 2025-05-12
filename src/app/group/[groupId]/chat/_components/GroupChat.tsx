@@ -3,6 +3,7 @@
 import { ProfileImage } from '@/components'
 import ChatMessage from './ChatMessage'
 import { useRouter } from 'next/navigation'
+import SendIcon from '@/assets/svgs/send.svg'
 
 const dummyDatas = [
     {
@@ -67,7 +68,8 @@ const dummyDatas = [
     },
     {
         _id: '65e8a5d6fc13ae5e7f000007',
-        content: '안녕하세요~',
+        content:
+            '안녕하세요~ssssssssssssssssss   sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss',
         author: {
             _id: 'aaaaa',
             nickname: '닉네임1',
@@ -144,10 +146,13 @@ export default function GroupChat({ groupId }: { groupId: string }) {
                 >
                     <ProfileImage size={32} profileImg={''} />
                 </div>
-                <input
-                    type="text"
-                    className="input-solid input-mobile w-full font-regular text-gray-900 md:input-pc"
-                />
+                <div className="relative w-full">
+                    <input
+                        type="text"
+                        className="input-solid input-mobile w-full pr-10 font-regular text-gray-900 md:input-pc"
+                    />
+                    <SendIcon className="absolute right-3 top-1/2 size-5 -translate-y-1/2 cursor-pointer text-gray-400 md:size-6" />
+                </div>
             </form>
         </section>
     )

@@ -36,7 +36,7 @@ export default function ChatMessage({ data }: ChatMessageProp) {
                     {data.createdAt}
                 </span>
             </div>
-            <span className="w-full pl-10 text-mobile-body-md font-regular md:pl-12 md:text-pc-body-md">
+            <span className="w-full whitespace-pre-wrap break-all pl-10 text-mobile-body-md font-regular md:pl-12 md:text-pc-body-md">
                 {data.content}
             </span>
         </article>
