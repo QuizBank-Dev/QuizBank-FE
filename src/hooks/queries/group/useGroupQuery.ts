@@ -1,6 +1,6 @@
 import { GcTime } from '@/constants/common/gcTime'
 import { StaleTime } from '@/constants/common/staleTime'
-import { getGroup } from '@/lib/api'
+import { getGroup } from '@/lib/api/group'
 import { useQuery } from '@tanstack/react-query'
 
 /**

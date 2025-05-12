@@ -1,4 +1,4 @@
-import { patchApplyResponse } from '@/lib/api'
+import { patchApplyResponse } from '@/lib/api/group'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'

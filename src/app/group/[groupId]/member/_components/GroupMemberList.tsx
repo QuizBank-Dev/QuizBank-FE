@@ -12,8 +12,9 @@ import { useEffect, useState } from 'react'
 import GroupMember from './GroupMember'
 import Link from 'next/link'
 import { useParams, usePathname, useRouter } from 'next/navigation'
-import { useCurrentUser, useGroupQuery } from '@/hooks/queries'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useGroupQuery } from '@/hooks/queries/group'
+import { useCurrentUser } from '@/hooks/queries/user'
 
 export default function GroupMemberList() {
     const [status, setStatus] = useState('member')

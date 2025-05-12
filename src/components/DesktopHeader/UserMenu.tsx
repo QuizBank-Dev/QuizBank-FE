@@ -2,7 +2,7 @@
 
 import Notification from '@/assets/svgs/notification.svg'
 import User from '@/assets/svgs/user.svg'
-import { useCurrentUser } from '@/hooks/queries'
+import { useCurrentUser } from '@/hooks/queries/user'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'

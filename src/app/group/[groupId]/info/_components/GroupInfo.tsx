@@ -1,8 +1,7 @@
 'use client'
 
 import { CustomInput, LoopAnimation, ProfileImage } from '@/components'
-import { usePatchGroup } from '@/hooks/mutations'
-import { useCurrentUser, useGroupQuery } from '@/hooks/queries'
+
 import { extractKSTDateOnly } from '@/utils/date/dateOnly'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
@@ -12,6 +11,9 @@ import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import * as z from 'zod'
 import InfoItem from './InfoItem'
+import { useGroupQuery } from '@/hooks/queries/group'
+import { usePatchGroup } from '@/hooks/mutations/group'
+import { useCurrentUser } from '@/hooks/queries/user'
 
 const schema = z.object({
     name: z
