@@ -1,4 +1,4 @@
-import { GroupInfoFormData } from '@/app/group/[groupId]/info/@main/_components/GroupInfo'
+import { GroupInfoFormData } from '@/app/group/[groupId]/info/_components/GroupInfo'
 import { patchGroup } from '@/lib/api'
 import { Group } from '@/types/group'
 import { useMutation, useQueryClient } from '@tanstack/react-query'

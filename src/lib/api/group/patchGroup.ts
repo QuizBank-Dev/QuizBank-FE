@@ -1,4 +1,4 @@
-import { GroupInfoFormData } from '@/app/group/[groupId]/info/@main/_components/GroupInfo'
+import { GroupInfoFormData } from '@/app/group/[groupId]/info/_components/GroupInfo'
 import axiosInstance from '../base'
 
 /**
