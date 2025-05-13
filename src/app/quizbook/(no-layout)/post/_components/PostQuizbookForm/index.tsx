@@ -4,19 +4,19 @@ import PlusSvg from '@/assets/svgs/plus.svg'
 
 import { usePostQuizbookStore } from '@/store/quizbook'
 import { FormProvider, useForm } from 'react-hook-form'
-import {
-    PostQuizbookFormValues,
-    postQuizbookSchema,
-} from '../../_schema/post-quizbook'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CustomInput, CustomSelect } from '@/components'
 import { QUIZBOOK_CATEGORY } from '@/constants/quizbook'
 import AddedQuiz from './AddedQuiz'
 import Link from 'next/link'
 import { useEffect } from 'react'
+import {
+    PostQuizbookFormData,
+    postQuizbookSchema,
+} from '@/types/schemas/quizbook/post-quizbook.schema'
 
 export default function PostQuizbookForm() {
-    const methods = useForm<PostQuizbookFormValues>({
+    const methods = useForm<PostQuizbookFormData>({
         resolver: zodResolver(postQuizbookSchema),
         mode: 'onChange',
         defaultValues: {
@@ -30,7 +30,7 @@ export default function PostQuizbookForm() {
 
     const { quizList, resetQuizList } = usePostQuizbookStore()
 
-    const onSubmit = (data: PostQuizbookFormValues) => {
+    const onSubmit = (data: PostQuizbookFormData) => {
         // TODO: API 연동 로직 및 페이지 이동
         console.log(data)
 
