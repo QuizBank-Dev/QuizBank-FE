@@ -9,10 +9,7 @@ import AnswerInput from './AnswerInput'
 import { useEffect } from 'react'
 import { usePostQuizbookStore } from '@/store/quizbook'
 import { useRouter } from 'next/navigation'
-import {
-    AddQuizFormData,
-    addQuizSchema,
-} from '@/types/schemas/quizbook/add-quiz.schema'
+import { AddQuizFormData, addQuizSchema } from '@/types/schemas/quizbook'
 
 export default function AddQuizForm() {
     const { addQuiz } = usePostQuizbookStore()
