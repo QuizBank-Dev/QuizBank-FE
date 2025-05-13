@@ -9,6 +9,8 @@ import { useCurrentUser } from '@/hooks/queries/user'
 import Link from 'next/link'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useCallback, useEffect, useRef } from 'react'
+import { patchReadStatus } from '@/lib/api/chat'
+import { toast } from 'sonner'
 
 export default function GroupChat({ groupId }: { groupId: string }) {
     // 데이터 패칭
@@ -27,6 +29,8 @@ export default function GroupChat({ groupId }: { groupId: string }) {
     const scrollContainerRef = useRef<HTMLDivElement>(null)
     const prevScrollHeightRef = useRef(0)
     const observerRef = useRef<IntersectionObserver | null>(null)
+
+    const hasPatchedReadStatus = useRef(false)
 
     // 패칭 전 scrollHeight 저장 함수
     const handleFetchPreviousPage = useCallback(async () => {
@@ -77,10 +81,17 @@ export default function GroupChat({ groupId }: { groupId: string }) {
         observerRef.current = observer
 
         // 최초 데이터 패칭시, 스크롤 가장 아래로
-        // 메세지 읽음 요청
         if (chatData && chatData.pages.length === 1) {
             const container = scrollContainerRef.current
             container.scrollTop = container.scrollHeight
+
+            // 메세지 읽음 요청 최소화
+            if (groupData && !hasPatchedReadStatus.current) {
+                patchReadStatus(groupData.chatRoom).catch((error) => {
+                    toast(error.response.data.message)
+                })
+                hasPatchedReadStatus.current = true
+            }
         }
 
         return () => observer.disconnect()
@@ -89,6 +100,7 @@ export default function GroupChat({ groupId }: { groupId: string }) {
         isFetchingPreviousPage,
         handleFetchPreviousPage,
         chatData,
+        groupData,
     ])
 
     return (
