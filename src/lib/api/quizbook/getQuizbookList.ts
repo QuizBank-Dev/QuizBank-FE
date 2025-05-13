@@ -4,7 +4,7 @@ import { PaginationResponse } from '@/types/base'
 import { Quizbook } from '@/types/quizbook'
 
 export const getQuizbookList = async (params: QuizbookListParams = {}) => {
-    const res = await axiosInstance.get<PaginationResponse<Quizbook[]>>(
+    const res = await axiosInstance.get<PaginationResponse<Quizbook<string>[]>>(
         '/quizbook',
         { params },
     )
