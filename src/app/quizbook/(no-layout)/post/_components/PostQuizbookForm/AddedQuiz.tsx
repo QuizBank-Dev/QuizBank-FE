@@ -2,13 +2,13 @@
 
 import CloseSvg from '@/assets/svgs/close.svg'
 
-import { PostQuiz } from '@/types/quiz'
 import AddedQuizField from './AddedQuizField'
 import { QUIZ_TYPE } from '@/constants/quiz'
 import { usePostQuizbookStore } from '@/store/quizbook'
+import { AddQuizFormData } from '@/types/schemas/quizbook/add-quiz.schema'
 
 interface Props {
-    quiz: PostQuiz
+    quiz: AddQuizFormData
     idx: number
 }
 

@@ -7,15 +7,15 @@ import { FormProvider, useForm, useWatch } from 'react-hook-form'
 import { CustomInput } from '@/components'
 import AnswerInput from './AnswerInput'
 import { useEffect } from 'react'
-import { AddQuizFormValues, addQuizSchema } from '../../../../_schema/add-quiz'
 import { usePostQuizbookStore } from '@/store/quizbook'
 import { useRouter } from 'next/navigation'
+import { AddQuizFormData, addQuizSchema } from '@/types/schemas/quizbook'
 
 export default function AddQuizForm() {
     const { addQuiz } = usePostQuizbookStore()
     const router = useRouter()
 
-    const methods = useForm<AddQuizFormValues>({
+    const methods = useForm<AddQuizFormData>({
         resolver: zodResolver(addQuizSchema),
         defaultValues: {
             type: QUIZ_TYPE.OX,
@@ -25,7 +25,7 @@ export default function AddQuizForm() {
     const { handleSubmit, setValue, unregister, control } = methods
     const type = useWatch({ control, name: 'type' })
 
-    const onSubmit = (data: AddQuizFormValues) => {
+    const onSubmit = (data: AddQuizFormData) => {
         addQuiz(data)
         router.back()
     }

@@ -1,9 +1,9 @@
-import { PostQuiz } from '@/types/quiz'
+import { AddQuizFormData } from '@/types/schemas/quizbook/add-quiz.schema'
 import { create } from 'zustand'
 
 interface PostQuizbookStore {
-    quizList: PostQuiz[]
-    addQuiz: (quiz: PostQuiz) => void
+    quizList: AddQuizFormData[]
+    addQuiz: (quiz: AddQuizFormData) => void
     removeQuiz: (idx: number) => void
     resetQuizList: () => void
 }
