@@ -8,16 +8,97 @@ import { useGroupQuery } from '@/hooks/queries/group'
 import { useCurrentUser } from '@/hooks/queries/user'
 import Link from 'next/link'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useCallback, useEffect, useRef } from 'react'
 
 export default function GroupChat({ groupId }: { groupId: string }) {
+    // 데이터 패칭
     const { data: groupData } = useGroupQuery(groupId)
     const chatRoomId = groupData?.chatRoom
-    const { data: chatData } = useChatQuery(chatRoomId, 10)
+    const {
+        data: chatData,
+        isFetchingPreviousPage,
+        fetchPreviousPage,
+        hasPreviousPage,
+    } = useChatQuery(chatRoomId, 10)
     const { data: userData } = useCurrentUser()
+
+    // 무한 스크롤 및 스크롤 위치 유지를 위한 ref 모음
+    const topRef = useRef<HTMLDivElement>(null)
+    const scrollContainerRef = useRef<HTMLDivElement>(null)
+    const prevScrollHeightRef = useRef(0)
+    const observerRef = useRef<IntersectionObserver | null>(null)
+
+    // 패칭 전 scrollHeight 저장 함수
+    const handleFetchPreviousPage = useCallback(async () => {
+        const container = scrollContainerRef.current
+        if (container) {
+            prevScrollHeightRef.current = container.scrollHeight
+        }
+        // fetch 중에는 observer 연결 해제
+        observerRef.current?.disconnect()
+        await fetchPreviousPage()
+    }, [fetchPreviousPage])
+
+    // Intersection Observer 등록
+    useEffect(() => {
+        if (!topRef.current || !scrollContainerRef.current) return
+
+        // 패칭 후 scrollTop 보정
+        if (!isFetchingPreviousPage && prevScrollHeightRef.current) {
+            const container = scrollContainerRef.current
+            if (container) {
+                const scrollDiff =
+                    container.scrollHeight - prevScrollHeightRef.current
+                container.scrollTop += scrollDiff
+            }
+            prevScrollHeightRef.current = 0
+        }
+
+        // 기존 observer 제거
+        observerRef.current?.disconnect()
+
+        // 새 observer 등록
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (
+                    entries[0].isIntersecting &&
+                    hasPreviousPage &&
+                    !isFetchingPreviousPage
+                ) {
+                    handleFetchPreviousPage()
+                }
+            },
+            {
+                root: scrollContainerRef.current,
+                threshold: 1,
+            },
+        )
+        observer.observe(topRef.current)
+        observerRef.current = observer
+
+        // 최초 데이터 패칭시, 스크롤 가장 아래로
+        // 메세지 읽음 요청
+        if (chatData && chatData.pages.length === 1) {
+            const container = scrollContainerRef.current
+            container.scrollTop = container.scrollHeight
+        }
+
+        return () => observer.disconnect()
+    }, [
+        hasPreviousPage,
+        isFetchingPreviousPage,
+        handleFetchPreviousPage,
+        chatData,
+    ])
 
     return (
         <section className="flex flex-1 flex-col gap-4 overflow-auto">
-            <div className="no-scrollbar flex-1 overflow-y-auto rounded-lg border-2 border-point-500 bg-white p-4">
+            <div
+                ref={scrollContainerRef}
+                className="custom-scrollbar relative flex-1 overflow-y-auto rounded-lg border-2 border-point-500 bg-white p-4"
+            >
+                {/* 최상단 감지용 div */}
+                <div ref={topRef} style={{ height: 1 }} />
                 {chatData &&
                     userData &&
                     chatData.pages
