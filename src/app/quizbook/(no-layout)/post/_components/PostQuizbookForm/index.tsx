@@ -5,17 +5,25 @@ import PlusSvg from '@/assets/svgs/plus.svg'
 import { usePostQuizbookStore } from '@/store/quizbook'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { CustomInput, CustomSelect } from '@/components'
+import { CustomInput, CustomSelect, LoopAnimation } from '@/components'
 import { QUIZBOOK_CATEGORY } from '@/constants/quizbook'
 import AddedQuiz from './AddedQuiz'
 import Link from 'next/link'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { postQuizbook } from '@/lib/api/quizbook'
+import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
+import { AxiosError } from 'axios'
+import { ErrorResponse } from '@/types/base'
+import clsx from 'clsx'
 import {
     PostQuizbookFormData,
     postQuizbookSchema,
-} from '@/types/schemas/quizbook/post-quizbook.schema'
+} from '@/types/schemas/quizbook'
 
 export default function PostQuizbookForm() {
+    const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter()
     const methods = useForm<PostQuizbookFormData>({
         resolver: zodResolver(postQuizbookSchema),
         mode: 'onChange',
@@ -25,17 +33,24 @@ export default function PostQuizbookForm() {
             quizList: [],
         },
     })
-
     const { handleSubmit, setValue, reset } = methods
-
     const { quizList, resetQuizList } = usePostQuizbookStore()
 
-    const onSubmit = (data: PostQuizbookFormData) => {
-        // TODO: API 연동 로직 및 페이지 이동
-        console.log(data)
+    const onSubmit = async (data: PostQuizbookFormData) => {
+        try {
+            setIsLoading(true)
+            await postQuizbook(data)
 
-        resetQuizList()
-        reset()
+            setIsLoading(false)
+            resetQuizList()
+            reset()
+            router.push('/quizbook')
+        } catch (e) {
+            const error = e as AxiosError<ErrorResponse>
+
+            setIsLoading(false)
+            toast.error(error.response?.data.message || error.message)
+        }
     }
 
     // TODO: AUTO SAVE 기능 추가
@@ -74,6 +89,14 @@ export default function PostQuizbookForm() {
                     placeholder="제목을 입력해주세요."
                 />
 
+                {/* 설명 영역 */}
+                <CustomInput
+                    id="description"
+                    name="description"
+                    label="설명"
+                    placeholder="간략한 설명을 입력해주세요."
+                />
+
                 {/* 추가 카드 리스트 영역 */}
                 <div className="flex w-full flex-1 flex-col gap-1">
                     <span className="text-mobile-body-sm font-regular text-gray-500 md:text-pc-body-sm">
@@ -100,11 +123,18 @@ export default function PostQuizbookForm() {
                     <PlusSvg className="h-[24px] w-[24px]" />
                 </Link>
                 <button
+                    disabled={isLoading}
                     type="submit"
                     form="post-quizbook-form"
-                    className="btn-solid btn-mobile-lg w-full md:btn-pc-lg"
+                    className={clsx(
+                        'btn-solid btn-mobile-lg w-full md:btn-pc-lg',
+                        {
+                            'btn-loading': isLoading,
+                        },
+                    )}
                 >
-                    생성하기
+                    {isLoading && <LoopAnimation />}
+                    {isLoading ? '생성중...' : '생성하기'}
                 </button>
             </div>
         </FormProvider>
