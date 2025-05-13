@@ -1,7 +1,7 @@
 import { QUIZ_TYPE } from '@/constants/quiz'
-import * as z from 'zod'
+import { z } from 'zod'
 
-const baseSchema = z.object({
+const schema = z.object({
     type: z.enum(
         [QUIZ_TYPE.OX, QUIZ_TYPE.MULTIPLE, QUIZ_TYPE.SHORT, QUIZ_TYPE.LONG],
         {
@@ -11,14 +11,14 @@ const baseSchema = z.object({
     question: z.string().min(1, '질문을 입력해주세요.'),
 })
 
-const oxSchema = baseSchema.extend({
+const oxSchema = schema.extend({
     type: z.literal(QUIZ_TYPE.OX),
     answer: z.enum(['O', 'X'], {
         errorMap: () => ({ message: '정답을 선택해주세요.' }),
     }),
 })
 
-const multipleSchema = baseSchema.extend({
+const multipleSchema = schema.extend({
     type: z.literal(QUIZ_TYPE.MULTIPLE),
     optionList: z
         .array(z.string().min(1, '빈 선택지는 허용되지 않습니다.'))
@@ -29,12 +29,12 @@ const multipleSchema = baseSchema.extend({
     answer: z.string().min(1, '정답을 선택해주세요.'),
 })
 
-const shortSchema = baseSchema.extend({
+const shortSchema = schema.extend({
     type: z.literal(QUIZ_TYPE.SHORT),
     answer: z.string().min(1, '정답을 입력해주세요.'),
 })
 
-const longSchema = baseSchema.extend({
+const longSchema = schema.extend({
     type: z.literal(QUIZ_TYPE.LONG),
     answer: z.string().min(1, '답안을 입력해주세요.'),
 })
@@ -46,4 +46,4 @@ export const addQuizSchema = z.discriminatedUnion('type', [
     longSchema,
 ])
 
-export type AddQuizFormValues = z.infer<typeof addQuizSchema>
+export type AddQuizFormData = z.infer<typeof addQuizSchema>

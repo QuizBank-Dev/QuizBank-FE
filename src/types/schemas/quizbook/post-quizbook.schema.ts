@@ -1,8 +1,6 @@
 import { QUIZBOOK_CATEGORY } from '@/constants/quizbook'
-import * as z from 'zod'
-import { addQuizSchema } from './add-quiz'
-
-export type PostQuizbookFormValues = z.infer<typeof postQuizbookSchema>
+import { z } from 'zod'
+import { addQuizSchema } from './add-quiz.schema'
 
 export const postQuizbookSchema = z.object({
     title: z.string().min(1, '제목을 입력해주세요.'),
@@ -19,3 +17,5 @@ export const postQuizbookSchema = z.object({
     ),
     quizList: z.array(addQuizSchema).min(1, '퀴즈를 1개 이상 추가해주세요.'),
 })
+
+export type PostQuizbookFormData = z.infer<typeof postQuizbookSchema>
