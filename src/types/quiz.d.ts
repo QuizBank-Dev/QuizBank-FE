@@ -9,5 +9,5 @@ export interface Quiz {
     type: QuizType
     question: string
     optionList?: string[]
-    answer?: string
+    answer: string
 }
