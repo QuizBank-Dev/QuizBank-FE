@@ -32,12 +32,11 @@ export default function ChatInput() {
             (oldData: ChatCache) => {
                 if (!oldData) return oldData
 
-                const now = new Date().toString()
                 const newMessage = {
-                    _id: now,
+                    _id: crypto.randomUUID(),
                     content: input.trim(),
                     sender: userData._id,
-                    createdAt: now,
+                    createdAt: new Date().toISOString(),
                 }
 
                 // 새로운 메세지들이 저장될 배열의 마지막 인덱스 공간
