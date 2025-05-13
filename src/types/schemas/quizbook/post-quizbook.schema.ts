@@ -15,6 +15,7 @@ export const postQuizbookSchema = z.object({
         ],
         { errorMap: () => ({ message: '카테고리를 선택해주세요.' }) },
     ),
+    description: z.string().min(1, '설명을 입력해주세요.'),
     quizList: z.array(addQuizSchema).min(1, '퀴즈를 1개 이상 추가해주세요.'),
 })
 
