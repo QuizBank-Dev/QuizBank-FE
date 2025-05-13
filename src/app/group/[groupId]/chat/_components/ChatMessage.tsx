@@ -1,20 +1,8 @@
 import { ProfileImage } from '@/components'
+import { ChatMessageType } from '@/types/chat'
 import { useRouter } from 'next/navigation'
 
-interface ChatMessageProp {
-    data: {
-        _id: string
-        content: string
-        author: {
-            _id: string
-            nickname: string
-            profileImg: string
-        }
-        createdAt: string
-    }
-}
-
-export default function ChatMessage({ data }: ChatMessageProp) {
+export default function ChatMessage({ data }: ChatMessageType) {
     const router = useRouter()
 
     return (
