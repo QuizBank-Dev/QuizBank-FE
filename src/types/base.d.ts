@@ -12,7 +12,7 @@ export interface Response<T = unknown> {
  */
 export type PaginationResponse<T> = Response<{
     data: T
-    nextCursor?: Record<string, number | string> | null
+    nextCursor: Record<string, number | string> | null
     totalCount: number
 }>
 
