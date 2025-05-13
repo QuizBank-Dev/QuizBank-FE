@@ -11,6 +11,9 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useCallback, useEffect, useRef } from 'react'
 import { patchReadStatus } from '@/lib/api/chat'
 import { toast } from 'sonner'
+import { useSocketStore } from '@/store/group'
+import { useQueryClient } from '@tanstack/react-query'
+import { ChatCache, ChatMessageType } from '@/types/chat'
 
 export default function GroupChat({ groupId }: { groupId: string }) {
     // 데이터 패칭
@@ -32,6 +35,10 @@ export default function GroupChat({ groupId }: { groupId: string }) {
     const shouldAutoScrollRef = useRef(true)
 
     const hasPatchedReadStatus = useRef(false)
+
+    // 다른 사람들의 메세지 수신 및 처리를 위한 변수
+    const socket = useSocketStore((state) => state.socket)
+    const queryClient = useQueryClient()
 
     // 패칭 전 scrollHeight 저장 함수
     const handleFetchPreviousPage = useCallback(async () => {
@@ -97,6 +104,66 @@ export default function GroupChat({ groupId }: { groupId: string }) {
         chatData,
         groupData,
     ])
+
+    // 다른 사람들의 메세지 수신 및 처리
+    useEffect(() => {
+        if (!socket || !chatRoomId) return
+
+        // 채팅방에 join
+        socket.emit('enter_chat', [chatRoomId])
+
+        // receive_chat 이벤트 핸들러 등록
+        const handleReceiveChat = (newMessage: ChatMessageType) => {
+            // 수신 받은 메세지 읽음 요청
+            patchReadStatus(groupData.chatRoom).catch((error) => {
+                toast(error.response.data.message)
+            })
+
+            // 채팅 내역 캐시 데이터 조작
+            queryClient.setQueryData(
+                ['chat', chatRoomId],
+                (oldData: ChatCache) => {
+                    if (!oldData) return oldData
+
+                    // 새로운 메세지들이 저장될 배열의 마지막 인덱스 공간
+                    const needRoomForNew = !oldData.pageParams.includes('new')
+
+                    const newPages = needRoomForNew
+                        ? [
+                              ...oldData.pages,
+                              {
+                                  chats: [newMessage],
+                                  nextCursor: 'new',
+                              },
+                          ]
+                        : oldData.pages.map((page, idx) =>
+                              idx === oldData.pages.length - 1
+                                  ? {
+                                        ...page,
+                                        chats: [...page.chats, newMessage],
+                                    }
+                                  : page,
+                          )
+
+                    return {
+                        ...oldData,
+                        pages: newPages,
+                        pageParams: needRoomForNew
+                            ? [...oldData.pageParams, 'new']
+                            : oldData.pageParams,
+                    }
+                },
+            )
+        }
+
+        // receive_chat 이벤트 수신
+        socket.on('receive_chat', handleReceiveChat)
+
+        // cleanup
+        return () => {
+            socket.off('receive_chat', handleReceiveChat)
+        }
+    }, [socket, chatRoomId, queryClient, groupData])
 
     // 스크롤 위치 추적
     useEffect(() => {
