@@ -1,17 +1,11 @@
 export interface ChatMessageType {
-    data: {
-        _id: string
-        content: string
-        author: {
-            _id: string
-            nickname: string
-            profileImg: string
-        }
-        createdAt: string
-    }
+    _id: string
+    content: string
+    sender: string
+    createdAt: string
 }
 
 export interface GetChatResponse {
-    chats: ChatMessage[]
-    nextCursor: string
+    chats: ChatMessageType[]
+    nextCursor: string | null
 }
