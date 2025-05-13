@@ -29,6 +29,7 @@ export default function GroupChat({ groupId }: { groupId: string }) {
     const scrollContainerRef = useRef<HTMLDivElement>(null)
     const prevScrollHeightRef = useRef(0)
     const observerRef = useRef<IntersectionObserver | null>(null)
+    const shouldAutoScrollRef = useRef(true)
 
     const hasPatchedReadStatus = useRef(false)
 
@@ -80,18 +81,12 @@ export default function GroupChat({ groupId }: { groupId: string }) {
         observer.observe(topRef.current)
         observerRef.current = observer
 
-        // 최초 데이터 패칭시, 스크롤 가장 아래로
-        if (chatData && chatData.pages.length === 1) {
-            const container = scrollContainerRef.current
-            container.scrollTop = container.scrollHeight
-
-            // 메세지 읽음 요청 최소화
-            if (groupData && !hasPatchedReadStatus.current) {
-                patchReadStatus(groupData.chatRoom).catch((error) => {
-                    toast(error.response.data.message)
-                })
-                hasPatchedReadStatus.current = true
-            }
+        // 메세지 읽음 요청 최소화
+        if (groupData && !hasPatchedReadStatus.current) {
+            patchReadStatus(groupData.chatRoom).catch((error) => {
+                toast(error.response.data.message)
+            })
+            hasPatchedReadStatus.current = true
         }
 
         return () => observer.disconnect()
@@ -102,6 +97,35 @@ export default function GroupChat({ groupId }: { groupId: string }) {
         chatData,
         groupData,
     ])
+
+    // 스크롤 위치 추적
+    useEffect(() => {
+        const container = scrollContainerRef.current
+        if (!container) return
+
+        const handleScroll = () => {
+            const isBottom =
+                container.scrollTop + container.clientHeight >=
+                container.scrollHeight - 20 // 약간의 여유를 둠
+            shouldAutoScrollRef.current = isBottom
+        }
+
+        container.addEventListener('scroll', handleScroll)
+
+        return () => {
+            container.removeEventListener('scroll', handleScroll)
+        }
+    }, [])
+
+    // chatData 변경 시 자동 스크롤
+    useEffect(() => {
+        const container = scrollContainerRef.current
+        if (!container || !chatData) return
+
+        if (shouldAutoScrollRef.current) {
+            container.scrollTop = container.scrollHeight
+        }
+    }, [chatData])
 
     return (
         <section className="flex flex-1 flex-col gap-4 overflow-auto">

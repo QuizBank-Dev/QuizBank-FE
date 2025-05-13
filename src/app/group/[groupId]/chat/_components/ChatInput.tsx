@@ -2,7 +2,10 @@
 
 import SendIcon from '@/assets/svgs/send.svg'
 import { useGroupQuery } from '@/hooks/queries/group'
+import { useCurrentUser } from '@/hooks/queries/user'
 import { useSocketStore } from '@/store/group'
+import { ChatCache } from '@/types/chat'
+import { useQueryClient } from '@tanstack/react-query'
 import { useParams } from 'next/navigation'
 import { useRef, useState } from 'react'
 
@@ -12,14 +15,61 @@ export default function ChatInput() {
     const socket = useSocketStore((state) => state.socket)
     const [input, setInput] = useState('')
     const inputRef = useRef<HTMLInputElement>(null)
+    const queryClient = useQueryClient()
+    const { data: userData } = useCurrentUser()
 
     // 메시지 전송 함수
     const sendMessage = () => {
-        if (!socket || !input.trim() || !data?.chatRoom) return
+        if (!socket || !input.trim() || !data?.chatRoom || !userData) return
         socket.emit('send_chat', {
             chatRoomId: data.chatRoom,
             content: input.trim(),
         })
+
+        // 채팅 내역 캐시 데이터 조작
+        queryClient.setQueryData(
+            ['chat', data.chatRoom],
+            (oldData: ChatCache) => {
+                if (!oldData) return oldData
+
+                const now = new Date().toString()
+                const newMessage = {
+                    _id: now,
+                    content: input.trim(),
+                    sender: userData._id,
+                    createdAt: now,
+                }
+
+                // 새로운 메세지들이 저장될 배열의 마지막 인덱스 공간
+                const needRoomForNew = !oldData.pageParams.includes('new')
+
+                const newPages = needRoomForNew
+                    ? [
+                          ...oldData.pages,
+                          {
+                              chats: [newMessage],
+                              nextCursor: 'new',
+                          },
+                      ]
+                    : oldData.pages.map((page, idx) =>
+                          idx === oldData.pages.length - 1
+                              ? {
+                                    ...page,
+                                    chats: [...page.chats, newMessage],
+                                }
+                              : page,
+                      )
+
+                return {
+                    ...oldData,
+                    pages: newPages,
+                    pageParams: needRoomForNew
+                        ? [...oldData.pageParams, 'new']
+                        : oldData.pageParams,
+                }
+            },
+        )
+
         setInput('')
         // input 포커스 유지
         inputRef.current?.focus()
