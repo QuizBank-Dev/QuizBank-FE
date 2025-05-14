@@ -6,21 +6,22 @@ import UserSvg from '@/assets/svgs/user.svg'
 import StarFullSvg from '@/assets/svgs/star-full.svg'
 import NoteSvg from '@/assets/svgs/note.svg'
 
-import { Quizbook } from '@/types/quizbook'
+import { QuizbookMeta, QuizbookStates } from '@/types/quizbook'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { Quiz } from '@/types/quiz'
 
 interface Props {
     className?: string
-    quizbook: Quizbook<string | Quiz>
+    quizbookMeta: QuizbookMeta
+    quizbookStates: QuizbookStates
     isToggle?: boolean
 }
 
 export default function QuizbookInfo({
     className = '',
-    quizbook,
+    quizbookMeta,
+    quizbookStates,
     isToggle = false,
 }: Props) {
     const router = useRouter()
@@ -33,7 +34,7 @@ export default function QuizbookInfo({
     const onToggle = () => {
         const next = mode === 'study' ? 'solution' : 'study'
         setMode(next)
-        router.replace(`/quizbook/${quizbook._id}/${next}`)
+        router.replace(`/quizbook/${quizbookMeta._id}/${next}`)
     }
 
     return (
@@ -79,14 +80,14 @@ export default function QuizbookInfo({
             <div className="flex flex-1 flex-col justify-between gap-[8px]">
                 <div className="flex flex-col">
                     <span className="text-mobile-caption text-point-500 md:text-pc-caption">
-                        {quizbook.category}
+                        {quizbookMeta.category}
                     </span>
                     <h2 className="line-clamp-1 text-mobile-body-lg font-semi-bold md:text-pc-body-md">
-                        {quizbook.title}
+                        {quizbookMeta.title}
                     </h2>
                 </div>
                 <span className="line-clamp-2 text-mobile-body-md text-gray-500 md:text-pc-body-sm">
-                    {quizbook.description}
+                    {quizbookMeta.description}
                 </span>
                 <div className="flex items-center justify-end gap-[8px] text-mobile-body-sm font-semi-bold md:text-pc-body-sm">
                     <div className="flex items-center gap-[4px]">
@@ -94,26 +95,29 @@ export default function QuizbookInfo({
                         <div className="flex items-center gap-[2px]">
                             <span>
                                 {(
-                                    (quizbook.solvedScore /
-                                        quizbook.solvedCount) *
+                                    (quizbookStates.solvedScore /
+                                        (quizbookStates.solvedCount *
+                                            quizbookStates.totalScore)) *
                                     100
                                 ).toFixed(1)}
                                 %
                             </span>
-                            <span className="text-gray-400">{`(${quizbook.solvedCount})`}</span>
+                            <span className="text-gray-400">{`(${quizbookStates.solvedCount})`}</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-[4px]">
                         <StarFullSvg className="size-5 text-[#FDDD51]" />
                         <div className="flex items-center gap-[2px]">
-                            <span>{quizbook.reviewRating.toFixed(1)}</span>
-                            <span className="text-gray-400">{`(${quizbook.reviewCount})`}</span>
+                            <span>
+                                {quizbookStates.reviewRating.toFixed(1)}
+                            </span>
+                            <span className="text-gray-400">{`(${quizbookStates.reviewCount})`}</span>
                         </div>
                     </div>
                     <div className="flex items-center gap-[4px]">
                         <NoteSvg className="size-5 text-gray-400" />
                         <div className="flex items-center gap-[2px]">
-                            <span>{quizbook.quizList.length + 1}</span>
+                            <span>{quizbookMeta.quizList.length + 1}</span>
                             <span className="text-gray-400">문제</span>
                         </div>
                     </div>
