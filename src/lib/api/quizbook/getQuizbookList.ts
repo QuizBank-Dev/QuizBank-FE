@@ -14,5 +14,5 @@ export const getQuizbookList = async (params: QuizbookListParams = {}) => {
         { params },
     )
 
-    return res.data
+    return res.data.result
 }

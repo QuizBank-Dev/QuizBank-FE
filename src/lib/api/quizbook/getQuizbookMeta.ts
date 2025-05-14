@@ -7,9 +7,7 @@ import { QuizbookMeta } from '@/types/quizbook'
  * @param quizbookId 조회할 문제집의 ObjectId
  * @returns 문제집의 메타데이터(QuizbookMeta 타입)
  */
-export const getQuizbookMeta = async (
-    quizbookId: string,
-): Promise<Response<QuizbookMeta>> => {
+export const getQuizbookMeta = async (quizbookId: string) => {
     try {
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/quizbook/${quizbookId}/meta-data`,
@@ -33,7 +31,7 @@ export const getQuizbookMeta = async (
         }
 
         const data: Response<QuizbookMeta> = await res.json()
-        return data
+        return data.result
     } catch (e) {
         if (e instanceof Error) throw e
 

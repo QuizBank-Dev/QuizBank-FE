@@ -12,5 +12,5 @@ export const getQuizbookStates = async (quizbookId: string) => {
         `/quizbook/${quizbookId}/states`,
     )
 
-    return res.data
+    return res.data.result
 }
