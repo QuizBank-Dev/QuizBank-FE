@@ -9,7 +9,7 @@ import { QuizbookMeta } from '@/types/quizbook'
  */
 export const getQuizbookMeta = async (
     quizbookId: string,
-): Promise<QuizbookMeta> => {
+): Promise<Response<QuizbookMeta>> => {
     try {
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_API_URL}/quizbook/${quizbookId}/meta-data`,
@@ -33,7 +33,7 @@ export const getQuizbookMeta = async (
         }
 
         const data: Response<QuizbookMeta> = await res.json()
-        return data.result
+        return data
     } catch (e) {
         if (e instanceof Error) throw e
 

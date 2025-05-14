@@ -12,5 +12,5 @@ export const getQuizbookUserFlags = async (quizbookId: string) => {
         `/quizbook/${quizbookId}/user-flags`,
     )
 
-    return res.data.result
+    return res.data
 }
