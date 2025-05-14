@@ -2,21 +2,20 @@
 
 import { QuestionCard, SolvedCard } from '@/components/study'
 import { getQuestionStore } from '@/store/quizbook'
-import { Quiz } from '@/types/quiz'
 import { useSearchParams } from 'next/navigation'
-import { Quizbook } from '@/types/quizbook'
+import { QuizbookMeta } from '@/types/quizbook'
 import ListAside from './ListAside'
 import CommentAside from './CommentAside'
 
 interface Props {
-    quizbook: Quizbook<Quiz>
+    quizbookMeta: QuizbookMeta
 }
 
-export default function SolutionUI({ quizbook }: Props) {
+export default function SolutionUI({ quizbookMeta }: Props) {
     const panel = useSearchParams().get('panel')
 
-    const { quizList } = quizbook
-    const questionStore = getQuestionStore(quizbook._id)
+    const { quizList } = quizbookMeta
+    const questionStore = getQuestionStore(quizbookMeta._id)
     const { curIdx, next, prev } = questionStore()
     const curQuiz = quizList[curIdx - 1]
 
@@ -34,12 +33,19 @@ export default function SolutionUI({ quizbook }: Props) {
                     <SolvedCard role="ai" quiz={curQuiz} />
                 </div>
             </section>
+
+            <div className="flex flex-col gap-[32px] px-[16px] md:px-[32px]">
+                {/* TODO: 사용자 작성 답안 가져오기 */}
+            </div>
+
             <button className="text-mobile-body-sm font-semi-bold text-point-500 md:text-pc-body-sm">
                 다른 사용자 답안 보기
             </button>
 
-            {panel === 'list' && <ListAside quizbook={quizbook} />}
-            {panel === 'comment' && <CommentAside quizbook={quizbook} />}
+            {panel === 'list' && <ListAside quizbookMeta={quizbookMeta} />}
+            {panel === 'comment' && (
+                <CommentAside quizbookMeta={quizbookMeta} />
+            )}
         </div>
     )
 }

@@ -2,21 +2,20 @@
 
 import { QuestionCard } from '@/components/study'
 import { getAnswerStore, getQuestionStore } from '@/store/quizbook'
-import { Quiz } from '@/types/quiz'
 import { AnswerInput } from '../common'
-import { Quizbook } from '@/types/quizbook'
+import { QuizbookMeta } from '@/types/quizbook'
 import { useSearchParams } from 'next/navigation'
 import ListAside from './ListAside'
 import CommentAside from './CommentAside'
 
 interface Props {
-    quizbook: Quizbook<Quiz>
+    quizbookMeta: QuizbookMeta
 }
 
-export default function StudyUI({ quizbook }: Props) {
+export default function StudyUI({ quizbookMeta }: Props) {
     const panel = useSearchParams().get('panel')
 
-    const { _id: quizbookId, quizList } = quizbook
+    const { _id: quizbookId, quizList } = quizbookMeta
     const questionStore = getQuestionStore(quizbookId)
     const answerStore = getAnswerStore(quizbookId)
 
@@ -71,8 +70,10 @@ export default function StudyUI({ quizbook }: Props) {
                 </button>
             </div>
 
-            {panel === 'list' && <ListAside quizbook={quizbook} />}
-            {panel === 'comment' && <CommentAside quizbook={quizbook} />}
+            {panel === 'list' && <ListAside quizbookMeta={quizbookMeta} />}
+            {panel === 'comment' && (
+                <CommentAside quizbookMeta={quizbookMeta} />
+            )}
         </div>
     )
 }
