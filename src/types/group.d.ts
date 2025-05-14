@@ -35,3 +35,11 @@ export interface Group {
     chatRoom: string
     createdAt: string
 }
+
+export interface GroupInviteUrl {
+    url: stirng
+}
+
+export interface CreateGroupResponse {
+    _id: stirng
+}

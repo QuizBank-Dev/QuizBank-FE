@@ -1,3 +1,4 @@
+import { Response } from '@/types/base'
 import axiosInstance from '../base'
 import { GetChatResponse } from '@/types/chat'
 
@@ -16,7 +17,7 @@ export const getChat = async (
     if (cursor) params.append('cursor', cursor)
     params.append('take', take.toString())
 
-    const res = await axiosInstance.get<{ result: GetChatResponse }>(
+    const res = await axiosInstance.get<Response<GetChatResponse>>(
         `/v1/chat/${chatRoomId}?${params.toString()}`,
     )
     return res.data.result

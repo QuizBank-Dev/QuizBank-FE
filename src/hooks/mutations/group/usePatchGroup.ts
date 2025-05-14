@@ -1,6 +1,6 @@
-import { GroupInfoFormData } from '@/app/group/[groupId]/info/_components/GroupInfo'
 import { patchGroup } from '@/lib/api/group'
 import { Group } from '@/types/group'
+import { GroupFormData } from '@/types/schemas/group'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
@@ -14,7 +14,7 @@ export const usePatchGroup = (
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: (data: GroupInfoFormData) => patchGroup(groupId, data),
+        mutationFn: (data: GroupFormData) => patchGroup(groupId, data),
         retry: 0,
         onSuccess: (_, variables) => {
             queryClient.setQueryData(['group', groupId], (oldData: Group) => {

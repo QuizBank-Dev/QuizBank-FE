@@ -9,24 +9,11 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import * as z from 'zod'
 import InfoItem from './InfoItem'
 import { useGroupQuery } from '@/hooks/queries/group'
 import { usePatchGroup } from '@/hooks/mutations/group'
 import { useCurrentUser } from '@/hooks/queries/user'
-
-const schema = z.object({
-    name: z
-        .string()
-        .min(3, { message: '그룹 이름은 3자 이상으로 해주세요' })
-        .max(20, { message: '그룹 이름은 20자 이하로 해주세요' }),
-    description: z
-        .string()
-        .min(1, { message: '그룹 소개는 꼭 입력해주세요' })
-        .max(50, { message: '그룹 소개는 50자 이하로 해주세요' }),
-})
-
-export type GroupInfoFormData = z.infer<typeof schema>
+import { GroupFormData, groupSchema } from '@/types/schemas/group'
 
 export default function GroupInfo() {
     const [isChangeMode, setIsChangeMode] = useState(false)
@@ -34,8 +21,8 @@ export default function GroupInfo() {
         name: '',
         description: '',
     })
-    const methods = useForm<GroupInfoFormData>({
-        resolver: zodResolver(schema),
+    const methods = useForm<GroupFormData>({
+        resolver: zodResolver(groupSchema),
         mode: 'onChange',
         defaultValues: backUp,
     })
@@ -54,7 +41,7 @@ export default function GroupInfo() {
         setBackUp({ name: data.name, description: data.description })
     }, [reset, setBackUp, data])
 
-    const handleFormSubmit = (data: GroupInfoFormData) => {
+    const handleFormSubmit = (data: GroupFormData) => {
         mutate(data)
     }
     const handleCancel = () => {
