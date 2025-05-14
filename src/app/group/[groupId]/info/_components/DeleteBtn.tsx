@@ -1,6 +1,7 @@
 'use client'
 
-import { useCurrentUser, useGroupQuery } from '@/hooks/queries'
+import { useGroupQuery } from '@/hooks/queries/group'
+import { useCurrentUser } from '@/hooks/queries/user'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 

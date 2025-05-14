@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { postGroup } from '@/lib/api'
+import { postGroup } from '@/lib/api/group'
 
 const schema = z.object({
     name: z

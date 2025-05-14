@@ -1,4 +1,4 @@
-import { getInviteURL } from '@/lib/api'
+import { getInviteURL } from '@/lib/api/group'
 import { useEffect, useState } from 'react'
 
 /**

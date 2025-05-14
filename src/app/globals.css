@@ -14,6 +14,20 @@
     }
 }
 
+/* 커스텀 스크롤 */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #8a43ef;
+    border-radius: 8px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 8px;
+}
+
 /* AnnualStudyHeatmap 스케일 별 컬러 */
 .react-calendar-heatmap .color-scale-1 {
     fill: #e5d5fc;

@@ -3,7 +3,7 @@
 import LoginIcon from '@/assets/svgs/login.svg'
 import NotificationIcon from '@/assets/svgs/notification.svg'
 import UserIcon from '@/assets/svgs/user.svg'
-import { useCurrentUser } from '@/hooks/queries'
+import { useCurrentUser } from '@/hooks/queries/user'
 import { useRouter } from 'next/navigation'
 import LoopAnimation from '../LoopAnimation'
 

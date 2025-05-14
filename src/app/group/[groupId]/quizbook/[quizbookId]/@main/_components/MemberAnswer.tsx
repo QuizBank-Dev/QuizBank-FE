@@ -40,10 +40,7 @@ export default function MemberAnswer({
                     <QuestionCard
                         curIdx={pageNumber + 1}
                         totalIdx={quizList.length}
-                        quiz={{
-                            type: quizList[pageNumber].type,
-                            question: quizList[pageNumber].question,
-                        }}
+                        quiz={quizList[pageNumber]}
                         onPrev={onPrevHandler}
                         onNext={onNextHandler}
                     />

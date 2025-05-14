@@ -1,6 +1,6 @@
 'use client'
 
-import { useCurrentUser } from '@/hooks/queries'
+import { useCurrentUser } from '@/hooks/queries/user'
 import clsx from 'clsx'
 import { usePathname, useRouter } from 'next/navigation'
 

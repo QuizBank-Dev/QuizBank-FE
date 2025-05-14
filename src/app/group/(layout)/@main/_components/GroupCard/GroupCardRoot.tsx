@@ -1,8 +1,8 @@
-import { Group } from '@/types/group'
+import { GroupCard } from '@/types/group'
 import { GroupCardContext } from './GroupCardContext'
 
 interface Props {
-    data: Group
+    data: GroupCard
     children: React.ReactNode
 }
 
