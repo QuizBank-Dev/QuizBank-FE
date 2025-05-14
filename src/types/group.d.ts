@@ -43,3 +43,9 @@ export interface GroupInviteUrl {
 export interface CreateGroupResponse {
     _id: stirng
 }
+
+export interface GroupList {
+    list: GroupCard[]
+    nextCursor: string | null
+    leftCount: number
+}
