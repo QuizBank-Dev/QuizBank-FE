@@ -21,7 +21,7 @@ export const getGroupList = async (
     if (name) params.append('name', name)
 
     const res = await axiosInstance.get<Response<GroupList>>(
-        theme
+        theme === 'total'
             ? `/v1/group?${params.toString()}`
             : `/v1/group/my?${params.toString()}`,
     )
