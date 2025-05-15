@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { CustomInput } from '@/components'
 import { useEmailVerification } from '@/hooks/useEmailVerification'
 import { SignupFormData, signupSchema } from '@/types/schemas/auth'
+import { signup } from '@/lib/api/auth'
 import LoadingButton from '../../_components/LoadingButton'
 
 export default function SignupForm() {
@@ -22,22 +23,17 @@ export default function SignupForm() {
 
     const handleFormSubmit = async (data: SignupFormData) => {
         setIsLoading(true)
-        // TODO 회원가입 API 호출
-        const result = await new Promise<string>((resolve) =>
-            setTimeout(() => {
-                console.log(data)
-                resolve('FAIL')
-            }, 2000),
-        )
-        setIsLoading(false)
-
-        if (result === 'OK') {
-            // 가입 완료 처리
-            router.push('/')
-        } else {
-            // 가입 실패 처리
-            toast('ERROR')
-        }
+        signup(data)
+            .then((response) => {
+                if (response.data.message === 'ok') {
+                    router.push('/')
+                } else {
+                    toast('회원가입 중 오류가 발생했습니다.')
+                }
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
     }
 
     return (
