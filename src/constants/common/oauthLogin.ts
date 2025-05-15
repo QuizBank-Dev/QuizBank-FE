@@ -2,8 +2,7 @@ import GitHubIcon from '@/assets/login-icons/github.svg'
 import GoogleIcon from '@/assets/login-icons/google.svg'
 import KakaoIcon from '@/assets/login-icons/kakao.svg'
 import NaverIcon from '@/assets/login-icons/naver.svg'
-
-export type OAuthProvider = 'github' | 'google' | 'kakao' | 'naver'
+import { OAuthProvider } from '@/types/api/auth'
 
 export const OAuthIcons: Record<OAuthProvider, React.FC> = {
     github: GitHubIcon,

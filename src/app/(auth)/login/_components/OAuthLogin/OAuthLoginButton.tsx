@@ -1,11 +1,9 @@
 'use client'
 
 import clsx from 'clsx'
-import {
-    OAuthBgColor,
-    OAuthIcons,
-    OAuthProvider,
-} from '@/constants/common/oauthLogin'
+import { OAuthBgColor, OAuthIcons } from '@/constants/common/oauthLogin'
+import { OAuthProvider } from '@/types/api/auth'
+import { oauthLogin } from '@/lib/api/auth'
 
 interface Props {
     provider: OAuthProvider
@@ -17,7 +15,7 @@ export default function OAuthLoginButton({ provider, title }: Props) {
     const bgColor = OAuthBgColor[provider]
 
     const handleOAuthButtonClick = () => {
-        console.log(provider)
+        oauthLogin(provider)
     }
 
     return (
