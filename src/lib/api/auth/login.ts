@@ -16,12 +16,9 @@ export const login = async (formData: LoginFormData) => {
  * @param provider OAuth Provider
  * @param redirect 로그인 이후 redirect url
  */
-export const oauthLogin = (
-    provider: OAuthProvider,
-    redirect = location.origin,
-) => {
+export const oauthLogin = (provider: OAuthProvider, redirect = '') => {
     window.open(
-        `${process.env.NEXT_PUBLIC_API_URL}/v1/auth/oauth/${provider}?redirect=${redirect}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/v1/auth/oauth/${provider}?redirect=${location.origin}/${redirect}`,
         '_self',
     )
 }

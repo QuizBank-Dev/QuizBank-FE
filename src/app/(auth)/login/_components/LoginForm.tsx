@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -14,6 +14,7 @@ import LoadingButton from '../../_components/LoadingButton'
 
 export default function LoginForm() {
     const router = useRouter()
+    const searchParams = useSearchParams()
     const [isLoading, setIsLoading] = useState(false)
     const methods = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
@@ -24,7 +25,8 @@ export default function LoginForm() {
         setIsLoading(true)
         login(data)
             .then(() => {
-                router.push('/')
+                const token = searchParams.get('token')
+                router.push(token ? `/group/invitation?token=${token}` : '/')
             })
             .catch((error: AxiosError<EmptyResponse>) => {
                 toast(
