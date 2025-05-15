@@ -24,12 +24,11 @@ export default function SignupForm() {
     const handleFormSubmit = async (data: SignupFormData) => {
         setIsLoading(true)
         signup(data)
-            .then((response) => {
-                if (response.data.message === 'ok') {
-                    router.push('/')
-                } else {
-                    toast('회원가입 중 오류가 발생했습니다.')
-                }
+            .then(() => {
+                router.push('/')
+            })
+            .catch(() => {
+                toast('회원가입 중 오류가 발생했습니다.')
             })
             .finally(() => {
                 setIsLoading(false)

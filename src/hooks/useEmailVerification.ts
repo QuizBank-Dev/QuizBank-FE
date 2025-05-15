@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { generateCode, verification } from '@/lib/api/auth'
+import { AxiosError } from 'axios'
+import { EmptyResponse } from '@/types/base'
 
 type SenderType = 'signup' | 'reset-password'
 
@@ -16,13 +18,12 @@ export function useEmailVerification(type: SenderType = 'signup') {
     const sendCode = async (email: string) => {
         setIsSending(true)
         generateCode(email)
-            .then((response) => {
-                if (response.data.message === 'ok') {
-                    setTimer(300)
-                    toast('인증코드가 전송되었습니다.')
-                } else {
-                    toast('전송 중 오류가 발생했습니다.')
-                }
+            .then(() => {
+                setTimer(300)
+                toast('인증코드가 전송되었습니다.')
+            })
+            .catch(() => {
+                toast('전송 중 오류가 발생했습니다.')
             })
             .finally(() => {
                 setIsSending(false)
@@ -32,20 +33,19 @@ export function useEmailVerification(type: SenderType = 'signup') {
     const verifyCode = async (email: string, code: string) => {
         setIsVerifying(true)
         verification(email, code)
-            .then((response) => {
-                if (response.data.message === 'ok') {
-                    setIsVerified(true)
-                    toast(
-                        type === 'signup'
-                            ? '인증이 완료되었습니다.'
-                            : '초기화 비밀번호가 전송되었습니다.',
-                    )
-                } else {
-                    toast('인증 처리중 오류가 발생했습니다.')
-                }
+            .then(() => {
+                setIsVerified(true)
+                toast(
+                    type === 'signup'
+                        ? '인증이 완료되었습니다.'
+                        : '초기화 비밀번호가 전송되었습니다.',
+                )
             })
-            .catch((error) => {
-                console.log(error)
+            .catch((error: AxiosError<EmptyResponse>) => {
+                toast(
+                    error.response?.data.message ||
+                        '인증 처리중 오류가 발생했습니다.',
+                )
             })
             .finally(() => {
                 setIsVerifying(false)
