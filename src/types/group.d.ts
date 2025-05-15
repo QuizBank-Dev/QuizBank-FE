@@ -9,6 +9,7 @@ export interface GroupCard {
     }
     memberCount: number
     chatRoom?: string
+    unreadMessageCount?: number
 }
 
 export interface Group {
