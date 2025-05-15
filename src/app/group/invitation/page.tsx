@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { invitation } from '@/lib/api/group/invitation'
+import { invitation } from '@/lib/api/group'
 import { getServerToken } from '@/utils/getServerToken'
 
 export default async function Page({
