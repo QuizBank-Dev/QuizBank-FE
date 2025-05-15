@@ -3,68 +3,36 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import * as z from 'zod'
 import { toast } from 'sonner'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CustomInput } from '@/components'
 import { useEmailVerification } from '@/hooks/useEmailVerification'
+import { SignupFormData, signupSchema } from '@/types/schemas/auth'
+import { signup } from '@/lib/api/auth'
 import LoadingButton from '../../_components/LoadingButton'
-
-const schema = z
-    .object({
-        email: z.string().email('이메일 형식으로 입력해주세요.'),
-        code: z.string(),
-        password: z
-            .string()
-            .nonempty('필수 입력되어야하는 항목입니다.')
-            .regex(
-                /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d`~!@#$%^&*()\-_=+\\|/?,.<>;:'"[\]{}]+$/,
-                '비밀번호는 8자리 이상, 영문과 숫자를 1가지 이상 조합해주세요.',
-            )
-            .min(
-                8,
-                '비밀번호는 8자리 이상, 영문과 숫자를 1가지 이상 조합해주세요.',
-            ),
-        confirmPassword: z
-            .string()
-            .nonempty('필수로 입력되어야하는 항목입니다.'),
-        nickname: z.string().nonempty('필수로 입력되어야하는 항목입니다.'),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-        message: '비밀번호가 일치하지 않습니다.',
-        path: ['confirmPassword'],
-    })
-
-type FormData = z.infer<typeof schema>
 
 export default function SignupForm() {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
-    const methods = useForm<FormData>({
-        resolver: zodResolver(schema),
+    const methods = useForm<SignupFormData>({
+        resolver: zodResolver(signupSchema),
         mode: 'onChange',
     })
     const { isVerified, isVerifying, isSending, timer, sendCode, verifyCode } =
         useEmailVerification()
 
-    const handleFormSubmit = async (data: FormData) => {
+    const handleFormSubmit = async (data: SignupFormData) => {
         setIsLoading(true)
-        // TODO 회원가입 API 호출
-        const result = await new Promise<string>((resolve) =>
-            setTimeout(() => {
-                console.log(data)
-                resolve('FAIL')
-            }, 2000),
-        )
-        setIsLoading(false)
-
-        if (result === 'OK') {
-            // 가입 완료 처리
-            router.push('/')
-        } else {
-            // 가입 실패 처리
-            toast('ERROR')
-        }
+        signup(data)
+            .then(() => {
+                router.push('/')
+            })
+            .catch(() => {
+                toast('회원가입 중 오류가 발생했습니다.')
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
     }
 
     return (
@@ -106,7 +74,12 @@ export default function SignupForm() {
                             className="w-32 shrink-0 !px-0 md:mt-1"
                             isLoading={isVerifying}
                             loadingMessage="인증중"
-                            onClick={() => verifyCode('', '')}
+                            onClick={() =>
+                                verifyCode(
+                                    methods.watch('email'),
+                                    methods.watch('code'),
+                                )
+                            }
                             disabled={timer === 0 || isVerified}
                         >
                             {!isVerified ? '확인' : '인증완료'}

@@ -7,11 +7,14 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import LoopAnimation from '../LoopAnimation'
+import { useState } from 'react'
+import ProfileMenu from '@/components/ProfileMenu'
 
 export default function UserMenu() {
     const { data: user, isLoading } = useCurrentUser()
 
     const router = useRouter()
+    const [isProfileOpen, setIsProfileOpen] = useState(false)
 
     if (!user)
         return (
@@ -39,8 +42,11 @@ export default function UserMenu() {
             />
             <User
                 className="size-6 cursor-pointer"
-                onClick={() => router.push('/my-page')}
+                onClick={() => setIsProfileOpen(true)}
             />
+            {isProfileOpen && (
+                <ProfileMenu onClose={() => setIsProfileOpen(false)} />
+            )}
         </div>
     )
 }
