@@ -76,9 +76,11 @@ export default function ChatInput() {
 
     // 엔터 입력 처리
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter' && input.trim().length > 0) {
+        if (e.key === 'Enter') {
             e.preventDefault()
-            sendMessage()
+            if (input.trim().length > 0) {
+                sendMessage()
+            }
         }
     }
 
