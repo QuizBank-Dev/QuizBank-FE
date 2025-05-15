@@ -1,47 +1,42 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import * as z from 'zod'
 import { toast } from 'sonner'
+import { AxiosError } from 'axios'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CustomInput } from '@/components'
+import { LoginFormData, loginSchema } from '@/types/schemas/auth'
+import { EmptyResponse } from '@/types/base'
+import { login } from '@/lib/api/auth'
 import LoadingButton from '../../_components/LoadingButton'
-
-const schema = z.object({
-    email: z.string(),
-    password: z.string(),
-})
-
-type FormData = z.infer<typeof schema>
 
 export default function LoginForm() {
     const router = useRouter()
+    const searchParams = useSearchParams()
     const [isLoading, setIsLoading] = useState(false)
-    const methods = useForm<FormData>({
-        resolver: zodResolver(schema),
+    const methods = useForm<LoginFormData>({
+        resolver: zodResolver(loginSchema),
         mode: 'onSubmit',
     })
 
-    const handleFormSubmit = async (data: FormData) => {
+    const handleFormSubmit = async (data: LoginFormData) => {
         setIsLoading(true)
-        // TODO API 호출
-        const result = await new Promise<string>((resolve) =>
-            setTimeout(() => {
-                console.log(data)
-                resolve('FAIL')
-            }, 2000),
-        )
-        setIsLoading(false)
-
-        if (result === 'OK') {
-            // 로그인 완료 처리
-            router.push('/')
-        } else {
-            // 로그인 실패 처리
-            toast('이메일 또는 비밀번호를 확인해주세요.')
-        }
+        login(data)
+            .then(() => {
+                const token = searchParams.get('token')
+                router.push(token ? `/group/invitation?token=${token}` : '/')
+            })
+            .catch((error: AxiosError<EmptyResponse>) => {
+                toast(
+                    error.response?.data.message ||
+                        '로그인 중 오류가 발생했습니다.',
+                )
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
     }
 
     return (
