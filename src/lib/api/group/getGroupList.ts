@@ -17,7 +17,7 @@ export const getGroupList = async (
 ) => {
     const params = new URLSearchParams()
     if (cursor) params.append('cursor', cursor)
-    params.append('take', limit.toString())
+    params.append('limit', limit.toString())
     if (name) params.append('name', name)
 
     const res = await axiosInstance.get<Response<GroupList>>(
