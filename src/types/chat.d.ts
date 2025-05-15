@@ -3,6 +3,7 @@ export interface ChatMessageType {
     content: string
     sender: string
     createdAt: string
+    chatRoom?: string
 }
 
 export interface GetChatResponse {
