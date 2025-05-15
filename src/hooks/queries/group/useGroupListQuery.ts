@@ -16,13 +16,8 @@ export const useGroupListQuery = (
     const groupListQuery = useInfiniteQuery({
         queryKey: ['group', 'list', theme, name],
         queryFn: ({ pageParam }) =>
-            getGroupList(
-                theme,
-                pageParam ?? undefined,
-                limit,
-                name ?? undefined,
-            ),
-        getNextPageParam: (firstPage) => firstPage.nextCursor,
+            getGroupList(theme, pageParam, limit, name ?? undefined),
+        getNextPageParam: (lastPage) => lastPage.nextCursor,
         initialPageParam: '',
         staleTime: 0,
         gcTime: GcTime.DEFAULT,

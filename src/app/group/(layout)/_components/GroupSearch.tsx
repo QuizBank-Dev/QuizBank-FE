@@ -8,14 +8,43 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import GroupCard from './GroupCard'
-import { useRouter } from 'next/navigation'
 import SearchSvg from '@/assets/svgs/search.svg'
 import { useGroupListQuery } from '@/hooks/queries/group'
 import GroupCardSkeleton from './GroupCardSkeleton'
+import Link from 'next/link'
+import { useEffect, useRef } from 'react'
 
 export default function GroupSearch() {
-    const router = useRouter()
-    const { groupListQuery, setName, setTheme } = useGroupListQuery()
+    const { groupListQuery, setName, setTheme } = useGroupListQuery('total', 5)
+
+    // 무한스크롤을 위한 ref
+    const bottomRef = useRef<HTMLDivElement>(null)
+
+    // Intersection Observer 등록
+    useEffect(() => {
+        if (!bottomRef.current) return
+
+        const observer = new IntersectionObserver(
+            async (entries) => {
+                if (
+                    entries[0].isIntersecting &&
+                    groupListQuery.hasNextPage &&
+                    !groupListQuery.isFetchingNextPage
+                ) {
+                    await groupListQuery.fetchNextPage()
+                }
+            },
+            {
+                root: null,
+                threshold: 1,
+            },
+        )
+        observer.observe(bottomRef.current)
+
+        return () => observer.disconnect()
+    }, [groupListQuery])
+
+    const list = groupListQuery.data?.pages.flatMap((page) => page.list) ?? []
 
     const handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
@@ -66,9 +95,7 @@ export default function GroupSearch() {
                         <div className="text-mobile-body-md font-semi-bold md:text-pc-body-md">
                             {groupListQuery.data
                                 ? (
-                                      groupListQuery.data.pages.flatMap(
-                                          (page) => page.list,
-                                      ).length +
+                                      list.length +
                                       groupListQuery.data.pages[
                                           groupListQuery.data.pages.length - 1
                                       ].leftCount
@@ -77,39 +104,42 @@ export default function GroupSearch() {
                             개의 결과
                         </div>
                     </div>
-                    <button
+                    <Link
                         className="btn-solid btn-mobile-sm md:btn-pc-md"
-                        onClick={() => router.push('/group/new')}
+                        href={'/group/new'}
                     >
                         그룹 생성
-                    </button>
+                    </Link>
                 </div>
             </form>
 
             {groupListQuery.isPending ? (
                 <GroupCardSkeleton />
             ) : (
-                groupListQuery.data?.pages
-                    .flatMap((page) => page.list)
-                    .map((data) => (
-                        <GroupCard key={data._id} data={data}>
-                            <div className="flex items-center justify-between">
-                                <GroupCard.Name />
-                                <div className="flex items-center gap-2 md:gap-4">
-                                    <GroupCard.MemberCount />
-                                    <GroupCard.MessageCount />
-                                </div>
+                list.map((data) => (
+                    <GroupCard key={data._id} data={data}>
+                        <div className="flex items-center justify-between">
+                            <GroupCard.Name />
+                            <div className="flex items-center gap-2 md:gap-4">
+                                <GroupCard.MemberCount />
+                                <GroupCard.MessageCount />
                             </div>
-                            <GroupCard.Description />
-                            <div className="flex items-center justify-between">
-                                <GroupCard.Owner />
-                                <GroupCard.ApplyBtn />
-                            </div>
-                        </GroupCard>
-                    ))
+                        </div>
+                        <GroupCard.Description />
+                        <div className="flex items-center justify-between">
+                            <GroupCard.Owner />
+                            <GroupCard.ApplyBtn />
+                        </div>
+                    </GroupCard>
+                ))
             )}
-            {/* 최상단 감지용 div */}
-            <div>{groupListQuery.isFetchingNextPage && '로딩 중...'}</div>
+            {/* 최하단 감지용 div */}
+            <div
+                ref={bottomRef}
+                className="w-full text-center text-mobile-body-lg font-semi-bold md:text-pc-body-lg"
+            >
+                {groupListQuery.isFetchingNextPage && '로딩 중...'}
+            </div>
         </div>
     )
 }
