@@ -3,28 +3,21 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import * as z from 'zod'
 import { toast } from 'sonner'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CustomInput } from '@/components'
+import { LoginFormData, loginSchema } from '@/types/schemas/auth'
 import LoadingButton from '../../_components/LoadingButton'
-
-const schema = z.object({
-    email: z.string(),
-    password: z.string(),
-})
-
-type FormData = z.infer<typeof schema>
 
 export default function LoginForm() {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
-    const methods = useForm<FormData>({
-        resolver: zodResolver(schema),
+    const methods = useForm<LoginFormData>({
+        resolver: zodResolver(loginSchema),
         mode: 'onSubmit',
     })
 
-    const handleFormSubmit = async (data: FormData) => {
+    const handleFormSubmit = async (data: LoginFormData) => {
         setIsLoading(true)
         // TODO API 호출
         const result = await new Promise<string>((resolve) =>
