@@ -8,7 +8,7 @@ export default function Description() {
     }
 
     return (
-        <span className="line-clamp-2 w-full whitespace-pre-line text-mobile-body-md font-regular text-gray-500 md:text-pc-body-md">
+        <span className="line-clamp-2 w-full whitespace-pre-wrap text-mobile-body-md font-regular text-gray-500 md:text-pc-body-md">
             {description}
         </span>
     )
