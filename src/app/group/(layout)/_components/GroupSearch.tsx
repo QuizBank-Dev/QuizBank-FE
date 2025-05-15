@@ -13,12 +13,22 @@ import { useGroupListQuery } from '@/hooks/queries/group'
 import GroupCardSkeleton from './GroupCardSkeleton'
 import Link from 'next/link'
 import { useEffect, useRef } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 
 export default function GroupSearch() {
-    const { groupListQuery, setName, setTheme } = useGroupListQuery('total', 5)
+    const { groupListQuery, name, setName, theme, setTheme } =
+        useGroupListQuery('total', 5)
+    const queryClient = useQueryClient()
 
     // 무한스크롤을 위한 ref
     const bottomRef = useRef<HTMLDivElement>(null)
+
+    // 첫 랜더링시, 남아있던 모든 my 그룹 관련 캐시 제거
+    useEffect(() => {
+        queryClient.removeQueries({
+            queryKey: ['group', 'list', 'my'],
+        })
+    }, [])
 
     // Intersection Observer 등록
     useEffect(() => {
@@ -42,7 +52,7 @@ export default function GroupSearch() {
         observer.observe(bottomRef.current)
 
         return () => observer.disconnect()
-    }, [groupListQuery])
+    }, [groupListQuery, theme, name, queryClient])
 
     const list = groupListQuery.data?.pages.flatMap((page) => page.list) ?? []
 
@@ -51,11 +61,17 @@ export default function GroupSearch() {
 
         const formData = new FormData(event.currentTarget)
 
-        const name = formData.get('name')?.toString() ?? ''
-        const theme = formData.get('theme')?.toString() ?? 'total'
+        const newName = formData.get('name')?.toString() ?? ''
+        const newTheme = formData.get('theme')?.toString() ?? 'total'
 
-        setName(name)
-        setTheme(theme)
+        // 캐시 제거
+        if (theme === 'my')
+            queryClient.removeQueries({
+                queryKey: ['group', 'list', theme, name],
+            })
+
+        setName(newName)
+        setTheme(newTheme)
     }
 
     return (
@@ -82,6 +98,17 @@ export default function GroupSearch() {
                             defaultValue="total"
                             onValueChange={(value) => {
                                 setTheme(value)
+
+                                // 캐시 제거
+                                if (theme === 'my')
+                                    queryClient.removeQueries({
+                                        queryKey: [
+                                            'group',
+                                            'list',
+                                            theme,
+                                            name,
+                                        ],
+                                    })
                             }}
                         >
                             <SelectTrigger className="mb-0 w-auto gap-[5px] rounded-lg border-2 border-gray-200 bg-white px-[15px] py-[7.5px] text-mobile-body-sm font-regular text-gray-900 md:gap-2 md:px-6 md:py-3 md:text-pc-body-md">

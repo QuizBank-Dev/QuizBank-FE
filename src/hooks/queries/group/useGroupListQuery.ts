@@ -24,5 +24,5 @@ export const useGroupListQuery = (
         retry: 0,
     })
 
-    return { groupListQuery, setName, setTheme }
+    return { groupListQuery, name, setName, theme, setTheme }
 }
