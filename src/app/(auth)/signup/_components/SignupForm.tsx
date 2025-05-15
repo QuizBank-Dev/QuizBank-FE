@@ -79,7 +79,12 @@ export default function SignupForm() {
                             className="w-32 shrink-0 !px-0 md:mt-1"
                             isLoading={isVerifying}
                             loadingMessage="인증중"
-                            onClick={() => verifyCode('', '')}
+                            onClick={() =>
+                                verifyCode(
+                                    methods.watch('email'),
+                                    methods.watch('code'),
+                                )
+                            }
                             disabled={timer === 0 || isVerified}
                         >
                             {!isVerified ? '확인' : '인증완료'}
