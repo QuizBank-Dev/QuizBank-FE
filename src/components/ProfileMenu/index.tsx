@@ -1,9 +1,12 @@
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import clsx from 'clsx'
 import { ProfileImage } from '@/components'
 import { useCurrentUser } from '@/hooks/queries/user'
-import { useRouter } from 'next/navigation'
+import { logout } from '@/lib/api/auth'
+import { getQueryClient } from '@/lib/react-query/getQueryClient'
+import { QueryKey } from '@/constants/common/queryKey'
 
 interface Props {
     onClose: () => void
@@ -12,11 +15,16 @@ interface Props {
 export default function ProfileMenu({ onClose }: Props) {
     const profileRef = useRef<HTMLDivElement | null>(null)
     const router = useRouter()
+    const queryClient = getQueryClient()
     const { data: user } = useCurrentUser()
 
     const handleLogout = () => {
-        // Logout API 호출
-        router.push('/login')
+        logout().then(async () => {
+            router.push('/login')
+            await queryClient.invalidateQueries({
+                queryKey: QueryKey.user.DEFAULT,
+            })
+        })
     }
 
     useEffect(() => {
