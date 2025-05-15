@@ -8,7 +8,7 @@ export default function Description() {
     }
 
     return (
-        <span className="w-full whitespace-normal break-words text-mobile-body-md font-regular text-gray-500 md:text-pc-body-md">
+        <span className="w-full whitespace-pre-line break-words text-mobile-body-md font-regular text-gray-500 md:text-pc-body-md">
             {description}
         </span>
     )
