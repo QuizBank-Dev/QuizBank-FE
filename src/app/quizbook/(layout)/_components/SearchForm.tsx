@@ -12,6 +12,7 @@ import {
 import { Categories } from '@/constants/common/category'
 import { QuizbookListParams } from '@/types/api/quizbook'
 import SearchSvg from '@/assets/svgs/search.svg'
+import { useCurrentUser } from '@/hooks/queries/user'
 
 interface Props {
     params: Pick<QuizbookListParams, 'sort' | 'category' | 'keyword'>
@@ -19,6 +20,7 @@ interface Props {
 
 export default function SearchForm({ params }: Props) {
     const router = useRouter()
+    const { data: user } = useCurrentUser()
 
     const handleSetParams = (name: string, value?: string) => {
         const searchParams = new URLSearchParams({ ...params, [name]: value })
@@ -94,12 +96,14 @@ export default function SearchForm({ params }: Props) {
                         </SelectContent>
                     </Select>
                 </div>
-                <Link
-                    href="/quizbook/post"
-                    className="btn-solid btn-mobile-md md:btn-pc-md"
-                >
-                    문제집 생성
-                </Link>
+                {user && (
+                    <Link
+                        href="/quizbook/post"
+                        className="btn-solid btn-mobile-md md:btn-pc-md"
+                    >
+                        문제집 생성
+                    </Link>
+                )}
             </div>
         </form>
     )
