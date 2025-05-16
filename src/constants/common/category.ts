@@ -17,3 +17,5 @@ export const CategoryEmoji: Record<CategoryType, string> = {
     '웹 개발': '💻',
     기타: '💬',
 }
+
+export const MINIMUM_REQUIRED_CATEGORIES = 1

@@ -9,9 +9,10 @@ export const getServerToken = async () => {
         cookieStore.get('refresh_token')?.value,
     ]
 
-    if (!accessToken || !refreshToken) {
-        return ''
-    }
-
-    return `access_token=${accessToken}; refresh_token=${refreshToken}`
+    return [
+        accessToken && `access_token=${accessToken}`,
+        refreshToken && `refresh_token=${refreshToken}`,
+    ]
+        .filter((item) => !!item)
+        .join('; ')
 }
