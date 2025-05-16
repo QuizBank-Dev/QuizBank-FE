@@ -3,6 +3,7 @@ import InfoIcon from '@/assets/svgs/info.svg'
 import NoteIcon from '@/assets/svgs/note.svg'
 import GroupChatIcon from '@/assets/svgs/group-chat.svg'
 import MemberIcon from '@/assets/svgs/member.svg'
+import CheckGroup from './_components/CheckGroup'
 
 export default async function GroupSidebarLayout({
     children,
@@ -44,6 +45,7 @@ export default async function GroupSidebarLayout({
                 </Sidebar>
             </div>
             {children}
+            <CheckGroup />
         </div>
     )
 }

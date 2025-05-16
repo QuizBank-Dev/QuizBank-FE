@@ -5,14 +5,14 @@ const PUBLIC_PATHS = [
     '/',
     '/login',
     '/signup',
+    '/reset-password',
     '/quizbook',
     /^\/quizbook\/[^/]+$/,
-    // TODO 개발용 전체 path 포함
-    /^\/[^/]*/,
+    '/group/invitation',
 ]
 
 // 로그인이 필요없는 paths
-const SKIP_AUTH_PATHS = ['/login', '/signup']
+const SKIP_AUTH_PATHS = ['/login', '/signup', '/reset-password']
 
 function isMatchedPath(pathname: string, paths: (string | RegExp)[]) {
     return paths.some((path) =>

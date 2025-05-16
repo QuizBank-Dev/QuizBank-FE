@@ -1,39 +1,50 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import clsx from 'clsx'
 import { toast } from 'sonner'
-import { CategoryType } from '@/constants/common/category'
+import {
+    CategoryType,
+    MINIMUM_REQUIRED_CATEGORIES,
+} from '@/constants/common/category'
 import { LoopAnimation } from '@/components'
 import CategoryList from './CategoryList'
+import { setCategory } from '@/lib/api/category'
+import { useCurrentUser } from '@/hooks/queries/user'
+import { getQueryClient } from '@/lib/react-query/getQueryClient'
+import { QueryKey } from '@/constants/common/queryKey'
 
 export default function CategorySelect() {
     const router = useRouter()
+    const queryClient = getQueryClient()
+    const { data: user } = useCurrentUser()
     const [isLoading, setIsLoading] = useState(false)
-    const [categories, setCategories] = useState<CategoryType[]>([
-        CategoryType.DATA_STRUCTURE,
-    ])
+    const [categories, setCategories] = useState<CategoryType[]>([])
+    const routingMethod = useMemo(
+        () =>
+            user?.category.length !== 0 //
+                ? router.back
+                : () => router.push('/'),
+        [router, user?.category.length],
+    )
 
     const handleUpdateCategory = async () => {
         setIsLoading(true)
-        // TODO 카테고리 설정 API 호출
-        const result = await new Promise<string>((resolve) =>
-            setTimeout(() => {
-                console.log(categories)
-                resolve('OK')
-            }, 2000),
-        )
-        setIsLoading(false)
-
-        if (result === 'OK') {
-            // 완료
-            toast('카테고리를 저장했습니다.')
-            router.push('/')
-        } else {
-            // 실패
-            toast('카테고리를 저장할 수 없습니다.')
-        }
+        setCategory(categories)
+            .then(() => {
+                toast('카테고리를 저장했습니다.')
+                routingMethod()
+                queryClient.invalidateQueries({
+                    queryKey: QueryKey.user.DEFAULT,
+                })
+            })
+            .catch(() => {
+                toast('카테고리를 저장하던 중 오류가 발생했습니다.')
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
     }
 
     const handleToggleCategory = (category: CategoryType) => {
@@ -44,24 +55,41 @@ export default function CategorySelect() {
         )
     }
 
+    useEffect(() => {
+        setCategories((user?.category as CategoryType[]) || [])
+    }, [user])
+
     return (
         <>
             <CategoryList
                 categories={categories}
                 onToggle={handleToggleCategory}
             />
-            <button
-                type="button"
-                disabled={isLoading || categories.length < 1}
-                className={clsx(
-                    'btn-solid btn-mobile-lg w-full md:btn-pc-lg',
-                    isLoading && 'btn-loading',
+            <div className="flex w-full flex-col gap-2">
+                <button
+                    type="button"
+                    disabled={
+                        isLoading ||
+                        categories.length < MINIMUM_REQUIRED_CATEGORIES
+                    }
+                    className={clsx(
+                        'btn-solid btn-mobile-lg md:btn-pc-lg',
+                        isLoading && 'btn-loading',
+                    )}
+                    onClick={handleUpdateCategory}
+                >
+                    {isLoading && <LoopAnimation />}
+                    {isLoading ? 'Loading...' : '계속하기'}
+                </button>
+                {user?.category.length !== 0 && (
+                    <button
+                        className="btn-outline btn-mobile-lg md:btn-pc-lg"
+                        onClick={() => routingMethod()}
+                    >
+                        돌아가기
+                    </button>
                 )}
-                onClick={handleUpdateCategory}
-            >
-                {isLoading && <LoopAnimation />}
-                {isLoading ? 'Loading...' : '계속하기'}
-            </button>
+            </div>
         </>
     )
 }

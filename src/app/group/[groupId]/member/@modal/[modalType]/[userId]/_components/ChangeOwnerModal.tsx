@@ -1,7 +1,7 @@
 'use client'
 
 import { LoopAnimation, Modal } from '@/components'
-import { usePatchOwner } from '@/hooks/mutations'
+import { usePatchOwner } from '@/hooks/mutations/group'
 import clsx from 'clsx'
 import { useParams } from 'next/navigation'
 

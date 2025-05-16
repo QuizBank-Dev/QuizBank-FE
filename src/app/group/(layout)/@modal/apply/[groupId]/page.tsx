@@ -1,21 +1,28 @@
 'use client'
 
 import { LoopAnimation, Modal } from '@/components'
+import { patchApply } from '@/lib/api/group'
 import clsx from 'clsx'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
 export default function ApplyGroupModal() {
     const [isLoading, setIsLoading] = useState(false)
-    const params = useParams()
+    const { groupId } = useParams()
+    const router = useRouter()
 
-    const handleClick = () => {
-        // 추후 로직 수정
+    const handleClick = async () => {
         setIsLoading(true)
-        setTimeout(() => {
-            console.log(1)
-            setIsLoading(false)
-        }, 2000)
+        await patchApply(groupId as string)
+            .then(() => {
+                toast('가입 신청이 완료되었습니다!')
+                router.push(`/group`)
+            })
+            .catch((error) => {
+                setIsLoading(false)
+                toast(error.response.data.message)
+            })
     }
 
     return (

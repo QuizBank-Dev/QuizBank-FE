@@ -1,4 +1,5 @@
 import CategorySelect from './_components/CategorySelect'
+import { MINIMUM_REQUIRED_CATEGORIES } from '@/constants/common/category'
 
 export default function Page() {
     return (
@@ -9,7 +10,9 @@ export default function Page() {
                 </h2>
                 <p className="text-mobile-body-sm text-gray-500 md:text-pc-body-sm">
                     선호하는 카테고리를{' '}
-                    <span className="text-point-500">1가지 이상</span>{' '}
+                    <span className="text-point-500">
+                        {MINIMUM_REQUIRED_CATEGORIES}가지 이상
+                    </span>{' '}
                     선택해주세요.
                 </p>
             </div>

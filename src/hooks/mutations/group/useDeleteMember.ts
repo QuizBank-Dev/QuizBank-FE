@@ -1,4 +1,4 @@
-import { deleteMember } from '@/lib/api'
+import { deleteMember } from '@/lib/api/group'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'

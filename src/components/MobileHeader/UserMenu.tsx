@@ -3,14 +3,17 @@
 import LoginIcon from '@/assets/svgs/login.svg'
 import NotificationIcon from '@/assets/svgs/notification.svg'
 import UserIcon from '@/assets/svgs/user.svg'
-import { useCurrentUser } from '@/hooks/queries'
+import { useCurrentUser } from '@/hooks/queries/user'
 import { useRouter } from 'next/navigation'
 import LoopAnimation from '../LoopAnimation'
+import ProfileMenu from '@/components/ProfileMenu'
+import { useState } from 'react'
 
 export default function UserMenu() {
     const { data: user, isLoading } = useCurrentUser()
 
     const router = useRouter()
+    const [isProfileOpen, setIsProfileOpen] = useState(false)
 
     if (!user)
         return (
@@ -36,8 +39,11 @@ export default function UserMenu() {
             />
             <UserIcon
                 className="size-6 cursor-pointer"
-                onClick={() => router.push('/my-page')}
+                onClick={() => setIsProfileOpen(true)}
             />
+            {isProfileOpen && (
+                <ProfileMenu onClose={() => setIsProfileOpen(false)} />
+            )}
         </>
     )
 }

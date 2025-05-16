@@ -1,7 +1,7 @@
 'use client'
 
 import { LoopAnimation, Modal } from '@/components'
-import { useDeleteWithdraw } from '@/hooks/mutations'
+import { useDeleteWithdraw } from '@/hooks/mutations/group'
 import clsx from 'clsx'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
