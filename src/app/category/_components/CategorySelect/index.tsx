@@ -4,7 +4,10 @@ import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import clsx from 'clsx'
 import { toast } from 'sonner'
-import { CategoryType } from '@/constants/common/category'
+import {
+    CategoryType,
+    MINIMUM_REQUIRED_CATEGORIES,
+} from '@/constants/common/category'
 import { LoopAnimation } from '@/components'
 import CategoryList from './CategoryList'
 import { setCategory } from '@/lib/api/category'
@@ -65,7 +68,10 @@ export default function CategorySelect() {
             <div className="flex w-full flex-col gap-2">
                 <button
                     type="button"
-                    disabled={isLoading || categories.length < 1}
+                    disabled={
+                        isLoading ||
+                        categories.length < MINIMUM_REQUIRED_CATEGORIES
+                    }
                     className={clsx(
                         'btn-solid btn-mobile-lg md:btn-pc-lg',
                         isLoading && 'btn-loading',
