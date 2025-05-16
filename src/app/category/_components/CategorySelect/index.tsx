@@ -1,39 +1,40 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import clsx from 'clsx'
 import { toast } from 'sonner'
 import { CategoryType } from '@/constants/common/category'
 import { LoopAnimation } from '@/components'
 import CategoryList from './CategoryList'
+import { setCategory } from '@/lib/api/category'
+import { useCurrentUser } from '@/hooks/queries/user'
+import { getQueryClient } from '@/lib/react-query/getQueryClient'
+import { QueryKey } from '@/constants/common/queryKey'
 
 export default function CategorySelect() {
     const router = useRouter()
+    const queryClient = getQueryClient()
+    const { data: user } = useCurrentUser()
     const [isLoading, setIsLoading] = useState(false)
-    const [categories, setCategories] = useState<CategoryType[]>([
-        CategoryType.DATA_STRUCTURE,
-    ])
+    const [categories, setCategories] = useState<CategoryType[]>([])
 
     const handleUpdateCategory = async () => {
         setIsLoading(true)
-        // TODO 카테고리 설정 API 호출
-        const result = await new Promise<string>((resolve) =>
-            setTimeout(() => {
-                console.log(categories)
-                resolve('OK')
-            }, 2000),
-        )
-        setIsLoading(false)
-
-        if (result === 'OK') {
-            // 완료
-            toast('카테고리를 저장했습니다.')
-            router.push('/')
-        } else {
-            // 실패
-            toast('카테고리를 저장할 수 없습니다.')
-        }
+        setCategory(categories)
+            .then(() => {
+                toast('카테고리를 저장했습니다.')
+                router.push('/')
+                queryClient.invalidateQueries({
+                    queryKey: QueryKey.user.DEFAULT,
+                })
+            })
+            .catch(() => {
+                toast('카테고리를 저장하던 중 오류가 발생했습니다.')
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
     }
 
     const handleToggleCategory = (category: CategoryType) => {
@@ -43,6 +44,10 @@ export default function CategorySelect() {
                 : prev.filter((i) => i !== category),
         )
     }
+
+    useEffect(() => {
+        setCategories((user?.category as CategoryType[]) || [])
+    }, [user])
 
     return (
         <>
