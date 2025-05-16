@@ -1,23 +1,45 @@
 'use client'
 
-import { QuizbookCard as Card, QuizbookCard } from '@/components'
-import { Quizbook } from '@/types/quizbook'
+import { useMemo } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { InfiniteScrollContainer, QuizbookCard } from '@/components'
 import { QuizbookCardStatus } from '@/constants/common/quizbookBadge'
+import { useQuizbookListQuery } from '@/hooks/queries/quizbook/useQuizbookListQuery'
+import { CategoryType } from '@/constants/common/category'
+import { QuizbookSortType } from '@/types/api/quizbook'
 
-interface Props {
-    quizbookList: Quizbook[]
-}
+export default function QuizbookList() {
+    const searchParams = useSearchParams()
+    const params = useMemo(
+        () => ({
+            keyword: searchParams.get('keyword') || undefined,
+            category:
+                (searchParams.get('category') as CategoryType) || undefined,
+            sort: (searchParams.get('sort') as QuizbookSortType) || undefined,
+        }),
+        [searchParams],
+    )
+    const {
+        data: { totalCount, quizbookList },
+        isPending,
+        hasNextPage,
+        isFetchingNextPage,
+        fetchNextPage,
+    } = useQuizbookListQuery(params)
 
-export default function QuizbookList({ quizbookList }: Props) {
     return (
         <div>
             <p className="mb-2 text-mobile-body-md font-semi-bold md:text-pc-body-md">
-                <span className="text-point-500">
-                    {quizbookList.length.toLocaleString()}
-                </span>
+                <span className="text-point-500">{totalCount}</span>
                 개의 결과
             </p>
-            <div className="flex flex-col gap-4">
+            <InfiniteScrollContainer
+                className="flex flex-col gap-4"
+                isPending={isPending}
+                hasNextPage={hasNextPage}
+                isFetchingNextPage={isFetchingNextPage}
+                fetchNextPage={fetchNextPage}
+            >
                 {quizbookList.map((quizbook) => (
                     <QuizbookCard
                         key={quizbook._id}
@@ -34,15 +56,17 @@ export default function QuizbookList({ quizbookList }: Props) {
                         <QuizbookCard.Author />
                         <div className="flex w-full justify-between">
                             <div className="flex items-center gap-2">
-                                <Card.SolvedRate />
-                                <Card.ReviewRate />
-                                <Card.QuizCount />
+                                <QuizbookCard.SolvedRate />
+                                <QuizbookCard.ReviewRate />
+                                <QuizbookCard.QuizCount />
                             </div>
-                            <Card.LikeButton isLike={quizbook.isLiked} />
+                            <QuizbookCard.LikeButton
+                                isLike={quizbook.isLiked}
+                            />
                         </div>
                     </QuizbookCard>
                 ))}
-            </div>
+            </InfiniteScrollContainer>
         </div>
     )
 }
