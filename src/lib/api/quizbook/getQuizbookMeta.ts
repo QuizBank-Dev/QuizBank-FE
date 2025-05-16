@@ -10,7 +10,7 @@ import { QuizbookMeta } from '@/types/quizbook'
 export const getQuizbookMeta = async (quizbookId: string) => {
     try {
         const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/quizbook/${quizbookId}/meta-data`,
+            `${process.env.NEXT_PUBLIC_API_URL}/v1/quizbook/${quizbookId}/meta-data`,
             {
                 method: 'GET',
                 cache: 'force-cache',
