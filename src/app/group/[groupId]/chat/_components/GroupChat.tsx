@@ -162,6 +162,11 @@ export default function GroupChat({ groupId }: { groupId: string }) {
         // cleanup
         return () => {
             socket.off('receive_chat', handleReceiveChat)
+            // 채팅방 나가기
+            socket.emit('leave_chat', [chatRoomId])
+
+            // 캐시 제거
+            queryClient.removeQueries({ queryKey: ['chat', chatRoomId] })
         }
     }, [socket, chatRoomId, queryClient, groupData])
 

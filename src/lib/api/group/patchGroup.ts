@@ -1,4 +1,4 @@
-import { GroupInfoFormData } from '@/app/group/[groupId]/info/_components/GroupInfo'
+import { GroupFormData } from '@/types/schemas/group'
 import axiosInstance from '../base'
 
 /**
@@ -6,6 +6,6 @@ import axiosInstance from '../base'
  * @param groupId 수정하고자 하는 그룹의 ID
  * @param data 그룹 정보 수정 내용
  */
-export const patchGroup = async (groupId: string, data: GroupInfoFormData) => {
+export const patchGroup = async (groupId: string, data: GroupFormData) => {
     await axiosInstance.patch(`/v1/group/${groupId}`, data)
 }

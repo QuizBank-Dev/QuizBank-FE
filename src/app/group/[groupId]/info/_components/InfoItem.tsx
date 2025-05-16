@@ -9,7 +9,7 @@ export default function InfoItem({ label, text }: Props) {
             <span className="text-mobile-body-sm font-regular text-gray-500 md:text-pc-body-sm">
                 {label}
             </span>
-            <span className="whitespace-pre-line text-mobile-body-md font-semi-bold md:text-pc-body-md">
+            <span className="whitespace-pre-wrap text-mobile-body-md font-semi-bold md:text-pc-body-md">
                 {text}
             </span>
         </div>
