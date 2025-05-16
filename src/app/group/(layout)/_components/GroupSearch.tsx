@@ -132,7 +132,7 @@ export default function GroupSearch() {
                         </div>
                     </div>
                     <Link
-                        className="btn-solid btn-mobile-sm md:btn-pc-md"
+                        className="btn-solid btn-mobile-md md:btn-pc-md"
                         href={'/group/new'}
                     >
                         그룹 생성

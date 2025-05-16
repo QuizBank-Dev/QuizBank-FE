@@ -142,7 +142,7 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                     </div>
                 </div>
                 <button
-                    className="btn-solid btn-mobile-sm md:btn-pc-md"
+                    className="btn-solid btn-mobile-md md:btn-pc-md"
                     onClick={() => router.push('/quizbook')}
                 >
                     문제집 추가
