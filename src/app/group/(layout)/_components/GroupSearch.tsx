@@ -12,16 +12,14 @@ import SearchSvg from '@/assets/svgs/search.svg'
 import { useGroupListQuery } from '@/hooks/queries/group'
 import GroupCardSkeleton from './GroupCardSkeleton'
 import Link from 'next/link'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import { InfiniteScrollContainer } from '@/components'
 
 export default function GroupSearch() {
     const { groupListQuery, name, setName, theme, setTheme } =
         useGroupListQuery('total', 5)
     const queryClient = useQueryClient()
-
-    // 무한스크롤을 위한 ref
-    const bottomRef = useRef<HTMLDivElement>(null)
 
     // 첫 랜더링시, 남아있던 모든 my 그룹 관련 캐시 제거
     useEffect(() => {
@@ -29,30 +27,6 @@ export default function GroupSearch() {
             queryKey: ['group', 'list', 'my'],
         })
     }, [])
-
-    // Intersection Observer 등록
-    useEffect(() => {
-        if (!bottomRef.current) return
-
-        const observer = new IntersectionObserver(
-            async (entries) => {
-                if (
-                    entries[0].isIntersecting &&
-                    groupListQuery.hasNextPage &&
-                    !groupListQuery.isFetchingNextPage
-                ) {
-                    await groupListQuery.fetchNextPage()
-                }
-            },
-            {
-                root: null,
-                threshold: 1,
-            },
-        )
-        observer.observe(bottomRef.current)
-
-        return () => observer.disconnect()
-    }, [groupListQuery, theme, name, queryClient])
 
     const list = groupListQuery.data?.pages.flatMap((page) => page.list) ?? []
 
@@ -136,10 +110,15 @@ export default function GroupSearch() {
                 개의 결과
             </div>
 
-            {groupListQuery.isPending ? (
-                <GroupCardSkeleton />
-            ) : (
-                list.map((data) => (
+            <InfiniteScrollContainer
+                isPending={groupListQuery.isPending}
+                hasNextPage={groupListQuery.hasNextPage}
+                isFetchingNextPage={groupListQuery.isFetchingNextPage}
+                fetchNextPage={groupListQuery.fetchNextPage}
+                SkeletonUI={<GroupCardSkeleton />}
+                className={'flex flex-col gap-4'}
+            >
+                {list.map((data) => (
                     <GroupCard key={data._id} data={data}>
                         <div className="flex items-center justify-between">
                             <GroupCard.Name />
@@ -154,15 +133,8 @@ export default function GroupSearch() {
                             <GroupCard.ApplyBtn />
                         </div>
                     </GroupCard>
-                ))
-            )}
-            {/* 최하단 감지용 div */}
-            <div
-                ref={bottomRef}
-                className="w-full text-center text-mobile-body-lg font-semi-bold md:text-pc-body-lg"
-            >
-                {groupListQuery.isFetchingNextPage && '로딩 중...'}
-            </div>
+                ))}
+            </InfiniteScrollContainer>
         </div>
     )
 }
