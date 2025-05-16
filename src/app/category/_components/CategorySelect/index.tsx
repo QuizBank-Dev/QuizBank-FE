@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import clsx from 'clsx'
 import { toast } from 'sonner'
@@ -18,13 +18,20 @@ export default function CategorySelect() {
     const { data: user } = useCurrentUser()
     const [isLoading, setIsLoading] = useState(false)
     const [categories, setCategories] = useState<CategoryType[]>([])
+    const routingMethod = useMemo(
+        () =>
+            user?.category.length !== 0 //
+                ? router.back
+                : () => router.push('/'),
+        [router, user?.category.length],
+    )
 
     const handleUpdateCategory = async () => {
         setIsLoading(true)
         setCategory(categories)
             .then(() => {
                 toast('카테고리를 저장했습니다.')
-                router.push('/')
+                routingMethod()
                 queryClient.invalidateQueries({
                     queryKey: QueryKey.user.DEFAULT,
                 })
@@ -55,18 +62,28 @@ export default function CategorySelect() {
                 categories={categories}
                 onToggle={handleToggleCategory}
             />
-            <button
-                type="button"
-                disabled={isLoading || categories.length < 1}
-                className={clsx(
-                    'btn-solid btn-mobile-lg w-full md:btn-pc-lg',
-                    isLoading && 'btn-loading',
+            <div className="flex w-full flex-col gap-2">
+                <button
+                    type="button"
+                    disabled={isLoading || categories.length < 1}
+                    className={clsx(
+                        'btn-solid btn-mobile-lg md:btn-pc-lg',
+                        isLoading && 'btn-loading',
+                    )}
+                    onClick={handleUpdateCategory}
+                >
+                    {isLoading && <LoopAnimation />}
+                    {isLoading ? 'Loading...' : '계속하기'}
+                </button>
+                {user?.category.length !== 0 && (
+                    <button
+                        className="btn-outline btn-mobile-lg md:btn-pc-lg"
+                        onClick={() => routingMethod()}
+                    >
+                        돌아가기
+                    </button>
                 )}
-                onClick={handleUpdateCategory}
-            >
-                {isLoading && <LoopAnimation />}
-                {isLoading ? 'Loading...' : '계속하기'}
-            </button>
+            </div>
         </>
     )
 }
