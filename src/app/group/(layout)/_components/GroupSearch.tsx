@@ -12,16 +12,14 @@ import SearchSvg from '@/assets/svgs/search.svg'
 import { useGroupListQuery } from '@/hooks/queries/group'
 import GroupCardSkeleton from './GroupCardSkeleton'
 import Link from 'next/link'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import { InfiniteScrollContainer } from '@/components'
 
 export default function GroupSearch() {
     const { groupListQuery, name, setName, theme, setTheme } =
         useGroupListQuery('total', 5)
     const queryClient = useQueryClient()
-
-    // 무한스크롤을 위한 ref
-    const bottomRef = useRef<HTMLDivElement>(null)
 
     // 첫 랜더링시, 남아있던 모든 my 그룹 관련 캐시 제거
     useEffect(() => {
@@ -29,30 +27,6 @@ export default function GroupSearch() {
             queryKey: ['group', 'list', 'my'],
         })
     }, [])
-
-    // Intersection Observer 등록
-    useEffect(() => {
-        if (!bottomRef.current) return
-
-        const observer = new IntersectionObserver(
-            async (entries) => {
-                if (
-                    entries[0].isIntersecting &&
-                    groupListQuery.hasNextPage &&
-                    !groupListQuery.isFetchingNextPage
-                ) {
-                    await groupListQuery.fetchNextPage()
-                }
-            },
-            {
-                root: null,
-                threshold: 1,
-            },
-        )
-        observer.observe(bottomRef.current)
-
-        return () => observer.disconnect()
-    }, [groupListQuery, theme, name, queryClient])
 
     const list = groupListQuery.data?.pages.flatMap((page) => page.list) ?? []
 
@@ -76,7 +50,7 @@ export default function GroupSearch() {
 
     return (
         <div className="flex flex-col gap-4">
-            <form className="flex flex-col gap-4" onSubmit={handleSearch}>
+            <form className="flex flex-col gap-2" onSubmit={handleSearch}>
                 <div className="relative w-full">
                     <input
                         type="text"
@@ -92,47 +66,29 @@ export default function GroupSearch() {
                     </button>
                 </div>
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <Select
-                            name="theme"
-                            defaultValue="total"
-                            onValueChange={(value) => {
-                                setTheme(value)
+                    <Select
+                        name="theme"
+                        defaultValue="total"
+                        onValueChange={(value) => {
+                            setTheme(value)
 
-                                // 캐시 제거
-                                if (theme === 'my')
-                                    queryClient.removeQueries({
-                                        queryKey: [
-                                            'group',
-                                            'list',
-                                            theme,
-                                            name,
-                                        ],
-                                    })
-                            }}
-                        >
-                            <SelectTrigger className="mb-0 w-auto gap-[5px] rounded-lg border-2 border-gray-200 bg-white px-[15px] py-[7.5px] text-mobile-body-sm font-regular text-gray-900 md:gap-2 md:px-6 md:py-3 md:text-pc-body-md">
-                                <SelectValue placeholder="Theme" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="total">모든 그룹</SelectItem>
-                                <SelectItem value="my">나의 그룹</SelectItem>
-                            </SelectContent>
-                        </Select>
-                        <div className="text-mobile-body-md font-semi-bold md:text-pc-body-md">
-                            {groupListQuery.data
-                                ? (
-                                      list.length +
-                                      groupListQuery.data.pages[
-                                          groupListQuery.data.pages.length - 1
-                                      ].leftCount
-                                  ).toLocaleString('en-US')
-                                : '--'}
-                            개의 결과
-                        </div>
-                    </div>
+                            // 캐시 제거
+                            if (theme === 'my')
+                                queryClient.removeQueries({
+                                    queryKey: ['group', 'list', theme, name],
+                                })
+                        }}
+                    >
+                        <SelectTrigger className="mb-0 w-auto gap-[5px] rounded-lg border-2 border-gray-200 bg-white px-[15px] py-[7.5px] text-mobile-body-sm font-regular text-gray-900 md:gap-2 md:px-6 md:py-3 md:text-pc-body-md">
+                            <SelectValue placeholder="Theme" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="total">전체</SelectItem>
+                            <SelectItem value="my">나의 그룹</SelectItem>
+                        </SelectContent>
+                    </Select>
                     <Link
-                        className="btn-solid btn-mobile-sm md:btn-pc-md"
+                        className="btn-solid btn-mobile-md md:btn-pc-md"
                         href={'/group/new'}
                     >
                         그룹 생성
@@ -140,10 +96,29 @@ export default function GroupSearch() {
                 </div>
             </form>
 
-            {groupListQuery.isPending ? (
-                <GroupCardSkeleton />
-            ) : (
-                list.map((data) => (
+            <div className="text-mobile-body-md font-semi-bold md:text-pc-body-md">
+                <span className="text-point-500">
+                    {groupListQuery.data
+                        ? (
+                              list.length +
+                              groupListQuery.data.pages[
+                                  groupListQuery.data.pages.length - 1
+                              ].leftCount
+                          ).toLocaleString('en-US')
+                        : '--'}
+                </span>
+                개의 결과
+            </div>
+
+            <InfiniteScrollContainer
+                isPending={groupListQuery.isPending}
+                hasNextPage={groupListQuery.hasNextPage}
+                isFetchingNextPage={groupListQuery.isFetchingNextPage}
+                fetchNextPage={groupListQuery.fetchNextPage}
+                SkeletonUI={<GroupCardSkeleton />}
+                className={'flex flex-col gap-4'}
+            >
+                {list.map((data) => (
                     <GroupCard key={data._id} data={data}>
                         <div className="flex items-center justify-between">
                             <GroupCard.Name />
@@ -158,15 +133,8 @@ export default function GroupSearch() {
                             <GroupCard.ApplyBtn />
                         </div>
                     </GroupCard>
-                ))
-            )}
-            {/* 최하단 감지용 div */}
-            <div
-                ref={bottomRef}
-                className="w-full text-center text-mobile-body-lg font-semi-bold md:text-pc-body-lg"
-            >
-                {groupListQuery.isFetchingNextPage && '로딩 중...'}
-            </div>
+                ))}
+            </InfiniteScrollContainer>
         </div>
     )
 }

@@ -10,7 +10,6 @@ import {
 } from '@/components/ui/select'
 import { QuizbookCardStatus } from '@/constants/common/quizbookBadge'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import RightArrowIcon from '@/assets/svgs/right-arrow.svg'
 import { Quizbook } from '@/types/quizbook'
 
@@ -118,8 +117,6 @@ const quizbookList: Quizbook[] = [
 ]
 
 export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
-    const router = useRouter()
-
     const handleQuizbookCardClick = () => {
         console.log(1)
     }
@@ -127,7 +124,7 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
     return (
         <section className="flex flex-col gap-4 md:mb-4">
             <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
                     <Select defaultValue="in-progress">
                         <SelectTrigger className="mb-0 w-auto gap-[5px] rounded-lg border-2 border-gray-200 bg-white px-[15px] py-[7.5px] text-mobile-body-sm font-regular text-gray-900 md:gap-2 md:px-6 md:py-3 md:text-pc-body-md">
                             <SelectValue placeholder="Status" />
@@ -137,17 +134,28 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                             <SelectItem value="complete">마감 완료</SelectItem>
                         </SelectContent>
                     </Select>
-                    <div className="text-mobile-body-md font-semi-bold md:text-pc-body-md">
-                        {'1,026'}개의 결과
-                    </div>
+                    <Select defaultValue="recent">
+                        <SelectTrigger className="mb-0 w-auto gap-[5px] rounded-lg border-2 border-gray-200 bg-white px-[15px] py-[7.5px] text-mobile-body-sm font-regular text-gray-900 md:gap-2 md:px-6 md:py-3 md:text-pc-body-md">
+                            <SelectValue placeholder="date" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="recent">등록순</SelectItem>
+                            <SelectItem value="end-date">마감일순</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
-                <button
-                    className="btn-solid btn-mobile-sm md:btn-pc-md"
-                    onClick={() => router.push('/quizbook')}
+                <Link
+                    className="btn-solid btn-mobile-md md:btn-pc-md"
+                    href={`/quizbook`}
                 >
-                    문제집 추가
-                </button>
+                    문제집 선정
+                </Link>
             </div>
+
+            <div className="text-mobile-body-md font-semi-bold md:text-pc-body-md">
+                <span className="text-point-500">{'1,026'}</span>개의 결과
+            </div>
+
             {quizbookList.map((quizbook) => (
                 <QuizbookCard
                     key={quizbook._id}

@@ -46,7 +46,7 @@ export default function GroupMemberList() {
                     </div>
                 </div>
                 <Link
-                    className="btn-solid btn-mobile-sm md:btn-pc-md"
+                    className="btn-solid btn-mobile-md md:btn-pc-md"
                     href={`${path}/invite`}
                 >
                     그룹 초대
