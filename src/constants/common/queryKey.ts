@@ -7,4 +7,8 @@ export const QueryKey = {
         META: 'quizbook-meta',
         USERFLAGS: 'quizbook-user-flags',
     },
+    comment: {
+        LIST: 'comment-list',
+        RECOMMENT_LIST: 'recomment-list',
+    },
 } as const
