@@ -73,10 +73,16 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                             <SelectValue placeholder="정렬 기준" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="increase">
+                            <SelectItem
+                                value="increase"
+                                className="whitespace-nowrap pr-12"
+                            >
                                 마감 오름차순
                             </SelectItem>
-                            <SelectItem value="decrease">
+                            <SelectItem
+                                value="decrease"
+                                className="whitespace-nowrap pr-12"
+                            >
                                 마감 내림차순
                             </SelectItem>
                         </SelectContent>
