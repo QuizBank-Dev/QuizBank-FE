@@ -14,18 +14,21 @@ import RightArrowIcon from '@/assets/svgs/right-arrow.svg'
 import { useGroupQuizbookListQuery } from '@/hooks/queries/group-quizbook'
 import { extractKSTDateOnly } from '@/utils/date/dateOnly'
 import { useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
+import { useEffect } from 'react'
 
 export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
-    const {
-        groupQuizbookListQuery,
-        standard,
-        setStandard,
-        status,
-        setStatus,
-        sort,
-        setSort,
-    } = useGroupQuizbookListQuery(groupId, new Date().toString())
+    const { groupQuizbookListQuery, setStandard, setStatus, setSort } =
+        useGroupQuizbookListQuery(groupId, new Date().toString())
     const router = useRouter()
+    const queryClient = useQueryClient()
+
+    useEffect(() => {
+        return () =>
+            queryClient.removeQueries({
+                queryKey: ['group-quizbook-list', groupId],
+            })
+    }, [groupId, queryClient])
 
     const list =
         groupQuizbookListQuery.data?.pages.flatMap((page) => page.list) ?? []
@@ -37,6 +40,9 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                     <Select
                         defaultValue="in-progress"
                         onValueChange={(value) => {
+                            queryClient.removeQueries({
+                                queryKey: ['group-quizbook-list', groupId],
+                            })
                             setStatus(value)
                             setStandard(new Date().toString())
                         }}
@@ -52,6 +58,9 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                     <Select
                         defaultValue="increase"
                         onValueChange={(value) => {
+                            queryClient.removeQueries({
+                                queryKey: ['group-quizbook-list', groupId],
+                            })
                             setSort(value)
                             setStandard(new Date().toString())
                         }}
