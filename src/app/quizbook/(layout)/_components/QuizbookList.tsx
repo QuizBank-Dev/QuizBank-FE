@@ -30,7 +30,9 @@ export default function QuizbookList() {
     return (
         <div>
             <p className="mb-2 text-mobile-body-md font-semi-bold md:text-pc-body-md">
-                <span className="text-point-500">{totalCount}</span>
+                {!isPending && (
+                    <span className="text-point-500">{totalCount}</span>
+                )}
                 개의 결과
             </p>
             <InfiniteScrollContainer
