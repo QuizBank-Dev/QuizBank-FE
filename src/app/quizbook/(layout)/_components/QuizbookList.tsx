@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { InfiniteScrollContainer, QuizbookCard } from '@/components'
 import { QuizbookCardStatus } from '@/constants/common/quizbookBadge'
 import { useQuizbookListQuery } from '@/hooks/queries/quizbook/useQuizbookListQuery'
@@ -10,6 +10,7 @@ import { QuizbookSortType } from '@/types/api/quizbook'
 
 export default function QuizbookList() {
     const searchParams = useSearchParams()
+    const router = useRouter()
     const params = useMemo(
         () => ({
             keyword: searchParams.get('keyword') || undefined,
@@ -52,7 +53,7 @@ export default function QuizbookList() {
                                 ? QuizbookCardStatus.COMPLETED
                                 : QuizbookCardStatus.BEFORE,
                         }}
-                        onClick={() => {}}
+                        onClick={() => router.push(`/quizbook/${quizbook._id}`)}
                     >
                         <QuizbookCard.Description />
                         <QuizbookCard.Author />
