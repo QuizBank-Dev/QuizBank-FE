@@ -1,6 +1,10 @@
 'use client'
 
-import { InfiniteScrollContainer, QuizbookCard } from '@/components'
+import {
+    CardSkeleton,
+    InfiniteScrollContainer,
+    QuizbookCard,
+} from '@/components'
 import {
     Select,
     SelectContent,
@@ -105,6 +109,7 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                 hasNextPage={groupQuizbookListQuery.hasNextPage}
                 isFetchingNextPage={groupQuizbookListQuery.isFetchingNextPage}
                 fetchNextPage={groupQuizbookListQuery.fetchNextPage}
+                SkeletonUI={<CardSkeleton />}
                 className={'flex flex-col gap-4'}
             >
                 {list.map((groupQuizbook) => (
