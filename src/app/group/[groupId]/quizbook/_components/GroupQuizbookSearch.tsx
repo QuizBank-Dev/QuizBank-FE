@@ -1,6 +1,6 @@
 'use client'
 
-import { QuizbookCard } from '@/components'
+import { InfiniteScrollContainer, QuizbookCard } from '@/components'
 import {
     Select,
     SelectContent,
@@ -91,48 +91,58 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                 개의 결과
             </div>
 
-            {list.map((groupQuizbook) => (
-                <QuizbookCard
-                    key={groupQuizbook.quizbook._id}
-                    id={groupQuizbook.quizbook._id}
-                    {...groupQuizbook.quizbook}
-                    badge={{
-                        status: groupQuizbook.quizbook.isStudied
-                            ? QuizbookCardStatus.COMPLETED
-                            : QuizbookCardStatus.BEFORE,
-                    }}
-                    onClick={() => {
-                        router.push(`/quizbook/${groupQuizbook.quizbook._id}`)
-                    }}
-                >
-                    <QuizbookCard.Description />
-                    <div className="flex w-full items-end justify-between">
-                        <QuizbookCard.Author />
-                        <div className="text-mobile-body-sm font-semi-bold md:text-pc-body-sm">
-                            마감일:{' '}
-                            <span className="text-mobile-body-sm font-semi-bold text-point-500 md:text-pc-body-sm">
-                                {extractKSTDateOnly(groupQuizbook.endedAt)}
-                            </span>
+            <InfiniteScrollContainer
+                isPending={groupQuizbookListQuery.isPending}
+                hasNextPage={groupQuizbookListQuery.hasNextPage}
+                isFetchingNextPage={groupQuizbookListQuery.isFetchingNextPage}
+                fetchNextPage={groupQuizbookListQuery.fetchNextPage}
+                className={'flex flex-col gap-4'}
+            >
+                {list.map((groupQuizbook) => (
+                    <QuizbookCard
+                        key={groupQuizbook.quizbook._id}
+                        id={groupQuizbook.quizbook._id}
+                        {...groupQuizbook.quizbook}
+                        badge={{
+                            status: groupQuizbook.quizbook.isStudied
+                                ? QuizbookCardStatus.COMPLETED
+                                : QuizbookCardStatus.BEFORE,
+                        }}
+                        onClick={() => {
+                            router.push(
+                                `/quizbook/${groupQuizbook.quizbook._id}`,
+                            )
+                        }}
+                    >
+                        <QuizbookCard.Description />
+                        <div className="flex w-full items-end justify-between">
+                            <QuizbookCard.Author />
+                            <div className="text-mobile-body-sm font-semi-bold md:text-pc-body-sm">
+                                마감일:{' '}
+                                <span className="text-mobile-body-sm font-semi-bold text-point-500 md:text-pc-body-sm">
+                                    {extractKSTDateOnly(groupQuizbook.endedAt)}
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                    <div className="flex w-full items-end justify-between">
-                        <div className="flex gap-2">
-                            <QuizbookCard.SolvedRate />
-                            <QuizbookCard.ReviewRate />
-                            <QuizbookCard.QuizCount />
+                        <div className="flex w-full items-end justify-between">
+                            <div className="flex gap-2">
+                                <QuizbookCard.SolvedRate />
+                                <QuizbookCard.ReviewRate />
+                                <QuizbookCard.QuizCount />
+                            </div>
+                            <Link
+                                href={`/group/${groupId}/quizbook/${groupQuizbook.quizbook._id}`}
+                                className="flex cursor-pointer items-center gap-1 text-point-500"
+                            >
+                                <span className="text-mobile-body-sm font-semi-bold md:text-pc-body-sm">
+                                    문제집 활동 상세
+                                </span>
+                                <RightArrowIcon className="size-5 md:size-6" />
+                            </Link>
                         </div>
-                        <Link
-                            href={`/group/${groupId}/quizbook/${groupQuizbook.quizbook._id}`}
-                            className="flex cursor-pointer items-center gap-1 text-point-500"
-                        >
-                            <span className="text-mobile-body-sm font-semi-bold md:text-pc-body-sm">
-                                문제집 활동 상세
-                            </span>
-                            <RightArrowIcon className="size-5 md:size-6" />
-                        </Link>
-                    </div>
-                </QuizbookCard>
-            ))}
+                    </QuizbookCard>
+                ))}
+            </InfiniteScrollContainer>
         </section>
     )
 }
