@@ -12,13 +12,13 @@ export const getQuizbookMeta = async (
 ): Promise<QuizbookMeta> => {
     try {
         const res = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/quizbook/${quizbookId}/meta-data`,
+            `${process.env.NEXT_PUBLIC_API_URL}/v1/quizbook/${quizbookId}/meta-data`,
             {
                 method: 'GET',
                 cache: 'force-cache',
                 next: {
                     tags: [`quizbook-meta-${quizbookId}`],
-                    revalidate: false,
+                    revalidate: 31536000,
                 },
             },
         )
