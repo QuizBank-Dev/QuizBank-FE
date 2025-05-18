@@ -2,7 +2,7 @@
 
 import { Modal } from '@/components'
 import Link from 'next/link'
-import { useParams } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 
 const groupList = [
     {
@@ -48,11 +48,11 @@ const groupList = [
 ]
 
 export default function IncludeGroupModal() {
-    const params = useParams()
+    const { quizbookId } = useParams()
     // 추후 fetch 로직 추가
 
     return (
-        <Modal title="문제집을 그룹에 추가" closeOnOverlayClick={true}>
+        <Modal title="그룹 선택" closeOnOverlayClick={true}>
             <div className="flex flex-col items-center gap-4">
                 <div className="flex h-[200px] w-full flex-col items-center gap-8 overflow-auto rounded-lg border-2 border-gray-200 bg-point-50 p-4 md:p-8">
                     {groupList.length === 0 ? (
@@ -61,12 +61,13 @@ export default function IncludeGroupModal() {
                         </span>
                     ) : (
                         groupList.map((data) => (
-                            <span
+                            <Link
                                 key={data._id}
                                 className="cursor-pointer font-semi-bold md:text-pc-body-md"
+                                href={`/quizbook/${quizbookId}/info/check-group/${data._id}`}
                             >
                                 {data.name}
-                            </span>
+                            </Link>
                         ))
                     )}
                 </div>

@@ -1,3 +1,4 @@
+import CheckGroupModal from './_components/CheckGroupModal'
 import DeleteReviewModal from './_components/DeleteReviewModal'
 import EditReviewModal from './_components/EditReviewModal'
 
@@ -13,6 +14,8 @@ export default async function ModalWithIdWrapper({
             return <EditReviewModal />
         case 'delete-review':
             return <DeleteReviewModal />
+        case 'check-group':
+            return <CheckGroupModal />
         default:
             return null
     }
