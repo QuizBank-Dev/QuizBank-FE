@@ -22,7 +22,7 @@ export default function Review({ quizbookId }: { quizbookId: string }) {
                     </div>
                 </div>
                 <Link
-                    href={`/quizbook/${quizbookId}/create-review`}
+                    href={`/quizbook/${quizbookId}/info/create-review`}
                     className="btn-solid btn-mobile-md md:btn-pc-md"
                 >
                     후기 남기기

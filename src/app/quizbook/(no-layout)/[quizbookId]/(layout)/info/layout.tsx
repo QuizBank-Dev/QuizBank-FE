@@ -3,10 +3,10 @@ import MobileHeader from '@/components/MobileHeader'
 import MobileBottomNav from './_components/MobileBottomNav'
 
 export default function Layout({
-    main,
+    children,
     modal,
 }: {
-    main: React.ReactNode
+    children: React.ReactNode
     modal: React.ReactNode
 }) {
     return (
@@ -20,7 +20,7 @@ export default function Layout({
                     <MobileHeader.UserMenu />
                 </MobileHeader>
 
-                {main}
+                {children}
 
                 {/* 문제 상세 페이지 전용 바텀 Nav */}
                 <MobileBottomNav />

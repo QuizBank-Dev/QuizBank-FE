@@ -6,9 +6,9 @@ import NoteIcon from '@/assets/svgs/note.svg'
 import DateIcon from '@/assets/svgs/date.svg'
 import Link from 'next/link'
 import { ProfileImage } from '@/components'
-import Preview from '../_components/Preview'
-import Review from '../_components/Review'
-import SideBar from '../_components/SideBar'
+import Preview from './_components/Preview'
+import Review from './_components/Review'
+import SideBar from './_components/SideBar'
 
 export default async function QuizbookDetailPage({
     params,
