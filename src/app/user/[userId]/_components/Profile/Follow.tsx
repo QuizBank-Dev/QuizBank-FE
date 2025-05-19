@@ -2,17 +2,22 @@
 
 import clsx from 'clsx'
 import { useMemo } from 'react'
+import { toast } from 'sonner'
 import { useCurrentUser } from '@/hooks/queries/user'
 import { cancelFollow, follow } from '@/lib/api/follow'
-import { toast } from 'sonner'
+import { getQueryClient } from '@/lib/react-query/getQueryClient'
+import { QueryKey } from '@/constants/common/queryKey'
+import { useOtherUser } from '@/hooks/queries/user/useOtherUser'
+import { useParams } from 'next/navigation'
 
-interface Props {
-    _id: string
-    follower: string[]
-}
+export default function Follow() {
+    const queryClient = getQueryClient()
+    const { userId } = useParams<{ userId: string }>()
 
-export default function Follow({ _id, follower }: Props) {
     const { data: user } = useCurrentUser()
+    const { data: targetUser } = useOtherUser(userId)
+    const { _id, follower } = targetUser!
+
     const isFollowed = useMemo(
         () => follower.includes(user?._id || ''),
         [follower, user?._id],
@@ -24,8 +29,13 @@ export default function Follow({ _id, follower }: Props) {
             : (_id: string) => cancelFollow(_id, 'following')
 
         method(_id)
-            .then(() => toast('성공!'))
-            .catch(() => toast.error('실패'))
+            .then(() => {
+                toast(`팔로우했습니다.`)
+                queryClient.invalidateQueries({
+                    queryKey: QueryKey.user.other(_id),
+                })
+            })
+            .catch(() => toast.error('실패했습니다.'))
     }
 
     return (

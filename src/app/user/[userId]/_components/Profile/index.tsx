@@ -35,7 +35,7 @@ export default function Profile() {
             >
                 {introduce || '아직 소개가 작성되지 않았습니다.'}
             </p>
-            <Follow _id={_id} follower={follower} />
+            <Follow />
             <div className="h-px w-full bg-gray-200" />
             <BadgeList experience={experience} />
         </div>
