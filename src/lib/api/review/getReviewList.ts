@@ -16,7 +16,6 @@ export const getReviewList = async (
     const params = new URLSearchParams()
     if (cursor) params.append('cursor', cursor)
     params.append('limit', limit.toString())
-    params.append('quizbookId', quizbookId)
 
     const res = await axiosInstance.get<Response<GroupList>>(
         `/v1/review/quizbook/${quizbookId}?${params.toString()}`,
