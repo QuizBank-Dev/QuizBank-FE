@@ -8,6 +8,7 @@ const PUBLIC_PATHS = [
     '/reset-password',
     '/quizbook',
     /^\/quizbook\/[^/]+$/,
+    /^\/quizbook\/[^/]+\/info$/,
     '/group/invitation',
 ]
 

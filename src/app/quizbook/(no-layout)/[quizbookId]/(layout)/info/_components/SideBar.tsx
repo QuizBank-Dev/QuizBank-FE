@@ -11,6 +11,7 @@ import { useParams, usePathname } from 'next/navigation'
 import { QuizbookMeta } from '@/types/quizbook'
 import { useQuizbookStates } from '@/hooks/queries/quizbook'
 import { toast } from 'sonner'
+import { useCurrentUser } from '@/hooks/queries/user'
 
 export default function SideBar({
     quizbookMeta,
@@ -19,7 +20,8 @@ export default function SideBar({
 }) {
     const path = usePathname()
     const { quizbookId } = useParams()
-    const { data } = useQuizbookStates(quizbookId as string)
+    const { data: statesData } = useQuizbookStates(quizbookId as string)
+    const { data: userData } = useCurrentUser()
 
     const handleCopyUrl = async () => {
         try {
@@ -37,31 +39,44 @@ export default function SideBar({
                 {quizbookMeta.title}
             </h2>
             <nav className="flex flex-col gap-[10px]">
-                <Link
-                    href={`/quizbook/${quizbookId}/study`}
-                    className="btn-solid btn-pc-md text-center"
-                >
-                    다시 풀기
-                </Link>
-                <Link
-                    href={`/quizbook/${quizbookId}/solution`}
-                    className="btn-solid btn-pc-md text-center"
-                >
-                    해설 보기
-                </Link>
-                <Link
-                    href={`${path}/include-group`}
-                    className="btn-solid btn-pc-md text-center"
-                >
-                    그룹에 추가하기
-                </Link>
+                {userData && (
+                    <>
+                        <Link
+                            href={`/quizbook/${quizbookId}/study`}
+                            className="btn-solid btn-pc-md text-center"
+                        >
+                            다시 풀기
+                        </Link>
+                        <Link
+                            href={`/quizbook/${quizbookId}/solution`}
+                            className="btn-solid btn-pc-md text-center"
+                        >
+                            해설 보기
+                        </Link>
+                        <Link
+                            href={`${path}/include-group`}
+                            className="btn-solid btn-pc-md text-center"
+                        >
+                            그룹에 추가하기
+                        </Link>
+                    </>
+                )}
                 <div className="flex w-full gap-[10px]">
-                    <button className="h-auth btn-outline btn-pc-md flex flex-1 items-center justify-center gap-2">
-                        <HeartOutlineIcon className="size-5" />
-                        찜하기
-                    </button>
+                    {userData ? (
+                        <button className="h-auth btn-outline btn-pc-md flex flex-1 items-center justify-center gap-2">
+                            <HeartOutlineIcon className="size-5" />
+                            찜하기
+                        </button>
+                    ) : (
+                        <Link
+                            href={`/login`}
+                            className="btn-solid btn-pc-md flex flex-1 items-center justify-center"
+                        >
+                            로그인
+                        </Link>
+                    )}
                     <button
-                        className="h-auth btn-outline btn-pc-md flex flex-1 items-center justify-center gap-2"
+                        className="btn-outline btn-pc-md flex flex-1 items-center justify-center gap-2"
                         onClick={handleCopyUrl}
                     >
                         <ShareIcon className="size-5" />
@@ -86,11 +101,11 @@ export default function SideBar({
                 </Link>
                 <div className="flex items-center gap-4">
                     <StarFullIcon className="size-6 text-[#FFCC00]" />
-                    {`${data ? data.reviewRating : '--'} (후기 ${data ? data.reviewCount.toLocaleString('en-US') : '--'}개)`}
+                    {`${statesData ? statesData.reviewRating : '--'} (후기 ${statesData ? statesData.reviewCount.toLocaleString('en-US') : '--'}개)`}
                 </div>
                 <div className="flex items-center gap-4">
                     <UserIcon className="size-6 text-gray-400" />
-                    {`${data ? ((data.solvedScore / (data.solvedCount * data.totalScore)) * 100).toFixed(1) : '--'}% (학습자 ${data ? data.solvedCount.toLocaleString('en-US') : '--'}명)`}
+                    {`${statesData ? ((statesData.solvedScore / (statesData.solvedCount * statesData.totalScore)) * 100).toFixed(1) : '--'}% (학습자 ${statesData ? statesData.solvedCount.toLocaleString('en-US') : '--'}명)`}
                 </div>
             </div>
         </section>
