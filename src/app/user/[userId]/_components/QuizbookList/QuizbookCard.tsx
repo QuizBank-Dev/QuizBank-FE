@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { QuizbookCard as Card } from '@/components'
 import { QuizbookCardStatus } from '@/constants/common/quizbookBadge'
 import { Quizbook } from '@/types/quizbook'
@@ -7,6 +8,8 @@ import { Quizbook } from '@/types/quizbook'
 type Props = Quizbook
 
 export default function QuizbookCard({ ...quizbook }: Props) {
+    const router = useRouter()
+    const handleQuizbookClick = () => router.push(`/quizbook/${quizbook._id}`)
     return (
         <Card
             id={quizbook._id}
@@ -16,7 +19,7 @@ export default function QuizbookCard({ ...quizbook }: Props) {
                     ? QuizbookCardStatus.COMPLETED
                     : QuizbookCardStatus.BEFORE,
             }}
-            onClick={() => {}}
+            onClick={handleQuizbookClick}
         >
             <Card.Description />
             <div className="flex w-full justify-between">
