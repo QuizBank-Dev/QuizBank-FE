@@ -1,19 +1,19 @@
 'use client'
 
 import { LoopAnimation, Modal } from '@/components'
+import { useDeleteReview } from '@/hooks/mutations/review'
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useParams } from 'next/navigation'
 
 export default function DeleteReviewModal() {
-    const [isLoading, setIsLoading] = useState(false)
+    const { quizbookId, targetId } = useParams()
+    const { mutate, isPending } = useDeleteReview(
+        quizbookId as string,
+        targetId as string,
+    )
 
     const handleClick = () => {
-        // 추후 로직 수정
-        setIsLoading(true)
-        setTimeout(() => {
-            console.log(1)
-            setIsLoading(false)
-        }, 2000)
+        mutate()
     }
 
     return (
@@ -24,15 +24,15 @@ export default function DeleteReviewModal() {
                     <span>삭제하시겠습니까?</span>
                 </div>
                 <button
-                    disabled={isLoading}
+                    disabled={isPending}
                     className={clsx(
                         'btn-solid btn-mobile-md bg-danger-300 md:btn-pc-md',
-                        isLoading && 'btn-loading',
+                        isPending && 'btn-loading',
                     )}
                     onClick={handleClick}
                 >
-                    {isLoading && <LoopAnimation />}
-                    {isLoading ? 'Loading...' : '삭제'}
+                    {isPending && <LoopAnimation />}
+                    {isPending ? 'Loading...' : '삭제'}
                 </button>
             </div>
         </Modal>
