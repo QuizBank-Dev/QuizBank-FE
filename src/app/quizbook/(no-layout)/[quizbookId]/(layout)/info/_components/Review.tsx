@@ -8,6 +8,7 @@ import ReviewCard from './ReviewCard'
 import { useQuizbookStatesQuery } from '@/hooks/queries/quizbook'
 import { useReviewListQuery } from '@/hooks/queries/review'
 import { useCurrentUser } from '@/hooks/queries/user'
+import { Author } from '@/types/review'
 
 export default function Review({ quizbookId }: { quizbookId: string }) {
     const { data: statesData } = useQuizbookStatesQuery(quizbookId)
@@ -28,7 +29,8 @@ export default function Review({ quizbookId }: { quizbookId: string }) {
             </h2>
             {userData &&
                 reviewsData &&
-                (list.length === 0 || list[0].author._id !== userData._id) && (
+                (list.length === 0 ||
+                    (list[0].author as Author)._id !== userData._id) && (
                     <div className="flex w-full items-start gap-4 rounded-lg bg-[#FFF9DB] p-4">
                         <div className="flex flex-1 gap-2 md:gap-4">
                             <StarFullIcon className="size-5 text-[#FFCC00] md:size-6" />
@@ -105,9 +107,9 @@ export default function Review({ quizbookId }: { quizbookId: string }) {
                         _id={data._id}
                         score={data.score}
                         content={data.content}
-                        author={data.author}
+                        author={data.author as Author}
                         createdAt={data.createdAt}
-                        myReview={data.author._id === userData?._id}
+                        myReview={(data.author as Author)._id === userData?._id}
                     />
                 ))}
                 <button

@@ -12,12 +12,13 @@ import { ProfileImage } from '@/components'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { extractKSTDateOnly } from '@/utils/date/dateOnly'
+import { Author } from '@/types/review'
 
 interface Props {
     _id: string
     score: number
     content: string
-    author: { _id: string; nickname: string; profileImg: string }
+    author: Author
     createdAt: string
     myReview: boolean
 }

@@ -8,7 +8,7 @@ export interface ReviewCard {
     updatedAt: string
 }
 
-interface Author {
+export interface Author {
     _id: string
     nickname: string
     profileImg: string
