@@ -13,5 +13,8 @@ export const useQuizbookUserFlagsQuery = (quizbookId: string) => {
         staleTime: StaleTime.DEFAULT,
         gcTime: GcTime.DEFAULT,
         retry: 0,
+        meta: {
+            ignoreGlobalError: true,
+        },
     })
 }
