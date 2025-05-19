@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query'
  */
 export const useQuizbookStates = (quizbookId: string) => {
     return useQuery({
-        queryKey: ['quizbook', quizbookId],
+        queryKey: ['quizbook-states', quizbookId],
         queryFn: () => getQuizbookStates(quizbookId),
         staleTime: StaleTime.DEFAULT,
         gcTime: GcTime.DEFAULT,
