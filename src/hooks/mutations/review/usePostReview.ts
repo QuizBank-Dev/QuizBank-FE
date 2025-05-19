@@ -21,6 +21,9 @@ export const usePostReview = (quizbookId: string) => {
             queryClient.invalidateQueries({
                 queryKey: ['quizbook-states', quizbookId],
             })
+            queryClient.removeQueries({
+                queryKey: ['quizbook'],
+            })
             router.push(`/quizbook/${quizbookId}/info`)
             toast('리뷰가 추가되었습니다!')
         },

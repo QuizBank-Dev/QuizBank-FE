@@ -44,5 +44,10 @@ export const usePostQuizbookLike = (quizbookId: string) => {
                 )
             }
         },
+        onSuccess: () => {
+            queryClient.removeQueries({
+                queryKey: ['quizbook'],
+            })
+        },
     })
 }
