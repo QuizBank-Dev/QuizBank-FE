@@ -11,7 +11,7 @@ interface InfiniteScrollProps {
     fetchNextPage: () => void
     SkeletonUI?: React.ReactNode
     className?: string
-    rootRef?: React.RefObject<HTMLElement>
+    rootRef?: React.RefObject<HTMLElement | null>
 }
 
 export default function InfiniteScrollContainer({
