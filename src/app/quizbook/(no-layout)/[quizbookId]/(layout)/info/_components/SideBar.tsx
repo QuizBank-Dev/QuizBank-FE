@@ -34,7 +34,7 @@ export default function SideBar({
     return (
         <section className="sticky top-8 flex w-[282px] flex-col gap-4 rounded-lg bg-white p-4 font-semi-bold shadow-point">
             <h2 className="pt-2 text-pc-body-lg font-extra-bold">
-                {'네트워크 마스터를 위한 OX 퀴즈'}
+                {quizbookMeta.title}
             </h2>
             <nav className="flex flex-col gap-[10px]">
                 <Link
