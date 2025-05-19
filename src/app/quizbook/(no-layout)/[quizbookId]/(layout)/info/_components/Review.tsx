@@ -9,6 +9,7 @@ import { useQuizbookStatesQuery } from '@/hooks/queries/quizbook'
 import { useReviewListQuery } from '@/hooks/queries/review'
 import { useCurrentUser } from '@/hooks/queries/user'
 import { Author } from '@/types/review'
+import { useQuizbookUserFlagsQuery } from '@/hooks/queries/like'
 
 export default function Review({ quizbookId }: { quizbookId: string }) {
     const { data: statesData } = useQuizbookStatesQuery(quizbookId)
@@ -19,6 +20,7 @@ export default function Review({ quizbookId }: { quizbookId: string }) {
         isFetchingNextPage,
     } = useReviewListQuery(quizbookId)
     const { data: userData } = useCurrentUser()
+    const { data: flagsData } = useQuizbookUserFlagsQuery(quizbookId as string)
 
     const list = reviewsData?.pages.flatMap((page) => page.data) ?? []
 
@@ -28,6 +30,8 @@ export default function Review({ quizbookId }: { quizbookId: string }) {
                 문제집 후기
             </h2>
             {userData &&
+                flagsData &&
+                flagsData.isStudied &&
                 reviewsData &&
                 (list.length === 0 ||
                     (list[0].author as Author)._id !== userData._id) && (
