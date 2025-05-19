@@ -22,7 +22,7 @@ export const usePostReview = (quizbookId: string) => {
                 queryKey: ['quizbook-states', quizbookId],
             })
             router.push(`/quizbook/${quizbookId}/info`)
-            toast('그룹에 추가되었습니다!')
+            toast('리뷰가 추가되었습니다!')
         },
     })
 }
