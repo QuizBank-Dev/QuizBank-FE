@@ -1,6 +1,6 @@
-import { GroupList } from '@/types/group'
 import axiosInstance from '../base'
 import { Response } from '@/types/base'
+import { ReviewList } from '@/types/review'
 
 /**
  * 문제집의 리뷰 리스트를 조회 요청하는 함수
@@ -17,7 +17,7 @@ export const getReviewList = async (
     if (cursor) params.append('cursor', cursor)
     params.append('limit', limit.toString())
 
-    const res = await axiosInstance.get<Response<GroupList>>(
+    const res = await axiosInstance.get<Response<ReviewList>>(
         `/v1/review/quizbook/${quizbookId}?${params.toString()}`,
     )
     return res.data.result
