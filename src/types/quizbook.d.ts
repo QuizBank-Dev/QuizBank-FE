@@ -20,7 +20,6 @@ export interface Quizbook<T = unknown> {
     reviewScore: number
     reviewRating: number
     quizList: T[]
-    // TODO User 타입으로 분리 필요
     author: Author
     isLiked: boolean
     isStudied: boolean

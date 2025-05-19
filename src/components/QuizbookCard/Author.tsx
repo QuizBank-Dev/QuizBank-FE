@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+import { ProfileImage } from '@/components'
 import { useQuizbookCardContext } from './QuizbookCardContext'
 
 export default function Author() {
@@ -10,12 +12,14 @@ export default function Author() {
     }
 
     return (
-        <div className="flex items-center gap-1.5">
-            {/* TODO 프로필사진 컴포넌트로 업데이트 필요 (author.profileImg) */}
-            <div className="size-8 rounded-full bg-gray-300" />
+        <Link
+            href={`/user/${author._id}`}
+            className="flex items-center gap-1.5"
+        >
+            <ProfileImage size={32} profileImg={author.profileImg} />
             <span className="text-mobile-body-md font-regular text-gray-500 md:text-pc-body-md">
                 {author.nickname}
             </span>
-        </div>
+        </Link>
     )
 }

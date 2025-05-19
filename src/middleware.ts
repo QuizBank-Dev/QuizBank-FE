@@ -21,6 +21,14 @@ function isMatchedPath(pathname: string, paths: (string | RegExp)[]) {
     )
 }
 
+function setUrlHeader(request: NextRequest, response: NextResponse) {
+    const { url } = request
+
+    response.headers.set('x-url', url)
+
+    return response
+}
+
 export function middleware(request: NextRequest) {
     const pathname = request.nextUrl.pathname
 
@@ -35,7 +43,10 @@ export function middleware(request: NextRequest) {
 
     // 로그인 상태로 인증 필요 없는 path 접근
     if (isLoggedIn && isSkipAuthPath) {
-        return NextResponse.redirect(new URL('/', request.url))
+        return setUrlHeader(
+            request,
+            NextResponse.redirect(new URL('/', request.url)),
+        )
     }
 
     // 로그인 되지 않은 상태로 로그인이 필요한 path 접근
@@ -43,7 +54,7 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/login', request.url))
     }
 
-    return NextResponse.next()
+    return setUrlHeader(request, NextResponse.next())
 }
 
 export const config = {

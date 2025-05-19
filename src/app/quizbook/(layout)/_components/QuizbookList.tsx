@@ -1,23 +1,59 @@
 'use client'
 
-import { QuizbookCard as Card, QuizbookCard } from '@/components'
-import { Quizbook } from '@/types/quizbook'
+import { useMemo } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import {
+    CardSkeleton,
+    InfiniteScrollContainer,
+    QuizbookCard,
+    EmptyList,
+} from '@/components'
 import { QuizbookCardStatus } from '@/constants/common/quizbookBadge'
+import { useQuizbookListQuery } from '@/hooks/queries/quizbook/useQuizbookListQuery'
+import { CategoryType } from '@/constants/common/category'
+import { QuizbookSortType } from '@/types/api/quizbook'
 
-interface Props {
-    quizbookList: Quizbook[]
-}
+import QuizbookSvg from '@/assets/svgs/quizbook.svg'
 
-export default function QuizbookList({ quizbookList }: Props) {
+export default function QuizbookList() {
+    const searchParams = useSearchParams()
+    const router = useRouter()
+    const params = useMemo(
+        () => ({
+            keyword: searchParams.get('keyword') || undefined,
+            category:
+                (searchParams.get('category') as CategoryType) || undefined,
+            sort: (searchParams.get('sort') as QuizbookSortType) || undefined,
+        }),
+        [searchParams],
+    )
+    const {
+        data: { totalCount, quizbookList },
+        isPending,
+        hasNextPage,
+        isFetchingNextPage,
+        fetchNextPage,
+    } = useQuizbookListQuery(params)
+
     return (
         <div>
             <p className="mb-2 text-mobile-body-md font-semi-bold md:text-pc-body-md">
-                <span className="text-point-500">
-                    {quizbookList.length.toLocaleString()}
-                </span>
+                {!isPending && (
+                    <span className="text-point-500">{totalCount}</span>
+                )}
                 개의 결과
             </p>
-            <div className="flex flex-col gap-4">
+            <InfiniteScrollContainer
+                className="flex flex-col gap-4"
+                isPending={isPending}
+                hasNextPage={hasNextPage}
+                isFetchingNextPage={isFetchingNextPage}
+                fetchNextPage={fetchNextPage}
+                SkeletonUI={<CardSkeleton />}
+            >
+                {!isPending && quizbookList.length === 0 && (
+                    <EmptyList Icon={QuizbookSvg} />
+                )}
                 {quizbookList.map((quizbook) => (
                     <QuizbookCard
                         key={quizbook._id}
@@ -28,21 +64,23 @@ export default function QuizbookList({ quizbookList }: Props) {
                                 ? QuizbookCardStatus.COMPLETED
                                 : QuizbookCardStatus.BEFORE,
                         }}
-                        onClick={() => {}}
+                        onClick={() => router.push(`/quizbook/${quizbook._id}`)}
                     >
                         <QuizbookCard.Description />
                         <QuizbookCard.Author />
                         <div className="flex w-full justify-between">
                             <div className="flex items-center gap-2">
-                                <Card.SolvedRate />
-                                <Card.ReviewRate />
-                                <Card.QuizCount />
+                                <QuizbookCard.SolvedRate />
+                                <QuizbookCard.ReviewRate />
+                                <QuizbookCard.QuizCount />
                             </div>
-                            <Card.LikeButton isLike={quizbook.isLiked} />
+                            <QuizbookCard.LikeButton
+                                isLike={quizbook.isLiked}
+                            />
                         </div>
                     </QuizbookCard>
                 ))}
-            </div>
+            </InfiniteScrollContainer>
         </div>
     )
 }
