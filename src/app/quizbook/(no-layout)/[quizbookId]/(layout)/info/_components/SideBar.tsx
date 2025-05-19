@@ -1,6 +1,7 @@
 'use client'
 
 import HeartOutlineIcon from '@/assets/svgs/heart-outline.svg'
+import HeartFillIcon from '@/assets/svgs/heart-fill.svg'
 import ShareIcon from '@/assets/svgs/share.svg'
 import NoteIcon from '@/assets/svgs/note.svg'
 import UserIcon from '@/assets/svgs/user.svg'
@@ -12,6 +13,7 @@ import { QuizbookMeta } from '@/types/quizbook'
 import { useQuizbookStates } from '@/hooks/queries/quizbook'
 import { toast } from 'sonner'
 import { useCurrentUser } from '@/hooks/queries/user'
+import { useGetQuizbookUserFlags } from '@/hooks/queries/like'
 
 export default function SideBar({
     quizbookMeta,
@@ -22,6 +24,7 @@ export default function SideBar({
     const { quizbookId } = useParams()
     const { data: statesData } = useQuizbookStates(quizbookId as string)
     const { data: userData } = useCurrentUser()
+    const { data: flagsData } = useGetQuizbookUserFlags(quizbookId as string)
 
     const handleCopyUrl = async () => {
         try {
@@ -41,18 +44,30 @@ export default function SideBar({
             <nav className="flex flex-col gap-[10px]">
                 {userData && (
                     <>
-                        <Link
-                            href={`/quizbook/${quizbookId}/study`}
-                            className="btn-solid btn-pc-md text-center"
-                        >
-                            다시 풀기
-                        </Link>
-                        <Link
-                            href={`/quizbook/${quizbookId}/solution`}
-                            className="btn-solid btn-pc-md text-center"
-                        >
-                            해설 보기
-                        </Link>
+                        {flagsData &&
+                            (flagsData.isStudied ? (
+                                <>
+                                    <Link
+                                        href={`/quizbook/${quizbookId}/study`}
+                                        className="btn-solid btn-pc-md text-center"
+                                    >
+                                        다시 풀기
+                                    </Link>
+                                    <Link
+                                        href={`/quizbook/${quizbookId}/solution`}
+                                        className="btn-solid btn-pc-md text-center"
+                                    >
+                                        해설 보기
+                                    </Link>
+                                </>
+                            ) : (
+                                <Link
+                                    href={`/quizbook/${quizbookId}/study`}
+                                    className="btn-solid btn-pc-md text-center"
+                                >
+                                    문제집 풀기
+                                </Link>
+                            ))}
                         <Link
                             href={`${path}/include-group`}
                             className="btn-solid btn-pc-md text-center"
@@ -64,7 +79,12 @@ export default function SideBar({
                 <div className="flex w-full gap-[10px]">
                     {userData ? (
                         <button className="h-auth btn-outline btn-pc-md flex flex-1 items-center justify-center gap-2">
-                            <HeartOutlineIcon className="size-5" />
+                            {flagsData &&
+                                (flagsData.isLiked ? (
+                                    <HeartFillIcon className="size-5" />
+                                ) : (
+                                    <HeartOutlineIcon className="size-5" />
+                                ))}
                             찜하기
                         </button>
                     ) : (

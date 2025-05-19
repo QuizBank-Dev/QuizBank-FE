@@ -1,16 +1,19 @@
 'use client'
 
 import HeartOutlineIcon from '@/assets/svgs/heart-outline.svg'
+import HeartFillIcon from '@/assets/svgs/heart-fill.svg'
 import ShareIcon from '@/assets/svgs/share.svg'
 import { useCurrentUser } from '@/hooks/queries/user'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 import { toast } from 'sonner'
+import { useGetQuizbookUserFlags } from '@/hooks/queries/like'
 
 export default function MobileBottomNav() {
     const path = usePathname()
     const { quizbookId } = useParams()
     const { data: userData } = useCurrentUser()
+    const { data: flagsData } = useGetQuizbookUserFlags(quizbookId as string)
 
     const handleCopyUrl = async () => {
         try {
@@ -26,18 +29,31 @@ export default function MobileBottomNav() {
             <div className="flex items-center gap-2">
                 {userData ? (
                     <>
-                        <Link
-                            href={`/quizbook/${quizbookId}/study`}
-                            className="btn-solid btn-mobile-sm py-3"
-                        >
-                            다시 풀기
-                        </Link>
-                        <Link
-                            href={`/quizbook/${quizbookId}/solution`}
-                            className="btn-solid btn-mobile-sm py-3"
-                        >
-                            해설
-                        </Link>
+                        {flagsData &&
+                            (flagsData.isStudied ? (
+                                <>
+                                    <Link
+                                        href={`/quizbook/${quizbookId}/study`}
+                                        className="btn-solid btn-mobile-sm py-3"
+                                    >
+                                        다시 풀기
+                                    </Link>
+                                    <Link
+                                        href={`/quizbook/${quizbookId}/solution`}
+                                        className="btn-solid btn-mobile-sm py-3"
+                                    >
+                                        해설
+                                    </Link>
+                                </>
+                            ) : (
+                                <Link
+                                    href={`/quizbook/${quizbookId}/study`}
+                                    className="btn-solid btn-mobile-sm py-3"
+                                >
+                                    문제집 풀기
+                                </Link>
+                            ))}
+
                         <Link
                             href={`${path}/include-group`}
                             className="btn-solid btn-mobile-sm py-3"
@@ -50,9 +66,13 @@ export default function MobileBottomNav() {
                 )}
             </div>
             <div className="flex items-center gap-2">
-                {userData && (
+                {userData && flagsData && (
                     <button className="btn-outline p-2">
-                        <HeartOutlineIcon className="size-4" />
+                        {flagsData.isLiked ? (
+                            <HeartFillIcon className="size-4" />
+                        ) : (
+                            <HeartOutlineIcon className="size-4" />
+                        )}
                     </button>
                 )}
                 <button className="btn-outline p-2" onClick={handleCopyUrl}>
