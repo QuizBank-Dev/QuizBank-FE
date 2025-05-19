@@ -1,31 +1,10 @@
 'use client'
 
 import { QuestionCard } from '@/components/study'
-import { QuizType } from '@/types/quiz'
+import { Quiz } from '@/types/quiz'
 import { useState } from 'react'
 
-const quizList = [
-    {
-        _id: '1',
-        type: '주관식' as QuizType,
-        question: 'test1',
-        optionList: [],
-    },
-    {
-        _id: '2',
-        type: '서술형' as QuizType,
-        question: 'test2',
-        optionList: [],
-    },
-    {
-        _id: '3',
-        type: '주관식' as QuizType,
-        question: 'test3',
-        optionList: [],
-    },
-]
-
-export default function Preview() {
+export default function Preview({ quizList }: { quizList: Quiz[] }) {
     const [pageNumber, setPageNumber] = useState(0)
 
     const onPrevHandler = () => {

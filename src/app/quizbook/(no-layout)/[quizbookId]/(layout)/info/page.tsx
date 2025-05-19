@@ -9,6 +9,8 @@ import { ProfileImage } from '@/components'
 import Preview from './_components/Preview'
 import Review from './_components/Review'
 import SideBar from './_components/SideBar'
+import { getQuizbookMeta } from '@/lib/api/quizbook'
+import { extractKSTDateOnly } from '@/utils/date/dateOnly'
 
 export default async function QuizbookDetailPage({
     params,
@@ -16,6 +18,8 @@ export default async function QuizbookDetailPage({
     params: Promise<{ quizbookId: string }>
 }) {
     const { quizbookId } = await params
+
+    const quizbookMeta = await getQuizbookMeta(quizbookId)
 
     return (
         <main className="no-scrollbar flex w-full flex-1 flex-col items-center overflow-auto">
@@ -35,14 +39,13 @@ export default async function QuizbookDetailPage({
                 {/* 안의 텍스트 */}
                 <div className="relative z-10 flex w-full max-w-[1056px] flex-col items-start gap-4 p-4 text-white md:py-8">
                     <span className="text-mobile-body-lg md:text-pc-body-lg">
-                        {`#네트워크`}
+                        {`#${quizbookMeta.category}`}
                     </span>
                     <h2 className="text-mobile-title-md md:text-pc-title-md">
-                        {`네트워크 마스터를 위한 OX 퀴즈`}
+                        {quizbookMeta.title}
                     </h2>
                     <p className="text-mobile-body-lg md:text-pc-body-lg">
-                        {`네트워크 기초부터 HTTP와 HTTPS의 차이를 학습할 수 있는
-                        문제집입니다.`}
+                        {quizbookMeta.description}
                     </p>
                     <div className="flex flex-wrap items-center gap-4 md:gap-8">
                         <div className="flex items-center gap-2">
@@ -56,26 +59,29 @@ export default async function QuizbookDetailPage({
                     </div>
                     <div className="flex flex-wrap items-center gap-4 md:gap-8">
                         <Link
-                            href={`/user/${321}`}
+                            href={`/user/${quizbookMeta.author._id}`}
                             className="flex items-center gap-2"
                         >
-                            <ProfileImage size={32} profileImg={''} />
-                            {`쭈니`}
+                            <ProfileImage
+                                size={32}
+                                profileImg={quizbookMeta.author.profileImg}
+                            />
+                            {quizbookMeta.author.nickname}
                         </Link>
                         <div className="flex items-center gap-2">
                             <NoteIcon className="size-5 md:size-6" />
-                            {`20 문제`}
+                            {`${quizbookMeta.quizList.length} 문제`}
                         </div>
                         <div className="flex items-center gap-2">
                             <DateIcon className="size-5 md:size-6" />
-                            {`2025-01-01`}
+                            {extractKSTDateOnly(quizbookMeta.createdAt)}
                         </div>
                     </div>
                 </div>
             </section>
             <div className="flex w-full max-w-[1056px] items-start">
                 <div className="flex flex-1 flex-col gap-8 p-4 md:py-8">
-                    <Preview />
+                    <Preview quizList={quizbookMeta.quizList.slice(0, 3)} />
                     <Review quizbookId={quizbookId} />
                 </div>
                 <div className="relative hidden h-full p-4 md:block md:py-8">
