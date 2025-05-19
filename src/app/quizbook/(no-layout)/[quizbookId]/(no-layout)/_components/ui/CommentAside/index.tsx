@@ -3,58 +3,38 @@
 import CloseSvg from '@/assets/svgs/close.svg'
 import LeftArrowSvg from '@/assets/svgs/left-arrow.svg'
 
-import { Quiz } from '@/types/quiz'
-import { Quizbook } from '@/types/quizbook'
+import { QuizbookMeta } from '@/types/quizbook'
 import { QuizbookInfo } from '../../common'
 import { usePathname, useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { Sheet } from 'react-modal-sheet'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import CommentInput from './CommentInput'
-import CommentInputPortal from './CommentInputPortal'
 import { getQuestionStore } from '@/store/quizbook'
 import { Comment } from '@/types/comment'
-import CommentList from './CommentList'
-import CommentDetail from './CommentDetail'
-
-export const commentData = Array.from({ length: 20 }, (_, i) => ({
-    _id: `cmt${i + 1}`,
-    content: `이 문제에 대한 제 생각은 이렇습니다. ${
-        i % 2 === 0
-            ? '로직 흐름을 천천히 따라가면서 문제를 분석해보니 생각보다 간단했지만, 조건을 잘못 이해하면 충분히 틀릴 수 있는 유형입니다.'
-            : '개념 자체는 익숙했지만 보기 구성이 헷갈려서 정답을 찾는 데 시간이 걸렸습니다. 다음부터는 꼼꼼히 읽어야 할 것 같아요.'
-    } 그리고 이런 문제는 자주 반복해서 푸는 게 좋은 것 같아요. 감사합니다!`,
-    quiz: 'quiz123',
-    author: {
-        _id: `user${(i % 5) + 1}`,
-        nickname: [
-            '코딩고수',
-            'JS마스터',
-            '초보개발자',
-            '피드백요정',
-            '감사합니다',
-        ][i % 5],
-        profileImg: `/images/profile/user${(i % 5) + 1}.png`,
-    },
-    createdAt: `2025-05-09T10:${(i + 1).toString().padStart(2, '0')}:00.000Z`,
-    updatedAt: `2025-05-09T10:${(i + 1).toString().padStart(2, '0')}:00.000Z`,
-    recommentCount: [6, 0, 5, 3, 4][i % 5],
-}))
+import CommentListView from './CommentListView'
+import { useQuizbookStates } from '@/hooks/queries/quizbook'
+import RecommentListView from './RecommentListView'
+import CommentItem from './CommentItem'
+import { Sheet } from 'react-modal-sheet'
+import CommentInputPortal from './CommentInputPortal'
+import { LoopAnimation } from '@/components'
 
 interface Props {
-    quizbook: Quizbook<Quiz>
+    quizbookMeta: QuizbookMeta
 }
 
-export default function CommentAside({ quizbook }: Props) {
+export default function CommentAside({ quizbookMeta }: Props) {
     const router = useRouter()
     const pathname = usePathname()
 
     const [isOpen, setIsOpen] = useState(false)
     const [mode, setMode] = useState<'list' | 'detail'>('list')
     const [selectedComment, setSelectedComment] = useState<Comment | null>(null)
+    const desktopRef = useRef<HTMLDivElement | null>(null)
+    const mobileRef = useRef<HTMLDivElement | null>(null)
 
-    const questionStore = getQuestionStore(quizbook._id)
+    const questionStore = getQuestionStore(quizbookMeta._id)
     const curIdx = questionStore((s) => s.curIdx)
-    const curQuiz = quizbook.quizList[curIdx - 1]
+    const curQuiz = quizbookMeta.quizList[curIdx - 1]
 
     const handleClose = () => {
         setIsOpen(false)
@@ -69,8 +49,7 @@ export default function CommentAside({ quizbook }: Props) {
         setMode('list')
     }
 
-    // TODO 댓글 조회 로직
-
+    // 새로 고침시 Hydration mismatch 오류 방지(컴포넌트 마운트 후 Open)
     useEffect(() => {
         setIsOpen(true)
     }, [])
@@ -103,19 +82,50 @@ export default function CommentAside({ quizbook }: Props) {
                         </button>
                     </div>
 
-                    {/* 문제집 정보 영역 */}
-                    {mode === 'list' && <QuizbookInfo quizbook={quizbook} />}
-
-                    {/* 댓글 영역 */}
+                    {/* 상위 댓글 */}
                     {mode === 'list' && (
-                        <CommentList
-                            commentList={commentData}
-                            onClickRecomment={handleClickRecomment}
-                        />
+                        <>
+                            <Suspense
+                                fallback={
+                                    <div className="flex items-center justify-center p-[16] md:p-[32px]">
+                                        <div className="size-8 animate-spin">
+                                            <LoopAnimation />
+                                        </div>
+                                    </div>
+                                }
+                            >
+                                <QuizbookInfo quizbookMeta={quizbookMeta} />
+                            </Suspense>
+                            <div
+                                className="flex-1 overflow-y-auto"
+                                ref={desktopRef}
+                            >
+                                <CommentListView
+                                    ref={desktopRef}
+                                    onClickRecomment={handleClickRecomment}
+                                    quiz={curQuiz}
+                                />
+                            </div>
+                        </>
                     )}
 
+                    {/* 대댓글 */}
                     {mode === 'detail' && selectedComment && (
-                        <CommentDetail selectedComment={selectedComment} />
+                        <>
+                            <CommentItem
+                                isTopComment={true}
+                                comment={selectedComment}
+                            />
+                            <div
+                                className="flex-1 overflow-y-auto pl-[32px]"
+                                ref={desktopRef}
+                            >
+                                <RecommentListView
+                                    ref={desktopRef}
+                                    comment={selectedComment}
+                                />
+                            </div>
+                        </>
                     )}
 
                     <CommentInput
@@ -130,7 +140,7 @@ export default function CommentAside({ quizbook }: Props) {
                 className="md:hidden"
                 isOpen={isOpen}
                 onClose={handleClose}
-                snapPoints={[0.8, 0.6, 0.4, 0.2]}
+                snapPoints={[1, 0.8, 0.6, 0.4, 0.2]}
                 initialSnap={1}
                 dragVelocityThreshold={2000}
             >
@@ -157,17 +167,28 @@ export default function CommentAside({ quizbook }: Props) {
                         </div>
 
                         {/* 댓글 영역 */}
-                        <Sheet.Scroller className="no-scrollbar flex-1">
+                        <Sheet.Scroller ref={mobileRef}>
+                            {/* 상위 댓글 */}
                             {mode === 'list' && (
-                                <CommentList
-                                    commentList={commentData}
+                                <CommentListView
+                                    ref={mobileRef}
+                                    quiz={curQuiz}
                                     onClickRecomment={handleClickRecomment}
                                 />
                             )}
                             {mode === 'detail' && selectedComment && (
-                                <CommentDetail
-                                    selectedComment={selectedComment}
-                                />
+                                <>
+                                    <CommentItem
+                                        isTopComment={true}
+                                        comment={selectedComment}
+                                    />
+                                    <div className="pl-[16px]">
+                                        <RecommentListView
+                                            ref={mobileRef}
+                                            comment={selectedComment}
+                                        />
+                                    </div>
+                                </>
                             )}
                         </Sheet.Scroller>
                     </Sheet.Content>

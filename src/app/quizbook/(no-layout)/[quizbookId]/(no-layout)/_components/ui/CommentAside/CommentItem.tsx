@@ -2,6 +2,7 @@
 
 import EllipsisVSvg from '@/assets/svgs/elipsis-v.svg'
 import RightArrowSvg from '@/assets/svgs/right-arrow.svg'
+import { ProfileImage } from '@/components'
 import { Comment } from '@/types/comment'
 import { extractKSTDateOnly } from '@/utils/date/dateOnly'
 import clsx from 'clsx'
@@ -19,15 +20,20 @@ export default function CommentItem({
 }: Props) {
     return (
         <div
-            className={clsx('flex flex-col gap-[16px] p-[16px]', {
+            onClick={onClickComment}
+            className={clsx('flex flex-col gap-[8px] p-[16px] md:gap-[16px]', {
                 'bg-point-50': isTopComment,
+                'cursor-pointer': onClickComment,
             })}
         >
             <div className="flex items-start gap-[16px]">
-                <div className="size-8 rounded-full bg-gray-300" />
+                <ProfileImage
+                    size={32}
+                    profileImg={comment.author.profileImg}
+                />
                 <div className="flex-1">
                     <div className="flex items-center gap-[8px]">
-                        <span className="text-mobilebody-md text-pc-body-md font-semi-bold text-gray-600">
+                        <span className="text-mobile-body-md font-semi-bold text-gray-600 md:text-pc-body-md">
                             {comment.author.nickname}
                         </span>
                         <span className="text-mobile-body-sm text-gray-500 md:text-pc-body-sm">
@@ -36,7 +42,7 @@ export default function CommentItem({
                     </div>
                     <p
                         style={{ overflowWrap: 'anywhere' }}
-                        className="whitespace-pre-line break-words text-pc-body-sm"
+                        className="whitespace-pre-line break-words text-mobile-body-md md:text-pc-body-md"
                     >
                         {comment.content}
                     </p>
@@ -46,16 +52,13 @@ export default function CommentItem({
                 </button>
             </div>
             {comment.recommentCount && !isTopComment ? (
-                <button
-                    onClick={onClickComment}
-                    className="flex items-center gap-[16px]"
-                >
+                <div className="flex items-center gap-[16px] text-mobile-body-sm md:text-pc-body-sm">
                     <div className="w-[32px]" />
                     <div className="flex items-center gap-[4px]">
                         <span>{`답글 ${comment.recommentCount}개`}</span>
                         <RightArrowSvg className="size-5" />
                     </div>
-                </button>
+                </div>
             ) : null}
         </div>
     )

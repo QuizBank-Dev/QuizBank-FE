@@ -10,7 +10,6 @@ import { QuizbookInfo } from '../common'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { QuizbookMeta } from '@/types/quizbook'
 import clsx from 'clsx'
-import { useQuizbookStates } from '@/hooks/queries/quizbook'
 import { LoopAnimation } from '@/components'
 
 interface Props {
@@ -21,8 +20,6 @@ export default function MobileMenu({ quizbookMeta }: Props) {
     const router = useRouter()
     const pathname = usePathname()
     const panel = useSearchParams().get('panel')
-
-    const { data: quizbookStates } = useQuizbookStates(quizbookMeta._id)
 
     const { isOpen, closeMenu } = useMobileMenuStore()
 
@@ -65,17 +62,13 @@ export default function MobileMenu({ quizbookMeta }: Props) {
                 <Suspense
                     fallback={
                         <div className="flex items-center justify-center p-[16px]">
-                            <div className="size-8">
+                            <div className="size-8 animate-spin">
                                 <LoopAnimation />
                             </div>
                         </div>
                     }
                 >
-                    <QuizbookInfo
-                        quizbookMeta={quizbookMeta}
-                        quizbookStates={quizbookStates}
-                        isToggle={true}
-                    />
+                    <QuizbookInfo quizbookMeta={quizbookMeta} isToggle={true} />
                 </Suspense>
 
                 {/* 메뉴 리스트 영역 */}
