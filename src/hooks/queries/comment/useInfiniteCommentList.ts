@@ -2,10 +2,10 @@ import { GcTime } from '@/constants/common/gcTime'
 import { QueryKey } from '@/constants/common/queryKey'
 import { StaleTime } from '@/constants/common/staleTime'
 import { getCommentList } from '@/lib/api/comment'
-import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 
 export const useInfiniteCommentList = (quizId: string) =>
-    useSuspenseInfiniteQuery({
+    useInfiniteQuery({
         queryKey: [QueryKey.comment.LIST, quizId],
         queryFn: ({ pageParam }) =>
             getCommentList(quizId, {
