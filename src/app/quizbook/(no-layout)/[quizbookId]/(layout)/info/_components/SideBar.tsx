@@ -131,7 +131,7 @@ export default function SideBar({
                 </div>
                 <div className="flex items-center gap-4">
                     <UserIcon className="size-6 text-gray-400" />
-                    {`${statesData ? ((statesData.solvedScore / (statesData.solvedCount * statesData.totalScore)) * 100).toFixed(1) : '--'}% (학습자 ${statesData ? statesData.solvedCount.toLocaleString('en-US') : '--'}명)`}
+                    {`${statesData ? (statesData.solvedCount !== 0 ? ((statesData.solvedScore / (statesData.solvedCount * statesData.totalScore)) * 100).toFixed(1) : '--') : '--'}% (학습자 ${statesData ? statesData.solvedCount.toLocaleString('en-US') : '--'}명)`}
                 </div>
             </div>
         </section>

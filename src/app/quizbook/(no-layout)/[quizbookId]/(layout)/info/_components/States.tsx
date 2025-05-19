@@ -17,7 +17,7 @@ export default function States() {
             </div>
             <div className="flex items-center gap-2">
                 <UserIcon className="size-5 md:size-6" />
-                {`${data ? ((data.solvedScore / (data.solvedCount * data.totalScore)) * 100).toFixed(1) : '--'}% (학습자 ${data ? data.solvedCount.toLocaleString('en-US') : '--'}명)`}
+                {`${data ? (data.solvedCount !== 0 ? ((data.solvedScore / (data.solvedCount * data.totalScore)) * 100).toFixed(1) : '--') : '--'}% (학습자 ${data ? data.solvedCount.toLocaleString('en-US') : '--'}명)`}
             </div>
         </div>
     )
