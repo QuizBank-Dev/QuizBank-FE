@@ -1,7 +1,5 @@
 import backgroundImg from '@/assets/pngs/background.png'
 import Image from 'next/image'
-import StarFullIcon from '@/assets/svgs/star-full.svg'
-import UserIcon from '@/assets/svgs/user.svg'
 import NoteIcon from '@/assets/svgs/note.svg'
 import DateIcon from '@/assets/svgs/date.svg'
 import Link from 'next/link'
@@ -11,6 +9,7 @@ import Review from './_components/Review'
 import SideBar from './_components/SideBar'
 import { getQuizbookMeta } from '@/lib/api/quizbook'
 import { extractKSTDateOnly } from '@/utils/date/dateOnly'
+import States from './_components/States'
 
 export default async function QuizbookDetailPage({
     params,
@@ -47,16 +46,7 @@ export default async function QuizbookDetailPage({
                     <p className="text-mobile-body-lg md:text-pc-body-lg">
                         {quizbookMeta.description}
                     </p>
-                    <div className="flex flex-wrap items-center gap-4 md:gap-8">
-                        <div className="flex items-center gap-2">
-                            <StarFullIcon className="size-5 text-[#FDDD51] md:size-6" />
-                            {`4.3 (후기 53개)`}
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <UserIcon className="size-5 md:size-6" />
-                            {`78.5% (학습자 121명)`}
-                        </div>
-                    </div>
+                    <States />
                     <div className="flex flex-wrap items-center gap-4 md:gap-8">
                         <Link
                             href={`/user/${quizbookMeta.author._id}`}
@@ -85,7 +75,7 @@ export default async function QuizbookDetailPage({
                     <Review quizbookId={quizbookId} />
                 </div>
                 <div className="relative hidden h-full p-4 md:block md:py-8">
-                    <SideBar />
+                    <SideBar quizbookMeta={quizbookMeta} />
                 </div>
             </div>
         </main>
