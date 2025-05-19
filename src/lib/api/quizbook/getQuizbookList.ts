@@ -18,5 +18,5 @@ export const getQuizbookList = async (
         { params, headers: { Cookie: cookie } },
     )
 
-    return res.data.result
+    return res.data
 }
