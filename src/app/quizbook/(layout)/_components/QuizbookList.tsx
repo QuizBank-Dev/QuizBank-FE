@@ -2,7 +2,11 @@
 
 import { useMemo } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { InfiniteScrollContainer, QuizbookCard } from '@/components'
+import {
+    CardSkeleton,
+    InfiniteScrollContainer,
+    QuizbookCard,
+} from '@/components'
 import { QuizbookCardStatus } from '@/constants/common/quizbookBadge'
 import { useQuizbookListQuery } from '@/hooks/queries/quizbook/useQuizbookListQuery'
 import { CategoryType } from '@/constants/common/category'
@@ -43,6 +47,7 @@ export default function QuizbookList() {
                 hasNextPage={hasNextPage}
                 isFetchingNextPage={isFetchingNextPage}
                 fetchNextPage={fetchNextPage}
+                SkeletonUI={<CardSkeleton />}
             >
                 {!isPending && quizbookList.length === 0 && <EmptyList />}
                 {quizbookList.map((quizbook) => (
