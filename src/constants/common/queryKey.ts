@@ -1,8 +1,11 @@
+import { QuizbookListParams } from '@/types/api/quizbook'
+
 export const QueryKey = {
     user: {
         DEFAULT: ['user'],
     },
     quizbook: {
+        DEFAULT: (params: QuizbookListParams) => ['quizbook', params],
         STATES: 'quizbook-states',
         META: 'quizbook-meta',
         USERFLAGS: 'quizbook-user-flags',

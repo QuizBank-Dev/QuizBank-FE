@@ -1,115 +1,18 @@
 import QuizbookList from './_components/QuizbookList'
-import { Quizbook } from '@/types/quizbook'
-import SearchForm from '@/app/quizbook/(layout)/_components/SearchForm'
+import SearchForm from './_components/SearchForm'
+import { QuizbookListParams } from '@/types/api/quizbook'
 
-const quizbookList: Quizbook[] = [
-    {
-        _id: '67fdc5ac1e49a2871aeb6657',
-        title: '면접 대비 CS 문제집',
-        description: '면접 대비하는 문제입니다.',
-        category: '웹 개발',
-        quizList: [
-            '67fdc5ac1e49a2871aeb6651',
-            '67fdc5ac1e49a2871aeb6652',
-            '67fdc5ac1e49a2871aeb6653',
-        ],
-        solvedCount: 3,
-        solvedScore: 40,
-        reviewCount: 1,
-        reviewScore: 4,
-        reviewRating: 4,
-        author: {
-            _id: '67e2e20e5872c849d5dd4b86',
-            nickname: 'test계정',
-            profileImg: '',
-        },
-        createdAt: '2025-04-15T02:34:20.113Z',
-        updatedAt: '2025-04-15T08:24:44.912Z',
-        isLiked: false,
-        isStudied: true,
-    },
-    {
-        _id: '67fdc5ac1e49a2871aeb6658',
-        title: '면접 대비 CS 문제집',
-        description: '면접 대비하는 문제입니다.',
-        category: '웹 개발',
-        quizList: [
-            '67fdc5ac1e49a2871aeb6651',
-            '67fdc5ac1e49a2871aeb6652',
-            '67fdc5ac1e49a2871aeb6653',
-        ],
-        solvedCount: 3,
-        solvedScore: 40,
-        reviewCount: 1,
-        reviewScore: 4,
-        reviewRating: 4,
-        author: {
-            _id: '67e2e20e5872c849d5dd4b86',
-            nickname: 'test계정',
-            profileImg: '',
-        },
-        createdAt: '2025-04-15T02:34:20.113Z',
-        updatedAt: '2025-04-15T08:24:44.912Z',
-        isLiked: false,
-        isStudied: false,
-    },
-    {
-        _id: '67fdc5ac1e49a2871aeb6659',
-        title: '면접 대비 CS 문제집',
-        description: '면접 대비하는 문제입니다.',
-        category: '웹 개발',
-        quizList: [
-            '67fdc5ac1e49a2871aeb6651',
-            '67fdc5ac1e49a2871aeb6652',
-            '67fdc5ac1e49a2871aeb6653',
-        ],
-        solvedCount: 3,
-        solvedScore: 40,
-        reviewCount: 1,
-        reviewScore: 4,
-        reviewRating: 4,
-        author: {
-            _id: '67e2e20e5872c849d5dd4b86',
-            nickname: 'test계정',
-            profileImg: '',
-        },
-        createdAt: '2025-04-15T02:34:20.113Z',
-        updatedAt: '2025-04-15T08:24:44.912Z',
-        isLiked: true,
-        isStudied: true,
-    },
-    {
-        _id: '67fdc5ac1e49a2871aeb6660',
-        title: '면접 대비 CS 문제집',
-        description: '면접 대비하는 문제입니다.',
-        category: '웹 개발',
-        quizList: [
-            '67fdc5ac1e49a2871aeb6651',
-            '67fdc5ac1e49a2871aeb6652',
-            '67fdc5ac1e49a2871aeb6653',
-        ],
-        solvedCount: 3,
-        solvedScore: 40,
-        reviewCount: 1,
-        reviewScore: 4,
-        reviewRating: 4,
-        author: {
-            _id: '67e2e20e5872c849d5dd4b86',
-            nickname: 'test계정',
-            profileImg: '',
-        },
-        createdAt: '2025-04-15T02:34:20.113Z',
-        updatedAt: '2025-04-15T08:24:44.912Z',
-        isLiked: true,
-        isStudied: false,
-    },
-]
+export default async function Page({
+    searchParams,
+}: {
+    searchParams: Promise<QuizbookListParams>
+}) {
+    const params = await searchParams
 
-export default function Page() {
     return (
         <div className="flex w-full max-w-[1056px] flex-col gap-4 px-4 py-4 md:py-8">
-            <SearchForm />
-            <QuizbookList quizbookList={quizbookList} />
+            <SearchForm params={params} />
+            <QuizbookList />
         </div>
     )
 }
