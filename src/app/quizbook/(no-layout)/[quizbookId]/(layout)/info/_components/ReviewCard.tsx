@@ -11,13 +11,14 @@ import Link from 'next/link'
 import { ProfileImage } from '@/components'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { extractKSTDateOnly } from '@/utils/date/dateOnly'
 
 interface Props {
     _id: string
     score: number
     content: string
     author: { _id: string; nickname: string; profileImg: string }
-    updatedAt: string
+    createdAt: string
     myReview: boolean
 }
 
@@ -26,7 +27,7 @@ export default function ReviewCard({
     score,
     content,
     author,
-    updatedAt,
+    createdAt,
     myReview,
 }: Props) {
     const [isDropMenuOpen, setIsDropMenuOpen] = useState(false)
@@ -46,16 +47,19 @@ export default function ReviewCard({
             <div className="flex w-full items-center justify-between">
                 <div className="flex items-center gap-2 md:gap-4">
                     <Link
-                        href={`/user/${_id}`}
+                        href={`/user/${author._id}`}
                         className="flex cursor-pointer items-center gap-2 md:gap-4"
                     >
-                        <ProfileImage size={32} profileImg={``} />
+                        <ProfileImage
+                            size={32}
+                            profileImg={author.profileImg}
+                        />
                         <span className="text-mobile-body-md font-semi-bold md:text-pc-body-md">
                             {author.nickname}
                         </span>
                     </Link>
                     <span className="text-mobile-caption font-regular text-gray-400 md:text-pc-caption">
-                        {updatedAt}
+                        {extractKSTDateOnly(createdAt)}
                     </span>
                 </div>
                 <div className="relative">
