@@ -3,17 +3,21 @@ import MobileHeader from '@/components/MobileHeader'
 import Profile from './_components/Profile'
 import StudyLog from './_components/StudyLog'
 import QuizbookList from './_components/QuizbookList'
+import { getOtherUser } from '@/lib/api/user'
+import { getServerToken } from '@/utils/getServerToken'
 
-const user = {
-    _id: '2',
-    nickname: 'example11',
-    profileImg: '',
-    introduce: '',
-    experience: 10000,
-    follower: ['1'],
-}
+export default async function Page({
+    params,
+}: {
+    params: Promise<{ userId: string }>
+}) {
+    const user = await getOtherUser(
+        (await params).userId,
+        await getServerToken(),
+    ).catch(() => {
+        return null
+    })
 
-export default function Page() {
     if (!user) {
         return notFound()
     }

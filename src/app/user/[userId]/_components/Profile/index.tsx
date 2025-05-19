@@ -7,7 +7,7 @@ interface Props {
     _id: string
     nickname: string
     profileImg: string
-    introduce: string
+    introduce?: string
     experience: number
     follower: string[]
 }
