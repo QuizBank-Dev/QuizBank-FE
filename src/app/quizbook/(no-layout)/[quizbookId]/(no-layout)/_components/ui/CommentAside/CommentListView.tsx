@@ -1,8 +1,10 @@
 'use client'
 
+import CommentSvg from '@/assets/svgs/comment.svg'
+
 import { Comment } from '@/types/comment'
 import CommentItem from './CommentItem'
-import { LoopAnimation } from '@/components'
+import { EmptyList, LoopAnimation } from '@/components'
 import { Quiz } from '@/types/quiz'
 import { useInfiniteCommentList } from '@/hooks/queries/comment'
 import { useInfiniteScrollTrigger } from '@/hooks/useInfiniteScrollTrigger'
@@ -18,7 +20,7 @@ export default function CommentListView({
     quiz,
     onClickRecomment,
 }: Props) {
-    const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
+    const { data, fetchNextPage, isFetchingNextPage, hasNextPage, isPending } =
         useInfiniteCommentList(quiz._id)
     const commentList = data?.pages.flatMap((p) => p.data) ?? []
 
@@ -31,6 +33,14 @@ export default function CommentListView({
 
     return (
         <>
+            {!isPending && commentList.length === 0 && (
+                <div className="pt-[16px] md:pt-[32px]">
+                    <EmptyList
+                        Icon={CommentSvg}
+                        text="작성된 댓글이 존재하지 않습니다."
+                    />
+                </div>
+            )}
             {commentList.map((comment) => (
                 <CommentItem
                     key={comment._id}

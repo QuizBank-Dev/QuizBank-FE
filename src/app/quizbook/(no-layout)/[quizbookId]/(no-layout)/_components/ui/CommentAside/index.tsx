@@ -116,7 +116,7 @@ export default function CommentAside({ quizbookMeta }: Props) {
                                 comment={selectedComment}
                             />
                             <div
-                                className="flex-1 overflow-y-auto pl-[32px]"
+                                className="flex-1 overflow-y-auto"
                                 ref={desktopRef}
                             >
                                 <RecommentListView
@@ -166,7 +166,10 @@ export default function CommentAside({ quizbookMeta }: Props) {
                         </div>
 
                         {/* 댓글 영역 */}
-                        <Sheet.Scroller ref={mobileRef}>
+                        <Sheet.Scroller
+                            className="no-scrollbar"
+                            ref={mobileRef}
+                        >
                             {/* 상위 댓글 */}
                             {mode === 'list' && (
                                 <CommentListView
@@ -181,12 +184,10 @@ export default function CommentAside({ quizbookMeta }: Props) {
                                         isTopComment={true}
                                         comment={selectedComment}
                                     />
-                                    <div className="pl-[16px]">
-                                        <RecommentListView
-                                            ref={mobileRef}
-                                            comment={selectedComment}
-                                        />
-                                    </div>
+                                    <RecommentListView
+                                        ref={mobileRef}
+                                        comment={selectedComment}
+                                    />
                                 </>
                             )}
                         </Sheet.Scroller>
