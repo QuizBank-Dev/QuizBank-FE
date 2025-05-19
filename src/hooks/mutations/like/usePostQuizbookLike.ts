@@ -44,11 +44,5 @@ export const usePostQuizbookLike = (quizbookId: string) => {
                 )
             }
         },
-        onSuccess: () => {
-            // 특정 Quizbook의 통계 정보 캐시 무효화
-            queryClient.invalidateQueries({
-                queryKey: ['quizbook-states', quizbookId],
-            })
-        },
     })
 }
