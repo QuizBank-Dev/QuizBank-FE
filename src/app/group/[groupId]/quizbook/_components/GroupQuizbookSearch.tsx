@@ -130,7 +130,7 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                         }}
                         onClick={() => {
                             router.push(
-                                `/quizbook/${groupQuizbook.quizbook._id}`,
+                                `/quizbook/${groupQuizbook.quizbook._id}/info`,
                             )
                         }}
                     >
