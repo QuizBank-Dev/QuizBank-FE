@@ -9,6 +9,7 @@ import { ProfileImage } from '@/components'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 import { QuizbookMeta } from '@/types/quizbook'
+import { useQuizbookStates } from '@/hooks/queries/quizbook'
 
 export default function SideBar({
     quizbookMeta,
@@ -17,6 +18,7 @@ export default function SideBar({
 }) {
     const path = usePathname()
     const { quizbookId } = useParams()
+    const { data } = useQuizbookStates(quizbookId as string)
 
     return (
         <section className="sticky top-8 flex w-[282px] flex-col gap-4 rounded-lg bg-white p-4 font-semi-bold shadow-point">
@@ -69,12 +71,12 @@ export default function SideBar({
                     {quizbookMeta.author.nickname}
                 </Link>
                 <div className="flex items-center gap-4">
-                    <UserIcon className="size-6 text-gray-400" />
-                    {'78.5% (학습자 121명)'}
+                    <StarFullIcon className="size-6 text-[#FFCC00]" />
+                    {`${data ? data.reviewRating : '--'} (후기 ${data ? data.reviewCount.toLocaleString('en-US') : '--'}개)`}
                 </div>
                 <div className="flex items-center gap-4">
-                    <StarFullIcon className="size-6 text-[#FFCC00]" />
-                    {'4.3 (후기 53개)'}
+                    <UserIcon className="size-6 text-gray-400" />
+                    {`${data ? ((data.solvedScore / (data.solvedCount * data.totalScore)) * 100).toFixed(1) : '--'}% (학습자 ${data ? data.solvedCount.toLocaleString('en-US') : '--'}명)`}
                 </div>
             </div>
         </section>
