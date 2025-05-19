@@ -3,17 +3,28 @@ export interface ReviewCard {
     score: number
     content: string
     quizbook: string
-    author: {
-        _id: string
-        nickname: string
-        profileImg: string
-    }
+    author: Author | string
     createdAt: string
     updatedAt: string
+}
+
+interface Author {
+    _id: string
+    nickname: string
+    profileImg: string
 }
 
 export interface ReviewList {
     data: ReviewCard[]
     nextCursor: string | null
     leftCount: number
+}
+
+export interface EditReview {
+    score: number
+    content: string
+}
+
+export interface CreateReview extends EditReview {
+    quizbookId: string
 }

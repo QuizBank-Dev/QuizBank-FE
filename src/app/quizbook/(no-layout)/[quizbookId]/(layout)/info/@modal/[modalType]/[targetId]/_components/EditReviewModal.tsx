@@ -8,24 +8,19 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import StarScore from '../../_components/StarScore'
 import { useParams } from 'next/navigation'
-
-const schema = z.object({
-    content: z.string().max(50, { message: '리뷰는 50자 이하로 해주세요' }),
-})
-
-type FormData = z.infer<typeof schema>
+import { ReviewFormData, reviewSchema } from '@/types/schemas/review'
 
 export default function EditReviewModal() {
     const [isLoading, setIsLoading] = useState(false)
     const [score, setScore] = useState(5)
     const params = useParams()
 
-    const methods = useForm<FormData>({
-        resolver: zodResolver(schema),
+    const methods = useForm<ReviewFormData>({
+        resolver: zodResolver(reviewSchema),
         mode: 'onChange',
     })
 
-    const handleFormSubmit = async (data: FormData) => {
+    const handleFormSubmit = async (data: ReviewFormData) => {
         // 추후 로직 수정
         setIsLoading(true)
         setTimeout(() => {
