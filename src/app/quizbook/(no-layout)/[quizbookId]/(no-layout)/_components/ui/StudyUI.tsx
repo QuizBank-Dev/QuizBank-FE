@@ -7,6 +7,9 @@ import { QuizbookMeta } from '@/types/quizbook'
 import { useSearchParams } from 'next/navigation'
 import ListAside from './ListAside'
 import CommentAside from './CommentAside'
+import { usePostStudy } from '@/hooks/mutations/study'
+import clsx from 'clsx'
+import { LoopAnimation } from '@/components'
 
 interface Props {
     quizbookMeta: QuizbookMeta
@@ -30,18 +33,24 @@ export default function StudyUI({ quizbookMeta }: Props) {
     const answerReset = answerStore((s) => s.reset)
 
     const handleSubmit = () => {
-        // TODO: 학습 제출 로직
-        const data = {
-            quizbookId,
-            answerList: quizList.map((quiz) => ({
-                quizId: quiz._id,
-                answer: answerMap[quiz._id] || '',
-            })),
-        }
-        console.log(data)
+        const answerList = quizList.map((quiz) => ({
+            quizId: quiz._id,
+            answer: answerMap[quiz._id] || '',
+        }))
+        postStudy({
+            answerList,
+        })
+    }
+
+    const handleSuccess = () => {
         answerReset()
         questionReset()
     }
+
+    const { mutate: postStudy, isPending } = usePostStudy(
+        quizbookMeta._id,
+        handleSuccess,
+    )
 
     return (
         <div className="mb-[16px] flex flex-1 flex-col justify-between gap-[32px] md:mb-[32px]">
@@ -63,10 +72,17 @@ export default function StudyUI({ quizbookMeta }: Props) {
             </div>
             <div className="px-[16px] md:px-[32px]">
                 <button
+                    disabled={isPending}
                     onClick={handleSubmit}
-                    className="btn-solid btn-mobile-lg w-full md:btn-pc-lg"
+                    className={clsx(
+                        'btn-solid btn-mobile-lg w-full md:btn-pc-lg',
+                        {
+                            'btn-loading': isPending,
+                        },
+                    )}
                 >
-                    제출하기
+                    {isPending && <LoopAnimation />}
+                    {isPending ? '제출중...' : '제출하기'}
                 </button>
             </div>
 
