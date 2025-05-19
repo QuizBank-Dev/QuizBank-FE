@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query'
 /**
  * 특정 Quizbook의 유저 플래그 조회하는 query
  */
-export const useGetQuizbookUserFlags = (quizbookId: string) => {
+export const useQuizbookUserFlagsQuery = (quizbookId: string) => {
     return useQuery({
         queryKey: ['quizbook-flags', quizbookId],
         queryFn: () => getQuizbookUserFlags(quizbookId),

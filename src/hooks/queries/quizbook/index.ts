@@ -1,1 +1,1 @@
-export * from './useQuizbookStates'
+export * from './useQuizbookStatesQuery'

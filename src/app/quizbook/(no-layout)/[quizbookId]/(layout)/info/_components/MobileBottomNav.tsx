@@ -7,14 +7,14 @@ import { useCurrentUser } from '@/hooks/queries/user'
 import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 import { toast } from 'sonner'
-import { useGetQuizbookUserFlags } from '@/hooks/queries/like'
 import { usePostQuizbookLike } from '@/hooks/mutations/like'
+import { useQuizbookUserFlagsQuery } from '@/hooks/queries/like'
 
 export default function MobileBottomNav() {
     const path = usePathname()
     const { quizbookId } = useParams()
     const { data: userData } = useCurrentUser()
-    const { data: flagsData } = useGetQuizbookUserFlags(quizbookId as string)
+    const { data: flagsData } = useQuizbookUserFlagsQuery(quizbookId as string)
     const { mutate, isPending } = usePostQuizbookLike(quizbookId as string)
 
     const handleCopyUrl = async () => {

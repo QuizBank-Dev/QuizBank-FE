@@ -1,1 +1,1 @@
-export * from './useGetQuizbookUserFlags'
+export * from './useQuizbookUserFlagsQuery'

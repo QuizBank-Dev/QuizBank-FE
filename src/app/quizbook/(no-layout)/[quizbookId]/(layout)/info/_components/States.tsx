@@ -2,12 +2,12 @@
 
 import StarFullIcon from '@/assets/svgs/star-full.svg'
 import UserIcon from '@/assets/svgs/user.svg'
-import { useQuizbookStates } from '@/hooks/queries/quizbook'
+import { useQuizbookStatesQuery } from '@/hooks/queries/quizbook'
 import { useParams } from 'next/navigation'
 
 export default function States() {
     const { quizbookId } = useParams()
-    const { data } = useQuizbookStates(quizbookId as string)
+    const { data } = useQuizbookStatesQuery(quizbookId as string)
 
     return (
         <div className="flex flex-wrap items-center gap-4 md:gap-8">
