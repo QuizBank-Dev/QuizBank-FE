@@ -1,5 +1,4 @@
 import { GcTime } from '@/constants/common/gcTime'
-import { StaleTime } from '@/constants/common/staleTime'
 import { getQuizbookStates } from '@/lib/api/quizbook'
 import { useQuery } from '@tanstack/react-query'
 
@@ -10,7 +9,7 @@ export const useQuizbookStates = (quizbookId: string) => {
     return useQuery({
         queryKey: ['quizbook-states', quizbookId],
         queryFn: () => getQuizbookStates(quizbookId),
-        staleTime: StaleTime.DEFAULT,
+        staleTime: 0,
         gcTime: GcTime.DEFAULT,
         retry: 0,
     })
