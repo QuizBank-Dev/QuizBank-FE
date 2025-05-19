@@ -14,18 +14,19 @@ import {
     PopoverTrigger,
 } from '@/components/ui/popover'
 import { ko } from 'date-fns/locale'
+import { usePostGroupQuizbook } from '@/hooks/mutations/group-quizbook'
+import { useParams } from 'next/navigation'
 
 export default function CheckGroupModal() {
-    const [isLoading, setIsLoading] = useState(false)
+    const { quizbookId, targetId } = useParams()
+    const { mutate, isPending } = usePostGroupQuizbook(
+        targetId as string,
+        quizbookId as string,
+    )
     const [date, setDate] = useState<Date>(new Date())
 
     const handleClick = () => {
-        // 추후 로직 수정
-        setIsLoading(true)
-        setTimeout(() => {
-            console.log(1)
-            setIsLoading(false)
-        }, 2000)
+        mutate(date.toString())
     }
 
     return (
@@ -69,15 +70,15 @@ export default function CheckGroupModal() {
                     <span>추가하시겠습니까?</span>
                 </div>
                 <button
-                    disabled={isLoading}
+                    disabled={isPending}
                     className={clsx(
                         'btn-solid btn-mobile-md md:btn-pc-md',
-                        isLoading && 'btn-loading',
+                        isPending && 'btn-loading',
                     )}
                     onClick={handleClick}
                 >
-                    {isLoading && <LoopAnimation />}
-                    {isLoading ? 'Loading...' : '추가'}
+                    {isPending && <LoopAnimation />}
+                    {isPending ? 'Loading...' : '추가'}
                 </button>
             </div>
         </Modal>
