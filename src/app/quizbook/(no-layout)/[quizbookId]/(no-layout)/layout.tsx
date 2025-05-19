@@ -11,8 +11,6 @@ import { notFound } from 'next/navigation'
 interface Props {
     params: Promise<{ quizbookId: string }>
     children: React.ReactNode
-    comment: React.ReactNode
-    aside: React.ReactNode
 }
 
 export default async function Layout({ params, children }: Props) {
