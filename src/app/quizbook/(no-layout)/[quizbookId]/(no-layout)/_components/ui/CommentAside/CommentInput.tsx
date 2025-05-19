@@ -17,9 +17,6 @@ export default function CommentInput({ quizId, commentId }: Props) {
     const [value, setValue] = useState('')
     const divRef = useRef<HTMLDivElement>(null)
 
-    const { mutate: postComment, isPending } = usePostComment(quizId)
-    const { data: userData } = useCurrentUser()
-
     const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
         const text = e.currentTarget.textContent || ''
         setValue(text)
@@ -33,14 +30,21 @@ export default function CommentInput({ quizId, commentId }: Props) {
     const handleSubmit = async () => {
         if (!value.trim()) return
 
-        // TODO: 댓글 POST 로직
         postComment({
             content: value,
             commentId,
         })
+    }
 
+    const handleSuccess = () => {
         setValue('')
     }
+
+    const { mutate: postComment, isPending } = usePostComment(
+        quizId,
+        handleSuccess,
+    )
+    const { data: userData } = useCurrentUser()
 
     return (
         <div className="flex items-end gap-[16px] overflow-y-hidden bg-white p-[16px] py-[8px] md:py-[16px]">
@@ -66,7 +70,11 @@ export default function CommentInput({ quizId, commentId }: Props) {
                     onInput={handleInput}
                 />
             </div>
-            <button onClick={handleSubmit} className="-translate-y-1/4">
+            <button
+                disabled={isPending}
+                onClick={handleSubmit}
+                className="-translate-y-1/4"
+            >
                 {isPending ? (
                     <div className="size-8 animate-spin">
                         <LoopAnimation />
