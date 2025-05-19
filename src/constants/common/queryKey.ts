@@ -6,5 +6,6 @@ export const QueryKey = {
     },
     quizbook: {
         DEFAULT: (params: QuizbookListParams) => ['quizbook', params],
+        author: (authorId: string) => ['quizbook', 'author', authorId],
     },
 } as const
