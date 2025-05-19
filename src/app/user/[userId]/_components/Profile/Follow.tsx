@@ -1,13 +1,13 @@
 'use client'
 
 import clsx from 'clsx'
+import { useParams } from 'next/navigation'
 import { useMemo } from 'react'
 import { toast } from 'sonner'
+import { QueryKey } from '@/constants/common/queryKey'
 import { useCurrentUser, useOtherUser } from '@/hooks/queries/user'
 import { cancelFollow, follow } from '@/lib/api/follow'
 import { getQueryClient } from '@/lib/react-query/getQueryClient'
-import { QueryKey } from '@/constants/common/queryKey'
-import { useParams } from 'next/navigation'
 
 export default function Follow() {
     const queryClient = getQueryClient()

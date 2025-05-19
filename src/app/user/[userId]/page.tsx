@@ -1,11 +1,11 @@
 import { notFound } from 'next/navigation'
-import MobileHeader from '@/components/MobileHeader'
 import { getOtherUser } from '@/lib/api/user'
 import { getServerToken } from '@/utils/getServerToken'
+import MobileHeader from '@/components/MobileHeader'
+import OtherUserPreFetcher from './_provider/OtherUserPreFetcher'
 import Profile from './_components/Profile'
 import StudyLog from './_components/StudyLog'
 import QuizbookList from './_components/QuizbookList'
-import OtherUserPreFetcher from './_provider/OtherUserPreFetcher'
 
 export default async function Page({
     params,

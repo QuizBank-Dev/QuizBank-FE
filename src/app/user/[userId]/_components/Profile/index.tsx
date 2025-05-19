@@ -1,25 +1,16 @@
 'use client'
 
 import clsx from 'clsx'
+import { useParams } from 'next/navigation'
+import { useOtherUser } from '@/hooks/queries/user'
 import { ProfileImage } from '@/components'
 import Follow from './Follow'
 import BadgeList from './BadgeList'
-import { useOtherUser } from '@/hooks/queries/user'
-import { useParams } from 'next/navigation'
-
-interface Props {
-    _id: string
-    nickname: string
-    profileImg: string
-    introduce?: string
-    experience: number
-    follower: string[]
-}
 
 export default function Profile() {
     const { userId } = useParams<{ userId: string }>()
     const { data: user } = useOtherUser(userId)
-    const { _id, nickname, profileImg, introduce, experience, follower } = user!
+    const { nickname, profileImg, introduce, experience } = user!
 
     return (
         <div className="flex w-full shrink-0 flex-col items-center gap-4 rounded-lg bg-white p-4 shadow-point md:w-[230px]">
