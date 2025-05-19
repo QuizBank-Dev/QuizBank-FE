@@ -1,8 +1,6 @@
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 import { getServerToken } from '@/utils/getServerToken'
-import { QueryKey } from '@/constants/common/queryKey'
-import { getQueryClient } from '@/lib/react-query/getQueryClient'
-import { getCurrentUser, getOtherUser } from '@/lib/api/user'
+import { getOtherUser } from '@/lib/api/user'
 import MobileHeader from '@/components/MobileHeader'
 import OtherUserPreFetcher from './_provider/OtherUserPreFetcher'
 import Profile from './_components/Profile'
@@ -15,21 +13,11 @@ export default async function Page({
     params: Promise<{ userId: string }>
 }) {
     const userId = (await params).userId
-    const queryClient = getQueryClient()
     const token = await getServerToken()
 
     const user = await getOtherUser(userId, token).catch(() => {
         return null
     })
-    const me = await queryClient.ensureQueryData({
-        queryKey: QueryKey.user.DEFAULT,
-        queryFn: () => getCurrentUser(token),
-    })
-
-    // 현재 로그인되어있는 유저인 경우
-    if (me && me._id === userId) {
-        return redirect('/my-page')
-    }
 
     // 해당 유저가 존재하지 않는 경우
     if (!user) {
