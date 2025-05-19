@@ -36,7 +36,7 @@ export default function IncludeGroupModal() {
                             list.map((data) => (
                                 <Link
                                     key={data._id}
-                                    className="cursor-pointer text-center font-semi-bold md:text-pc-body-md"
+                                    className="cursor-pointer text-center text-mobile-body-md font-semi-bold md:text-pc-body-md"
                                     href={`/quizbook/${quizbookId}/info/check-group/${data._id}`}
                                 >
                                     {data.name}
