@@ -13,8 +13,7 @@ export default function StudyLog() {
             </p>
             <div className="flex flex-col gap-4">
                 <div className="grid grid-cols-[minmax(0,778px)]">
-                    {/* TODO AnnualStudyHeatmap 컴포넌트 수정 이후 확인 */}
-                    <AnnualStudyHeatmap />
+                    <AnnualStudyHeatmap targetUserId={userId} />
                 </div>
                 <WeeklyStudyTracker targetUserId={userId} />
             </div>
