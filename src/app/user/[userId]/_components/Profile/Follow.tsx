@@ -3,11 +3,10 @@
 import clsx from 'clsx'
 import { useMemo } from 'react'
 import { toast } from 'sonner'
-import { useCurrentUser } from '@/hooks/queries/user'
+import { useCurrentUser, useOtherUser } from '@/hooks/queries/user'
 import { cancelFollow, follow } from '@/lib/api/follow'
 import { getQueryClient } from '@/lib/react-query/getQueryClient'
 import { QueryKey } from '@/constants/common/queryKey'
-import { useOtherUser } from '@/hooks/queries/user/useOtherUser'
 import { useParams } from 'next/navigation'
 
 export default function Follow() {

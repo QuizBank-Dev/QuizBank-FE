@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { ProfileImage } from '@/components'
 import Follow from './Follow'
 import BadgeList from './BadgeList'
-import { useOtherUser } from '@/hooks/queries/user/useOtherUser'
+import { useOtherUser } from '@/hooks/queries/user'
 import { useParams } from 'next/navigation'
 
 interface Props {
