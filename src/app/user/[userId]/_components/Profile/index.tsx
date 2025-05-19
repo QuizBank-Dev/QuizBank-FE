@@ -1,7 +1,11 @@
+'use client'
+
 import clsx from 'clsx'
 import { ProfileImage } from '@/components'
 import Follow from './Follow'
 import BadgeList from './BadgeList'
+import { useOtherUser } from '@/hooks/queries/user/useOtherUser'
+import { useParams } from 'next/navigation'
 
 interface Props {
     _id: string
@@ -12,14 +16,11 @@ interface Props {
     follower: string[]
 }
 
-export default function Profile({
-    _id,
-    nickname,
-    profileImg,
-    introduce,
-    experience,
-    follower,
-}: Props) {
+export default function Profile() {
+    const { userId } = useParams<{ userId: string }>()
+    const { data: user } = useOtherUser(userId)
+    const { _id, nickname, profileImg, introduce, experience, follower } = user!
+
     return (
         <div className="flex w-full shrink-0 flex-col items-center gap-4 rounded-lg bg-white p-4 shadow-point md:w-[230px]">
             <ProfileImage size={128} profileImg={profileImg} />

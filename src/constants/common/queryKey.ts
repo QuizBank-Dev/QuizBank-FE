@@ -3,6 +3,7 @@ import { QuizbookListParams } from '@/types/api/quizbook'
 export const QueryKey = {
     user: {
         DEFAULT: ['user'],
+        other: (id: string) => ['user', id],
     },
     quizbook: {
         DEFAULT: (params: QuizbookListParams) => ['quizbook', params],
