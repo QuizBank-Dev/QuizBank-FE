@@ -4,8 +4,9 @@ import { getQueryClient } from '@/lib/react-query/getQueryClient'
 import { PostCommentBody } from '@/types/api/comment'
 import { useMutation } from '@tanstack/react-query'
 
-export const usePostComment = (quizId: string) => {
+export const usePostComment = (quizId: string, onSuccess?: () => void) => {
     const queryClient = getQueryClient()
+
     return useMutation({
         mutationFn: (body: PostCommentBody) => postComment(quizId, body),
         // TODO: 기존 캐싱 데이터 업데이트 로직으로 변경
@@ -22,6 +23,8 @@ export const usePostComment = (quizId: string) => {
             queryClient.invalidateQueries({
                 queryKey: [QueryKey.comment.LIST, quizId],
             })
+
+            onSuccess?.()
         },
         meta: {
             ignoreGlobalError: true,
