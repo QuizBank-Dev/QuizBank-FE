@@ -7,6 +7,7 @@ import { QuizbookCardStatus } from '@/constants/common/quizbookBadge'
 import { useQuizbookListQuery } from '@/hooks/queries/quizbook/useQuizbookListQuery'
 import { CategoryType } from '@/constants/common/category'
 import { QuizbookSortType } from '@/types/api/quizbook'
+import EmptyList from './EmptyList'
 
 export default function QuizbookList() {
     const searchParams = useSearchParams()
@@ -43,6 +44,7 @@ export default function QuizbookList() {
                 isFetchingNextPage={isFetchingNextPage}
                 fetchNextPage={fetchNextPage}
             >
+                {!isPending && quizbookList.length === 0 && <EmptyList />}
                 {quizbookList.map((quizbook) => (
                     <QuizbookCard
                         key={quizbook._id}
