@@ -10,11 +10,10 @@ import {
 import GroupCard from './GroupCard'
 import SearchSvg from '@/assets/svgs/search.svg'
 import { useGroupListQuery } from '@/hooks/queries/group'
-import GroupCardSkeleton from './GroupCardSkeleton'
 import Link from 'next/link'
 import { useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { InfiniteScrollContainer } from '@/components'
+import { CardSkeleton, InfiniteScrollContainer } from '@/components'
 
 export default function GroupSearch() {
     const { groupListQuery, name, setName, theme, setTheme } =
@@ -115,7 +114,7 @@ export default function GroupSearch() {
                 hasNextPage={groupListQuery.hasNextPage}
                 isFetchingNextPage={groupListQuery.isFetchingNextPage}
                 fetchNextPage={groupListQuery.fetchNextPage}
-                SkeletonUI={<GroupCardSkeleton />}
+                SkeletonUI={<CardSkeleton />}
                 className={'flex flex-col gap-4'}
             >
                 {list.map((data) => (

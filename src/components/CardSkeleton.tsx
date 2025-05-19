@@ -1,6 +1,6 @@
 import { Skeleton } from '@/components/ui/skeleton'
 
-export default function GroupCardSkeleton() {
+export default function CardSkeleton() {
     return (
         <article className="flex flex-col items-start gap-2 rounded-lg bg-white px-4 py-4 shadow-point md:px-8">
             <div className="flex w-full items-center justify-between">
