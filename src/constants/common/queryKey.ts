@@ -14,4 +14,7 @@ export const QueryKey = {
         LIST: 'comment-list',
         RECOMMENT_LIST: 'recomment-list',
     },
+    study: {
+        SOLVED_ANSWER: 'solved-answer',
+    },
 } as const
