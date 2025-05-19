@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 import { QuizbookMeta } from '@/types/quizbook'
 import { useQuizbookStates } from '@/hooks/queries/quizbook'
+import { toast } from 'sonner'
 
 export default function SideBar({
     quizbookMeta,
@@ -19,6 +20,16 @@ export default function SideBar({
     const path = usePathname()
     const { quizbookId } = useParams()
     const { data } = useQuizbookStates(quizbookId as string)
+
+    const handleCopyUrl = async () => {
+        try {
+            const fullUrl = `${window.location.origin}${path}`
+            await navigator.clipboard.writeText(fullUrl)
+            toast('링크 COPY 완료!')
+        } catch (_) {
+            toast('링크 COPY 실패!')
+        }
+    }
 
     return (
         <section className="sticky top-8 flex w-[282px] flex-col gap-4 rounded-lg bg-white p-4 font-semi-bold shadow-point">
@@ -49,7 +60,10 @@ export default function SideBar({
                         <HeartOutlineIcon className="size-5" />
                         찜하기
                     </button>
-                    <button className="h-auth btn-outline btn-pc-md flex flex-1 items-center justify-center gap-2">
+                    <button
+                        className="h-auth btn-outline btn-pc-md flex flex-1 items-center justify-center gap-2"
+                        onClick={handleCopyUrl}
+                    >
                         <ShareIcon className="size-5" />
                         공유
                     </button>
