@@ -2,8 +2,9 @@
 
 import { useParams } from 'next/navigation'
 import { useAuthorQuizbookListQuery } from '@/hooks/queries/quizbook'
-import { CardSkeleton, InfiniteScrollContainer } from '@/components'
+import { CardSkeleton, EmptyList, InfiniteScrollContainer } from '@/components'
 import QuizbookCard from './QuizbookCard'
+import QuizbookSvg from '@/assets/svgs/quizbook.svg'
 
 export default function QuizbookList() {
     const { userId } = useParams<{ userId: string }>()
@@ -32,6 +33,12 @@ export default function QuizbookList() {
                 fetchNextPage={fetchNextPage}
                 SkeletonUI={<CardSkeleton />}
             >
+                {!isPending && quizbookList.length === 0 && (
+                    <EmptyList
+                        Icon={QuizbookSvg}
+                        text="사용자가 생성한 문제집이 존재하지 않습니다."
+                    />
+                )}
                 {quizbookList.map((quizbook) => (
                     <QuizbookCard key={`other_${quizbook._id}`} {...quizbook} />
                 ))}
