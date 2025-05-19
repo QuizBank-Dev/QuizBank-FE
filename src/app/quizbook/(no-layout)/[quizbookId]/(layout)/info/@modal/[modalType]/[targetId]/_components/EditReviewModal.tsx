@@ -1,6 +1,5 @@
 'use client'
 
-import * as z from 'zod'
 import { CustomInput, LoopAnimation, Modal } from '@/components'
 import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -9,24 +8,22 @@ import clsx from 'clsx'
 import StarScore from '../../_components/StarScore'
 import { useParams } from 'next/navigation'
 import { ReviewFormData, reviewSchema } from '@/types/schemas/review'
+import { usePatchReview } from '@/hooks/mutations/review'
 
 export default function EditReviewModal() {
-    const [isLoading, setIsLoading] = useState(false)
+    const { quizbookId, targetId } = useParams()
     const [score, setScore] = useState(5)
-    const params = useParams()
-
     const methods = useForm<ReviewFormData>({
         resolver: zodResolver(reviewSchema),
         mode: 'onChange',
     })
+    const { mutate, isPending } = usePatchReview(
+        quizbookId as string,
+        targetId as string,
+    )
 
     const handleFormSubmit = async (data: ReviewFormData) => {
-        // 추후 로직 수정
-        setIsLoading(true)
-        setTimeout(() => {
-            console.log('Form Data:', { ...data, score })
-            setIsLoading(false)
-        }, 2000)
+        mutate({ ...data, score })
     }
 
     return (
@@ -42,19 +39,19 @@ export default function EditReviewModal() {
                         name="content"
                         area={true}
                         placeholder="수정된 후기를 작성해주세요!"
-                        disabled={isLoading}
+                        disabled={isPending}
                     />
                     <div className="flex w-full justify-end">
                         <button
                             type="submit"
-                            disabled={isLoading}
+                            disabled={isPending}
                             className={clsx(
                                 'btn-solid btn-mobile-lg md:btn-pc-lg',
-                                isLoading && 'btn-loading',
+                                isPending && 'btn-loading',
                             )}
                         >
-                            {isLoading && <LoopAnimation />}
-                            {isLoading ? 'Loading...' : '수정'}
+                            {isPending && <LoopAnimation />}
+                            {isPending ? 'Loading...' : '수정'}
                         </button>
                     </div>
                 </form>
