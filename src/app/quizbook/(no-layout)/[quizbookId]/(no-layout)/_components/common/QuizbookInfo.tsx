@@ -6,22 +6,21 @@ import UserSvg from '@/assets/svgs/user.svg'
 import StarFullSvg from '@/assets/svgs/star-full.svg'
 import NoteSvg from '@/assets/svgs/note.svg'
 
-import { QuizbookMeta, QuizbookStates } from '@/types/quizbook'
+import { QuizbookMeta } from '@/types/quizbook'
 import clsx from 'clsx'
 import { useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
+import { useQuizbookStates } from '@/hooks/queries/quizbook'
 
 interface Props {
     className?: string
     quizbookMeta: QuizbookMeta
-    quizbookStates: QuizbookStates
     isToggle?: boolean
 }
 
 export default function QuizbookInfo({
     className = '',
     quizbookMeta,
-    quizbookStates,
     isToggle = false,
 }: Props) {
     const router = useRouter()
@@ -30,6 +29,8 @@ export default function QuizbookInfo({
     const [mode, setMode] = useState<'study' | 'solution'>(
         pathname.includes('/solution') ? 'solution' : 'study',
     )
+
+    const { data: quizbookStates } = useQuizbookStates(quizbookMeta._id)
 
     const onToggle = () => {
         const next = mode === 'study' ? 'solution' : 'study'

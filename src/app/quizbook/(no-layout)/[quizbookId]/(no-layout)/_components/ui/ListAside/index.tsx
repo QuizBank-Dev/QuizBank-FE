@@ -9,7 +9,6 @@ import { usePathname, useRouter } from 'next/navigation'
 import { Suspense, useEffect, useState } from 'react'
 import { Sheet } from 'react-modal-sheet'
 import { LoopAnimation } from '@/components'
-import { useQuizbookStates } from '@/hooks/queries/quizbook'
 
 interface Props {
     quizbookMeta: QuizbookMeta
