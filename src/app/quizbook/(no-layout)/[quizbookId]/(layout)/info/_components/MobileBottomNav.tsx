@@ -8,12 +8,14 @@ import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 import { toast } from 'sonner'
 import { useGetQuizbookUserFlags } from '@/hooks/queries/like'
+import { usePostQuizbookLike } from '@/hooks/mutations/like'
 
 export default function MobileBottomNav() {
     const path = usePathname()
     const { quizbookId } = useParams()
     const { data: userData } = useCurrentUser()
     const { data: flagsData } = useGetQuizbookUserFlags(quizbookId as string)
+    const { mutate, isPending } = usePostQuizbookLike(quizbookId as string)
 
     const handleCopyUrl = async () => {
         try {
@@ -67,7 +69,11 @@ export default function MobileBottomNav() {
             </div>
             <div className="flex items-center gap-2">
                 {userData && flagsData && (
-                    <button className="btn-outline p-2">
+                    <button
+                        className="btn-outline p-2"
+                        onClick={() => mutate()}
+                        disabled={isPending}
+                    >
                         {flagsData.isLiked ? (
                             <HeartFillIcon className="size-4" />
                         ) : (

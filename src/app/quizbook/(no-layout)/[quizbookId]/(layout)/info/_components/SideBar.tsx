@@ -14,6 +14,7 @@ import { useQuizbookStates } from '@/hooks/queries/quizbook'
 import { toast } from 'sonner'
 import { useCurrentUser } from '@/hooks/queries/user'
 import { useGetQuizbookUserFlags } from '@/hooks/queries/like'
+import { usePostQuizbookLike } from '@/hooks/mutations/like'
 
 export default function SideBar({
     quizbookMeta,
@@ -25,6 +26,7 @@ export default function SideBar({
     const { data: statesData } = useQuizbookStates(quizbookId as string)
     const { data: userData } = useCurrentUser()
     const { data: flagsData } = useGetQuizbookUserFlags(quizbookId as string)
+    const { mutate, isPending } = usePostQuizbookLike(quizbookId as string)
 
     const handleCopyUrl = async () => {
         try {
@@ -78,7 +80,11 @@ export default function SideBar({
                 )}
                 <div className="flex w-full gap-[10px]">
                     {userData ? (
-                        <button className="h-auth btn-outline btn-pc-md flex flex-1 items-center justify-center gap-2">
+                        <button
+                            className="h-auth btn-outline btn-pc-md flex flex-1 items-center justify-center gap-2"
+                            onClick={() => mutate()}
+                            disabled={isPending}
+                        >
                             {flagsData &&
                                 (flagsData.isLiked ? (
                                     <HeartFillIcon className="size-5" />
