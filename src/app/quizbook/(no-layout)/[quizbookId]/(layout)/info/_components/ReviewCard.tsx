@@ -75,6 +75,7 @@ export default function ReviewCard({
                             <Link
                                 href={`${path}/edit-review/${_id}`}
                                 className="flex items-center gap-2 md:gap-4"
+                                onClick={() => setIsDropMenuOpen(false)}
                             >
                                 <EditIcon className="size-5" />
                                 <span className="whitespace-nowrap text-mobile-body-md md:text-pc-body-md">
@@ -84,6 +85,7 @@ export default function ReviewCard({
                             <Link
                                 href={`${path}/delete-review/${_id}`}
                                 className="flex items-center gap-2 md:gap-4"
+                                onClick={() => setIsDropMenuOpen(false)}
                             >
                                 <TrashIcon className="size-5" />
                                 <span className="whitespace-nowrap text-mobile-body-md md:text-pc-body-md">
