@@ -18,11 +18,9 @@ export default async function Page({
     const queryClient = getQueryClient()
     const token = await getServerToken()
 
-    const user = await getOtherUser(userId, await getServerToken()).catch(
-        () => {
-            return null
-        },
-    )
+    const user = await getOtherUser(userId, token).catch(() => {
+        return null
+    })
     const me = await queryClient.ensureQueryData({
         queryKey: QueryKey.user.DEFAULT,
         queryFn: () => getCurrentUser(token),
