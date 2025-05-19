@@ -18,6 +18,9 @@ export const usePatchReview = (quizbookId: string, reviewId: string) => {
             queryClient.invalidateQueries({
                 queryKey: ['quizbook-reviews', quizbookId],
             })
+            queryClient.invalidateQueries({
+                queryKey: ['quizbook-states', quizbookId],
+            })
             router.push(`/quizbook/${quizbookId}/info`)
             toast('리뷰가 수정되었습니다!')
         },
