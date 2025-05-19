@@ -3,38 +3,24 @@
 import clsx from 'clsx'
 import { useParams } from 'next/navigation'
 import { useMemo } from 'react'
-import { toast } from 'sonner'
-import { QueryKey } from '@/constants/common/queryKey'
 import { useCurrentUser, useOtherUser } from '@/hooks/queries/user'
-import { cancelFollow, follow } from '@/lib/api/follow'
-import { getQueryClient } from '@/lib/react-query/getQueryClient'
+import { useFollowMutation } from '@/hooks/mutations/user'
 
 export default function Follow() {
-    const queryClient = getQueryClient()
     const { userId } = useParams<{ userId: string }>()
 
     const { data: user } = useCurrentUser()
     const { data: targetUser } = useOtherUser(userId)
-    const { _id, follower } = targetUser!
+    const { mutate: toggleFollow } = useFollowMutation(userId)
+    const { follower } = targetUser!
 
     const isFollowed = useMemo(
         () => follower.includes(user?._id || ''),
         [follower, user?._id],
     )
 
-    const handleToggleFollow = () => {
-        const method = !isFollowed
-            ? follow
-            : (_id: string) => cancelFollow(_id, 'following')
-
-        method(_id)
-            .then(() => {
-                toast(`팔로우했습니다.`)
-                queryClient.invalidateQueries({
-                    queryKey: QueryKey.user.other(_id),
-                })
-            })
-            .catch(() => toast.error('실패했습니다.'))
+    const handleFollowClick = () => {
+        toggleFollow(isFollowed)
     }
 
     return (
@@ -44,7 +30,7 @@ export default function Follow() {
                     'btn-solid btn-mobile-lg w-full md:btn-pc-lg',
                     isFollowed && 'btn-outline',
                 )}
-                onClick={handleToggleFollow}
+                onClick={handleFollowClick}
             >
                 {isFollowed ? '팔로우 취소' : '팔로우'}
             </button>
