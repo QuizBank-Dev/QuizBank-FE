@@ -12,6 +12,7 @@ export const usePostQuizbook = () => {
                 queryKey: ['quizbook'],
             })
         },
+        retry: 0,
         meta: {
             ignoreGlobalError: true,
         },

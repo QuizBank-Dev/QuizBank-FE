@@ -23,6 +23,7 @@ export const usePostComment = (quizId: string) => {
                 queryKey: QueryKey.comment.LIST(quizId),
             })
         },
+        retry: 0,
         meta: {
             ignoreGlobalError: true,
         },

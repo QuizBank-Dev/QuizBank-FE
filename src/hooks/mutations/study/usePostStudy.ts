@@ -18,6 +18,7 @@ export const usePostStudy = (quizbookId: string) => {
                 }),
             ])
         },
+        retry: 0,
         meta: {
             ignoreGlobalError: true,
         },
