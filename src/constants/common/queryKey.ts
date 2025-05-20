@@ -33,4 +33,7 @@ export const QueryKey = {
             offset,
         ],
     },
+    follower: {
+        DEFAULT: ['follower'],
+    },
 } as const
