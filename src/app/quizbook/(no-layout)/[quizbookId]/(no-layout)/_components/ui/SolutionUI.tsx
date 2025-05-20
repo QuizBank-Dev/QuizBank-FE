@@ -30,14 +30,20 @@ export default function SolutionUI({ quizbookMeta }: Props) {
     const solvedAnswerList = data?.pages.flatMap((p) => p.data) ?? []
 
     return (
-        <div className="mb-[16px] flex flex-1 flex-col justify-between gap-[32px] md:mb-[32px]">
+        <div className="mb-[16px] flex flex-1 flex-col gap-[32px] md:mb-[32px]">
             <section className="flex flex-col justify-center gap-[32px]">
                 <QuestionCard
                     curIdx={curIdx}
                     quiz={quizList[curIdx - 1]}
                     totalIdx={quizList.length}
-                    onNext={() => next(quizList.length)}
-                    onPrev={prev}
+                    onNext={() => {
+                        setShowAnswerList(false)
+                        next(quizList.length)
+                    }}
+                    onPrev={() => {
+                        setShowAnswerList(false)
+                        prev()
+                    }}
                 />
                 <div className="px-[16px] md:px-[32px]">
                     <SolvedCard role="ai" quiz={curQuiz} />
@@ -45,30 +51,24 @@ export default function SolutionUI({ quizbookMeta }: Props) {
             </section>
 
             {showAnswerList && (
-                <div
-                    ref={scrollRef}
-                    className="flex flex-col gap-[32px] px-[16px] md:px-[32px]"
-                >
-                    {scrollRef && (
-                        <InfiniteScrollContainer
-                            rootRef={
-                                scrollRef as React.RefObject<HTMLDivElement>
-                            }
-                            isPending={isPending}
-                            hasNextPage={hasNextPage}
-                            isFetchingNextPage={isFetchingNextPage}
-                            fetchNextPage={fetchNextPage}
-                        >
-                            {solvedAnswerList.map((solvedAnswer) => (
-                                <SolvedCard
-                                    key={solvedAnswer.owner._id}
-                                    data={solvedAnswer}
-                                    role="user"
-                                    quiz={curQuiz}
-                                />
-                            ))}
-                        </InfiniteScrollContainer>
-                    )}
+                <div className="mb-[8px] flex flex-col gap-[32px] px-[16px] md:mb-[16px] md:px-[32px]">
+                    <InfiniteScrollContainer
+                        className="flex flex-col gap-[16px]"
+                        rootRef={scrollRef as React.RefObject<HTMLDivElement>}
+                        isPending={isPending}
+                        hasNextPage={hasNextPage}
+                        isFetchingNextPage={isFetchingNextPage}
+                        fetchNextPage={fetchNextPage}
+                    >
+                        {solvedAnswerList.map((solvedAnswer) => (
+                            <SolvedCard
+                                key={solvedAnswer.owner._id}
+                                data={solvedAnswer}
+                                role="user"
+                                quiz={curQuiz}
+                            />
+                        ))}
+                    </InfiniteScrollContainer>
                 </div>
             )}
 
