@@ -1,4 +1,5 @@
 import axiosInstance from '@/lib/api/base'
+import { FollowerType } from '@/types/api/follow'
 
 export const follow = async (targetId: string) => {
     return (await axiosInstance.post(`v1/follow/${targetId}`)).data
@@ -6,7 +7,7 @@ export const follow = async (targetId: string) => {
 
 export const cancelFollow = async (
     targetId: string,
-    type: 'follower' | 'following',
+    type: Exclude<FollowerType, 'all'>,
 ) => {
     return (
         await axiosInstance.delete(`v1/follow/${targetId}`, {
