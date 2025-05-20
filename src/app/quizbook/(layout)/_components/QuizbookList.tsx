@@ -9,7 +9,7 @@ import {
     EmptyList,
 } from '@/components'
 import { QuizbookCardStatus } from '@/constants/common/quizbookBadge'
-import { useQuizbookListQuery } from '@/hooks/queries/quizbook/useQuizbookListQuery'
+import { useQuizbookListQuery } from '@/hooks/queries/quizbook'
 import { CategoryType } from '@/constants/common/category'
 import { QuizbookSortType } from '@/types/api/quizbook'
 

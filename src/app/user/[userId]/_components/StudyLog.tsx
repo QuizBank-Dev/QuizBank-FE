@@ -1,22 +1,11 @@
-import { AnnualStudyHeatmap, WeeklyStudyTracker } from '@/components'
-import dayjs from '@/utils/date'
+'use client'
 
-const weeklyLog = [
-    {
-        date: dayjs().subtract(3, 'day').format('YYYY-MM-DD'),
-        solvedCount: 2,
-    },
-    {
-        date: dayjs().subtract(2, 'day').format('YYYY-MM-DD'),
-        solvedCount: 2,
-    },
-    {
-        date: dayjs().subtract(1, 'day').format('YYYY-MM-DD'),
-        solvedCount: 2,
-    },
-]
+import { useParams } from 'next/navigation'
+import { AnnualStudyHeatmap, WeeklyStudyTracker } from '@/components'
 
 export default function StudyLog() {
+    const { userId } = useParams<{ userId: string }>()
+
     return (
         <div className="flex flex-col gap-2">
             <p className="text-mobile-body-md font-semi-bold text-gray-600 md:text-pc-body-md">
@@ -24,10 +13,9 @@ export default function StudyLog() {
             </p>
             <div className="flex flex-col gap-4">
                 <div className="grid grid-cols-[minmax(0,778px)]">
-                    {/* TODO AnnualStudyHeatmap 컴포넌트 수정 이후 확인 */}
-                    <AnnualStudyHeatmap />
+                    <AnnualStudyHeatmap targetUserId={userId} />
                 </div>
-                <WeeklyStudyTracker data={weeklyLog} />
+                <WeeklyStudyTracker targetUserId={userId} />
             </div>
         </div>
     )
