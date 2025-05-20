@@ -1,12 +1,12 @@
 import MobileHeader from '@/components/MobileHeader'
+import { getQuizbookMeta } from '@/lib/api/quizbook'
+import { notFound } from 'next/navigation'
 import {
     DesktopHeader,
     DesktopMenu,
     MobileMenu,
     StudyMenuBtn,
-} from './_components/layout'
-import { getQuizbookMeta } from '@/lib/api/quizbook'
-import { notFound } from 'next/navigation'
+} from '../_components/layout'
 
 interface Props {
     params: Promise<{ quizbookId: string }>

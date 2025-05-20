@@ -1,5 +1,5 @@
 import { getQuizbookMeta } from '@/lib/api/quizbook'
-import { StudyUI } from '../_components/ui'
+import { SolutionUI } from '../../_components/ui'
 import { notFound } from 'next/navigation'
 
 interface Props {
@@ -15,7 +15,7 @@ export default async function Page({ params }: Props) {
 
     return (
         <div className="no-scrollbar flex flex-1 flex-col overflow-y-auto">
-            <StudyUI quizbookMeta={quizbookMeta} />
+            <SolutionUI quizbookMeta={quizbookMeta} />
         </div>
     )
 }
