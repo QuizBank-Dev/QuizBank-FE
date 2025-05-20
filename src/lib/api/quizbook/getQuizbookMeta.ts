@@ -16,7 +16,7 @@ export const getQuizbookMeta = async (quizbookId: string) => {
                 cache: 'force-cache',
                 next: {
                     tags: [`quizbook-meta-${quizbookId}`],
-                    revalidate: false,
+                    revalidate: 31536000,
                 },
             },
         )

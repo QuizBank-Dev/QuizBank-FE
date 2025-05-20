@@ -1,18 +1,26 @@
 'use client'
 
 import clsx from 'clsx'
+import { useParams } from 'next/navigation'
 import { useMemo } from 'react'
+import { useCurrentUser, useOtherUser } from '@/hooks/queries/user'
+import { useFollowMutation } from '@/hooks/mutations/user'
 
-interface Props {
-    _id: string
-    follower: string[]
-}
+export default function Follow() {
+    const { userId } = useParams<{ userId: string }>()
 
-export default function Follow({ _id, follower }: Props) {
-    const isFollowed = useMemo(() => follower.includes('1'), [follower])
+    const { data: user } = useCurrentUser()
+    const { data: targetUser } = useOtherUser(userId)
+    const { mutate: toggleFollow } = useFollowMutation(userId)
+    const { follower } = targetUser!
 
-    const handleToggleFollow = () => {
-        console.log(_id)
+    const isFollowed = useMemo(
+        () => follower.includes(user?._id || ''),
+        [follower, user?._id],
+    )
+
+    const handleFollowClick = () => {
+        toggleFollow(isFollowed)
     }
 
     return (
@@ -22,7 +30,7 @@ export default function Follow({ _id, follower }: Props) {
                     'btn-solid btn-mobile-lg w-full md:btn-pc-lg',
                     isFollowed && 'btn-outline',
                 )}
-                onClick={handleToggleFollow}
+                onClick={handleFollowClick}
             >
                 {isFollowed ? '팔로우 취소' : '팔로우'}
             </button>

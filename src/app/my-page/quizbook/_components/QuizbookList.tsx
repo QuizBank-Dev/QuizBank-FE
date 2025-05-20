@@ -148,7 +148,9 @@ export default function QuizbookList() {
                                 ? QuizbookCardStatus.COMPLETED
                                 : QuizbookCardStatus.BEFORE,
                         }}
-                        onClick={() => router.push(`/quizbook/${quizbook._id}`)}
+                        onClick={() =>
+                            router.push(`/quizbook/${quizbook._id}/info`)
+                        }
                     >
                         <QuizbookCard.Description />
                         <div className="flex items-center gap-2">

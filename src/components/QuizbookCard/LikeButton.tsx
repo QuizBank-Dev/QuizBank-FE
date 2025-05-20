@@ -2,12 +2,12 @@
 
 import { useState } from 'react'
 import clsx from 'clsx'
+import { toast } from 'sonner'
+import { useCurrentUser } from '@/hooks/queries/user'
 import { useQuizbookCardContext } from './QuizbookCardContext'
 
 import HeartFillSvg from '@/assets/svgs/heart-fill.svg'
-import { useCurrentUser } from '@/hooks/queries/user'
-import { toast } from 'sonner'
-import { postQuizbookLike } from '@/lib/api/like'
+import { usePostQuizbookListLike } from '@/hooks/mutations/like'
 
 interface Props {
     isLike?: boolean
@@ -18,26 +18,19 @@ export default function LikeButton({ isLike }: Props) {
     const { data: user } = useCurrentUser()
     const [_isLike, setIsLike] = useState(isLike)
 
+    const toggleIsLike = () => {
+        setIsLike((prev) => !prev)
+    }
+
+    const { mutate: like } = usePostQuizbookListLike(quizbookId, toggleIsLike)
+
     const handleLike = () => {
         if (!user) {
             // 로그인상태가 아닌 경우
             toast('로그인이 필요한 서비스입니다.')
             return
         }
-
-        // 찜하기 클릭 로직 (API 호출)
-        postQuizbookLike(quizbookId)
-            .then(({ result: { state } }) => {
-                setIsLike(state)
-                toast(
-                    state
-                        ? '찜목록에 추가되었습니다.'
-                        : '찜목록에서 제거되었습니다.',
-                )
-            })
-            .catch(() => {
-                toast('저장 중 오류가 발생했습니다.')
-            })
+        like()
     }
 
     return (

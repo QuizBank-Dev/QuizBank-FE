@@ -9,7 +9,7 @@ import {
     EmptyList,
 } from '@/components'
 import { QuizbookCardStatus } from '@/constants/common/quizbookBadge'
-import { useQuizbookListQuery } from '@/hooks/queries/quizbook/useQuizbookListQuery'
+import { useQuizbookListQuery } from '@/hooks/queries/quizbook'
 import { CategoryType } from '@/constants/common/category'
 import { QuizbookSortType } from '@/types/api/quizbook'
 
@@ -64,7 +64,9 @@ export default function QuizbookList() {
                                 ? QuizbookCardStatus.COMPLETED
                                 : QuizbookCardStatus.BEFORE,
                         }}
-                        onClick={() => router.push(`/quizbook/${quizbook._id}`)}
+                        onClick={() =>
+                            router.push(`/quizbook/${quizbook._id}/info`)
+                        }
                     >
                         <QuizbookCard.Description />
                         <QuizbookCard.Author />

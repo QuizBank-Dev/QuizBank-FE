@@ -5,7 +5,7 @@ import { Response } from '@/types/base'
 /**
  * 그룹 정보 리스트를 조회 요청하는 함수
  * @param cursor 기준이 되는 그룹의 ID
- * @param limit 불러올 항목 개수정보를 조회하고자 하는 그룹의 ID
+ * @param limit 불러올 항목 개수
  * @param name 그룹 제목 검색
  * @param theme api 분기(전체 그룹, 나의 그룹)
  */
