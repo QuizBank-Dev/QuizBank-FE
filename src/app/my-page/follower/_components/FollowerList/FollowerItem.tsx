@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import clsx from 'clsx'
-import { toast } from 'sonner'
 import { Follower } from '@/types/user'
-import { LoopAnimation, ProfileImage } from '@/components'
+import { ProfileImage } from '@/components'
+import { useFollowMutation } from '@/hooks/mutations/user'
+import { FollowerType } from '@/types/api/follow'
 
 interface Props {
-    followType: string
+    followType: Exclude<FollowerType, 'all'>
     user: Follower
 }
 
@@ -14,24 +15,14 @@ export default function FollowerItem({
     followType,
     user: { _id, profileImg, nickname },
 }: Props) {
-    const [isLoading, setIsLoading] = useState(false)
+    // 최초 접속 시 팔로우 목록에 등록된 사용자기 때문에 true
+    const [isFollowed, setIsFollowed] = useState(true)
+    const { mutate: toggleFollow } = useFollowMutation(_id, () =>
+        setIsFollowed((prev) => !prev),
+    )
 
     const handleCancelFollow = async () => {
-        setIsLoading(true)
-        // TODO 팔로우 취소 API 호출
-        const result = await new Promise<string>((resolve) =>
-            setTimeout(() => {
-                console.log(followType)
-                resolve('OK')
-            }, 2000),
-        )
-        setIsLoading(false)
-
-        if (result === 'OK') {
-            toast('팔로우 취소 되었습니다.')
-        } else {
-            toast('팔로우 취소 중 오류가 발생했습니다.')
-        }
+        toggleFollow({ isFollowed, type: followType })
     }
 
     return (
@@ -44,16 +35,13 @@ export default function FollowerItem({
                 <span>{nickname}</span>
             </Link>
             <button
-                type="submit"
                 className={clsx(
-                    'btn-outline btn-mobile-sm md:btn-pc-sm',
-                    isLoading && 'btn-loading',
+                    'btn-mobile-sm md:btn-pc-sm',
+                    isFollowed ? 'btn-outline' : 'btn-solid',
                 )}
                 onClick={handleCancelFollow}
-                disabled={isLoading}
             >
-                {isLoading && <LoopAnimation />}
-                {isLoading ? 'Loading...' : '팔로우 취소'}
+                {isFollowed ? '팔로우 취소' : '팔로우'}
             </button>
         </div>
     )

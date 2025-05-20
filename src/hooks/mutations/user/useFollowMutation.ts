@@ -23,11 +23,6 @@ export const useFollowMutation = (
             await method(userId)
             return !isFollowed
         },
-        onMutate: () => {
-            if (toggleClickFollow) {
-                toggleClickFollow()
-            }
-        },
         onSuccess: (isFollowing) => {
             queryClient
                 .invalidateQueries({
@@ -35,6 +30,9 @@ export const useFollowMutation = (
                     refetchType: 'all',
                 })
                 .then(() => {
+                    if (toggleClickFollow) {
+                        toggleClickFollow()
+                    }
                     toast(
                         isFollowing
                             ? `팔로우했습니다.`
@@ -43,7 +41,7 @@ export const useFollowMutation = (
                 })
         },
         onError: () => {
-            toast('팔로우 중 오류가 발생했습니다.')
+            toast('팔로우 처리 중 오류가 발생했습니다.')
         },
     })
 }
