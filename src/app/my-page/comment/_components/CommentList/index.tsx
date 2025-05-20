@@ -1,9 +1,10 @@
 'use client'
 
 import { useMyCommentQuery } from '@/hooks/queries/comment'
-import { InfiniteScrollContainer } from '@/components'
+import { EmptyList, InfiniteScrollContainer } from '@/components'
 import CommentItem from './CommentItem'
 import CommentItemSkeleton from './CommentItemSkeleton'
+import CommentSvg from '@/assets/svgs/comment.svg'
 
 export default function CommentList() {
     const {
@@ -32,6 +33,12 @@ export default function CommentList() {
                 fetchNextPage={fetchNextPage}
                 SkeletonUI={<CommentItemSkeleton />}
             >
+                {!isPending && commentList.length === 0 && (
+                    <EmptyList
+                        Icon={CommentSvg}
+                        text="작성한 댓글이 존재하지 않습니다."
+                    />
+                )}
                 {commentList.map((comment) => (
                     <CommentItem key={comment._id} {...comment} />
                 ))}

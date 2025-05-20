@@ -16,7 +16,10 @@ export default function CommentItem({ _id, quiz, content, updatedAt }: Props) {
                 <data className="text-gray-400">
                     {getRelativeTime(updatedAt)}
                 </data>
-                <Link href="#" className="text-point-500 underline">
+                <Link
+                    href={`/quizbook/${quiz}/study?panel=comment`}
+                    className="text-point-500 underline"
+                >
                     자세히 보기
                 </Link>
             </div>

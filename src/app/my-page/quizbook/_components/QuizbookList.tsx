@@ -3,11 +3,13 @@
 import { useRouter } from 'next/navigation'
 import {
     CardSkeleton,
+    EmptyList,
     InfiniteScrollContainer,
     QuizbookCard,
 } from '@/components'
 import { QuizbookCardStatus } from '@/constants/common/quizbookBadge'
 import { useAuthorQuizbookListQuery } from '@/hooks/queries/quizbook'
+import QuizbookSvg from '@/assets/svgs/quizbook.svg'
 
 export default function QuizbookList() {
     const router = useRouter()
@@ -39,6 +41,12 @@ export default function QuizbookList() {
                 fetchNextPage={fetchNextPage}
                 SkeletonUI={<CardSkeleton />}
             >
+                {!isPending && quizbookList.length === 0 && (
+                    <EmptyList
+                        Icon={QuizbookSvg}
+                        text="생성한 문제집이 존재하지 않습니다."
+                    />
+                )}
                 {quizbookList.map((quizbook) => (
                     <QuizbookCard
                         key={`my_${quizbook._id}`}
