@@ -47,7 +47,6 @@ export default function StudyUI({ quizbookMeta }: Props) {
             },
             {
                 onSuccess: () => {
-                    console.log(answerList)
                     answerReset()
                     questionReset()
                     router.replace(`/quizbook/${quizbookMeta._id}/result`)
