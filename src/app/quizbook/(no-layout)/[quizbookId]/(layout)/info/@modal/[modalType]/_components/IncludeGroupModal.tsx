@@ -25,10 +25,11 @@ export default function IncludeGroupModal() {
                         hasNextPage={groupListQuery.hasNextPage}
                         isFetchingNextPage={groupListQuery.isFetchingNextPage}
                         fetchNextPage={groupListQuery.fetchNextPage}
-                        className={'flex flex-col gap-4'} // 옵션
-                        rootRef={scrollContainerRef} // 필요
+                        className={'flex flex-col gap-4'}
+                        SkeletonUI={<>불러오는 중...</>}
+                        rootRef={scrollContainerRef}
                     >
-                        {list.length === 0 ? (
+                        {!groupListQuery.isPending && list.length === 0 ? (
                             <span className="text-mobile-body-md font-semi-bold text-gray-500 md:text-pc-body-md">
                                 소속된 그룹이 없습니다!
                             </span>
