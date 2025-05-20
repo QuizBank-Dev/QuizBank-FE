@@ -9,7 +9,7 @@ import { QuizbookUserFlags } from '@/types/quizbook'
  */
 export const getQuizbookUserFlags = async (quizbookId: string) => {
     const res = await axiosInstance.get<Response<QuizbookUserFlags>>(
-        `/quizbook/${quizbookId}/user-flags`,
+        `/v1/quizbook/${quizbookId}/user-flags`,
     )
 
     return res.data.result

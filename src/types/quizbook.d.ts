@@ -38,6 +38,7 @@ export interface QuizbookMeta {
     quizList: Quiz[]
     totalScore: number
     author: Author
+    createdAt: string
 }
 
 /**

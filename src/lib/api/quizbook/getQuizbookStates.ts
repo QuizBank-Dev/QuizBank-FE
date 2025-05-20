@@ -9,7 +9,7 @@ import { Response } from '@/types/base'
  */
 export const getQuizbookStates = async (quizbookId: string) => {
     const res = await axiosInstance.get<Response<QuizbookStates>>(
-        `/quizbook/${quizbookId}/states`,
+        `/v1/quizbook/${quizbookId}/states`,
     )
 
     return res.data.result

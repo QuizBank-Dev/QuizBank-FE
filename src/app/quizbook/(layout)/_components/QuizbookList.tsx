@@ -64,7 +64,9 @@ export default function QuizbookList() {
                                 ? QuizbookCardStatus.COMPLETED
                                 : QuizbookCardStatus.BEFORE,
                         }}
-                        onClick={() => router.push(`/quizbook/${quizbook._id}`)}
+                        onClick={() =>
+                            router.push(`/quizbook/${quizbook._id}/info`)
+                        }
                     >
                         <QuizbookCard.Description />
                         <QuizbookCard.Author />
