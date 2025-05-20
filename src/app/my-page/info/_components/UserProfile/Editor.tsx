@@ -6,14 +6,15 @@ import { CustomInput, LoopAnimation } from '@/components'
 import { useCurrentUser } from '@/hooks/queries/user'
 import { EditProfileFormData, editProfileSchema } from '@/types/schemas/user'
 import { getDirtyValues } from '@/utils/form'
-import EditProfileImage from './EditProfileImage'
 import { useUpdateProfileMutation } from '@/hooks/mutations/user'
+import EditProfileImage from './EditProfileImage'
 
 interface Props {
+    isEditMode: boolean
     onCancelEditMode: () => void
 }
 
-export default function Editor({ onCancelEditMode }: Props) {
+export default function Editor({ isEditMode, onCancelEditMode }: Props) {
     const { data: user } = useCurrentUser()
     const [isLoading, setIsLoading] = useState(false)
     const methods = useForm<EditProfileFormData>({
@@ -47,7 +48,10 @@ export default function Editor({ onCancelEditMode }: Props) {
     return (
         <FormProvider {...methods}>
             <form
-                className="flex flex-col items-center gap-4 rounded-lg bg-white p-4 shadow-point"
+                className={clsx(
+                    'flex flex-col items-center gap-4 rounded-lg bg-white p-4 shadow-point',
+                    !isEditMode && '!hidden',
+                )}
                 onSubmit={methods.handleSubmit(handleFormSubmit, console.error)}
             >
                 <EditProfileImage

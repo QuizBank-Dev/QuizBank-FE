@@ -3,10 +3,11 @@ import { ProfileImage } from '@/components'
 import { useCurrentUser } from '@/hooks/queries/user'
 
 interface Props {
+    isEditMode: boolean
     onEditMode: () => void
 }
 
-export default function Viewer({ onEditMode }: Props) {
+export default function Viewer({ isEditMode, onEditMode }: Props) {
     const { data: user } = useCurrentUser()
 
     if (!user) {
@@ -14,7 +15,12 @@ export default function Viewer({ onEditMode }: Props) {
     }
 
     return (
-        <div className="flex flex-col items-center gap-4 rounded-lg bg-white p-4 shadow-point">
+        <div
+            className={clsx(
+                'flex flex-col items-center gap-4 rounded-lg bg-white p-4 shadow-point',
+                isEditMode && '!hidden',
+            )}
+        >
             <ProfileImage size={128} profileImg={user.profileImg} />
             <p className="text-mobile-body-md text-point-900 md:text-pc-body-md">
                 {user.nickname}
