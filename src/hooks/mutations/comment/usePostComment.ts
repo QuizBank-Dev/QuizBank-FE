@@ -1,11 +1,10 @@
 import { QueryKey } from '@/constants/common/queryKey'
 import { postComment } from '@/lib/api/comment/postComment'
-import { getQueryClient } from '@/lib/react-query/getQueryClient'
 import { PostCommentBody } from '@/types/api/comment'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-export const usePostComment = (quizId: string, onSuccess?: () => void) => {
-    const queryClient = getQueryClient()
+export const usePostComment = (quizId: string) => {
+    const queryClient = useQueryClient()
 
     return useMutation({
         mutationFn: (body: PostCommentBody) => postComment(quizId, body),
@@ -15,16 +14,14 @@ export const usePostComment = (quizId: string, onSuccess?: () => void) => {
             // 대댓글 리스트 캐시 무효화
             if (commentId) {
                 queryClient.invalidateQueries({
-                    queryKey: [QueryKey.comment.RECOMMENT_LIST, commentId],
+                    queryKey: QueryKey.comment.RECOMMENT_LIST(commentId),
                 })
             }
 
             // 상위 댓글 리스트 캐시 무효화
             queryClient.invalidateQueries({
-                queryKey: [QueryKey.comment.LIST, quizId],
+                queryKey: QueryKey.comment.LIST(quizId),
             })
-
-            onSuccess?.()
         },
         meta: {
             ignoreGlobalError: true,

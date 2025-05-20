@@ -7,8 +7,8 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 export const useInfiniteRecommentList = (commentId?: string) =>
     useInfiniteQuery({
         queryKey: commentId
-            ? [QueryKey.comment.RECOMMENT_LIST, commentId]
-            : [QueryKey.comment.RECOMMENT_LIST, 'skip'],
+            ? QueryKey.comment.RECOMMENT_LIST(commentId)
+            : QueryKey.comment.RECOMMENT_LIST('skip'),
         queryFn: ({ pageParam }) => {
             if (!commentId) {
                 return {

@@ -6,15 +6,14 @@ export const QueryKey = {
     },
     quizbook: {
         DEFAULT: (params: QuizbookListParams) => ['quizbook', params],
-        STATES: 'quizbook-states',
-        META: 'quizbook-meta',
-        USERFLAGS: 'quizbook-user-flags',
+        STATES: (quizbookId: string) => ['quizbook-states', quizbookId],
+        USERFLAGS: (quizbookId: string) => ['quizbook-user-flags', quizbookId],
     },
     comment: {
-        LIST: 'comment-list',
-        RECOMMENT_LIST: 'recomment-list',
+        LIST: (quizId: string) => ['comment-list', quizId],
+        RECOMMENT_LIST: (commentId: string) => ['recomment-list', commentId],
     },
     study: {
-        SOLVED_ANSWER: 'solved-answer',
+        SOLVED_ANSWER: (quizId: string) => ['solved-answer', quizId],
     },
 } as const

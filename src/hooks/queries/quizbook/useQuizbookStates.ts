@@ -6,7 +6,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 
 export const useQuizbookStates = (quizbookId: string) =>
     useSuspenseQuery({
-        queryKey: [QueryKey.quizbook.STATES, quizbookId],
+        queryKey: QueryKey.quizbook.STATES(quizbookId),
         queryFn: () => getQuizbookStates(quizbookId),
         staleTime: StaleTime.HALF,
         gcTime: GcTime.HOUR,

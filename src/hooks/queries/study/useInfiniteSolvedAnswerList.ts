@@ -6,7 +6,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 
 export const useInfiniteSolvedAnswerList = (quizId: string) =>
     useInfiniteQuery({
-        queryKey: [QueryKey.study.SOLVED_ANSWER, quizId],
+        queryKey: QueryKey.study.SOLVED_ANSWER(quizId),
         queryFn: ({ pageParam }) =>
             getSolvedAnswerList(quizId, {
                 cursor: pageParam ?? undefined,

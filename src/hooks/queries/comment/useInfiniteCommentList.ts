@@ -6,7 +6,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 
 export const useInfiniteCommentList = (quizId: string) =>
     useInfiniteQuery({
-        queryKey: [QueryKey.comment.LIST, quizId],
+        queryKey: QueryKey.comment.LIST(quizId),
         queryFn: ({ pageParam }) =>
             getCommentList(quizId, {
                 cursor: pageParam ?? undefined,
