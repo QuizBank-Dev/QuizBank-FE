@@ -95,12 +95,14 @@ export default function QuizbookInfo({
                         <UserSvg className="size-5 text-point-200" />
                         <div className="flex items-center gap-[2px]">
                             <span>
-                                {(
-                                    (quizbookStates.solvedScore /
-                                        (quizbookStates.solvedCount *
-                                            quizbookStates.totalScore)) *
-                                    100
-                                ).toFixed(1)}
+                                {quizbookStates.solvedScore !== 0
+                                    ? (
+                                          (quizbookStates.solvedScore /
+                                              (quizbookStates.solvedCount *
+                                                  quizbookStates.totalScore)) *
+                                          100
+                                      ).toFixed(1)
+                                    : 0}
                                 %
                             </span>
                             <span className="text-gray-400">{`(${quizbookStates.solvedCount})`}</span>
