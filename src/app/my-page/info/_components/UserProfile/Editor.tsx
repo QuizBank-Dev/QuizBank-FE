@@ -1,56 +1,27 @@
 import clsx from 'clsx'
-import EditProfileImage from './EditProfileImage'
-import { FormProvider, useForm } from 'react-hook-form'
-import * as z from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { CustomInput, LoopAnimation } from '@/components'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
+import { FormProvider, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { CustomInput, LoopAnimation } from '@/components'
 import { useCurrentUser } from '@/hooks/queries/user'
+import { EditProfileFormData, editProfileSchema } from '@/types/schemas/user'
+import { getDirtyValues } from '@/utils/form'
+import EditProfileImage from './EditProfileImage'
 
 interface Props {
     onCancelEditMode: () => void
 }
 
-const schema = z.object({
-    profileImg: z
-        .custom<File | null>()
-        .refine(
-            (file) => file instanceof File || file === null,
-            '유효한 파일을 선택해주세요.',
-        ),
-    nickname: z.string().nonempty('닉네임은 필수로 입력되어야합니다.'),
-    introduce: z.string(),
-})
-type FormData = z.infer<typeof schema>
-
 export default function Editor({ onCancelEditMode }: Props) {
     const { data: user } = useCurrentUser()
     const [isLoading, setIsLoading] = useState(false)
-    const methods = useForm<FormData>({
-        resolver: zodResolver(schema),
+    const methods = useForm<EditProfileFormData>({
+        resolver: zodResolver(editProfileSchema),
         mode: 'onChange',
     })
 
-    /**
-     * formState에서 변경된 값만 추출하는 함수
-     * @param dirtyFields formState.dirtyFields
-     * @param values onSubmit의 data
-     */
-    const getDirtyValues = <T extends Record<string, unknown>>(
-        dirtyFields: Partial<Record<keyof T, boolean>>,
-        values: T,
-    ): Partial<T> => {
-        return (Object.keys(dirtyFields) as (keyof T)[]).reduce((prev, key) => {
-            if (!dirtyFields[key] || values[key] === undefined) return prev
-            return {
-                ...prev,
-                [key]: values[key],
-            }
-        }, {})
-    }
-
-    const handleFormSubmit = async (data: FormData) => {
+    const handleFormSubmit = async (data: EditProfileFormData) => {
         const dirtyValues = getDirtyValues(methods.formState.dirtyFields, data)
 
         setIsLoading(true)
