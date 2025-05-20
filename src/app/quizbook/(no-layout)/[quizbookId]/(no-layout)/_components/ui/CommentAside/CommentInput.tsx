@@ -1,12 +1,15 @@
 'use client'
 
 import SendSvg from '@/assets/svgs/send.svg'
+
 import { LoopAnimation, ProfileImage } from '@/components'
 import { usePostComment } from '@/hooks/mutations/comment'
 import { useCurrentUser } from '@/hooks/queries/user'
+import { ErrorResponse } from '@/types/base'
+import { AxiosError } from 'axios'
 import clsx from 'clsx'
-
 import { useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
 
 interface Props {
     quizId: string
@@ -28,22 +31,30 @@ export default function CommentInput({ quizId, commentId }: Props) {
     }, [value])
 
     const handleSubmit = async () => {
-        if (!value.trim()) return
+        if (!value.trim() || isPending) return
 
-        postComment({
-            content: value,
-            commentId,
-        })
+        postComment(
+            {
+                content: value,
+                commentId,
+            },
+            {
+                onSuccess: () => {
+                    setValue('')
+                },
+                onError: (e) => {
+                    const err = e as AxiosError<ErrorResponse>
+                    const msg =
+                        err.response?.data.message ||
+                        '댓글 등록 중 오류가 발생했습니다.'
+
+                    toast.error(msg)
+                },
+            },
+        )
     }
 
-    const handleSuccess = () => {
-        setValue('')
-    }
-
-    const { mutate: postComment, isPending } = usePostComment(
-        quizId,
-        handleSuccess,
-    )
+    const { mutate: postComment, isPending } = usePostComment(quizId)
     const { data: userData } = useCurrentUser()
 
     return (
