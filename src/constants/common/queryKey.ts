@@ -36,4 +36,8 @@ export const QueryKey = {
     follower: {
         DEFAULT: ['follower'],
     },
+    comment: {
+        DEFAULT: ['comment'],
+        me: ['comment', 'me'],
+    },
 } as const
