@@ -1,6 +1,6 @@
 export interface HeatmapValue {
     date: string | Date
-    count?: number
+    solvedCount?: number
 }
 
 export interface Tooltip {

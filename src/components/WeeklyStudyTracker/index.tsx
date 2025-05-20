@@ -2,15 +2,18 @@
 
 import { useMemo, useState } from 'react'
 import dayjs from '@/utils/date'
+import { useWeeklyLogQuery } from '@/hooks/queries/study-log'
 import WeekNavigator from './WeekNavigator'
 import DayTracker from './DayTracker'
 
 interface Props {
-    data: { date: string; solvedCount: number }[]
+    targetUserId?: string
 }
 
-export default function WeeklyStudyTracker({ data }: Props) {
+export default function WeeklyStudyTracker({ targetUserId }: Props) {
+    const { data, setOffset } = useWeeklyLogQuery(targetUserId)
     const [target, setTarget] = useState(dayjs().startOf('isoWeek'))
+
     // target을 기준으로 일주일 Array로 저장
     const days = useMemo(
         () => Array.from({ length: 7 }).map((_, idx) => target.add(idx, 'day')),
@@ -24,9 +27,11 @@ export default function WeeklyStudyTracker({ data }: Props) {
     }
     const handlePrevWeek = () => {
         setTarget(target.subtract(1, 'week'))
+        setOffset((prev) => prev + 1)
     }
     const handleNextWeek = () => {
         setTarget(target.add(1, 'week'))
+        setOffset((prev) => prev - 1)
     }
 
     return (

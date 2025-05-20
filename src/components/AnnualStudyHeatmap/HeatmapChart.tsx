@@ -23,19 +23,23 @@ export default function HeatmapChart({
                 values={data || []}
                 monthLabels={MONTH_LABELS}
                 classForValue={(value) => {
-                    if (!value?.count) return 'color-empty'
+                    if (!value?.solvedCount) return 'color-empty'
 
-                    return `color-scale-${value.count > 30 ? 4 : value.count > 20 ? 3 : value.count > 10 ? 2 : 1}`
+                    return `color-scale-${value.solvedCount > 30 ? 4 : value.solvedCount > 20 ? 3 : value.count > 10 ? 2 : 1}`
                 }}
                 tooltipDataAttrs={(value) => {
-                    if (!value || value.date === null || value.count === null)
+                    if (
+                        !value ||
+                        value.date === null ||
+                        value.solvedCount === null
+                    )
                         return {}
                     return {
                         onMouseEnter: (e) => {
                             onTooltip({
                                 x: e.clientX,
                                 y: e.clientY,
-                                text: `Date: ${value.date} | Solved: ${value.count}`,
+                                text: `Date: ${value.date} | Solved: ${value.solvedCount}`,
                             })
                         },
                         onMouseLeave: () => onTooltip(null),

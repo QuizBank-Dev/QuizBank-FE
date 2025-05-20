@@ -6,34 +6,29 @@ import YearNavigator from './YearNavigator'
 import HeatmapChart from './HeatmapChart'
 import HeatmapTooltip from './HeatmapTooltip'
 import ScrollContainer from './ScrollContainer'
+import { useYearlyLogQuery } from '@/hooks/queries/study-log'
 
-export default function AnnualStudyHeatmap() {
+interface Props {
+    targetUserId?: string
+}
+
+export default function AnnualStudyHeatmap({ targetUserId }: Props) {
     const [year, setYear] = useState<number>(new Date().getFullYear())
     const [tooltip, setTooltip] = useState<Tooltip | null>(null)
-
-    // 데이터 패칭 로직 작성 필요 (현재 더미 데이터).
-    const data = [
-        { date: '2025-01-02', count: 12 },
-        { date: '2025-01-22', count: 120 },
-        { date: '2025-01-30', count: 20 },
-        { date: '2025-01-30', count: 38 },
-        { date: '2025-02-01', count: 38 },
-        { date: '2025-02-02', count: 10 },
-        { date: '2025-02-03', count: 20 },
-        { date: '2025-02-04', count: 10 },
-        { date: '2025-02-05', count: 20 },
-    ]
+    const { data, setOffset } = useYearlyLogQuery(targetUserId)
 
     // 이전, 다음 버튼 클릭 핸들러
     const onPrevHandler = async () => {
         setYear((prev) => prev - 1)
 
-        // 이전 년도 데이터 패칭 로직 작성 필요
+        // 이전 년도 데이터 패칭
+        setOffset((prev) => prev + 1)
     }
     const onNextHandler = async () => {
         setYear((prev) => prev + 1)
 
-        // 다음 년도 데이터 패칭 로직 작성 필요
+        // 다음 년도 데이터 패칭
+        setOffset((prev) => prev - 1)
     }
 
     return (

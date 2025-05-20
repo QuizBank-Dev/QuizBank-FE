@@ -1,21 +1,23 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query'
 import { getQueryClient } from '@/lib/react-query/getQueryClient'
 import { QueryKey } from '@/constants/common/queryKey'
-import { getCurrentUser } from '@/lib/api/user'
-import { getServerToken } from '@/utils/getServerToken'
+import { OtherUser } from '@/types/user'
 
 interface Props {
     children: React.ReactNode
+    userId: string
+    defaultData: OtherUser
 }
 
-export const UserPrefetcher = async ({ children }: Props) => {
+export default async function OtherUserPreFetcher({
+    children,
+    userId,
+    defaultData,
+}: Props) {
     const queryClient = getQueryClient()
-    const token = await getServerToken()
-
-    // 서버에서 쿼리 호출
     await queryClient.prefetchQuery({
-        queryKey: QueryKey.user.DEFAULT,
-        queryFn: () => getCurrentUser(token),
+        queryKey: QueryKey.user.other(userId),
+        queryFn: () => defaultData,
     })
 
     return (
