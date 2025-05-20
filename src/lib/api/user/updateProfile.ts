@@ -9,3 +9,7 @@ export const updateProfile = async (formData: Partial<EditProfileFormData>) => {
         },
     })
 }
+
+export const deleteProfileImage = async () => {
+    return axiosInstance.delete<EmptyResponse>('v1/user/me/profile-image')
+}

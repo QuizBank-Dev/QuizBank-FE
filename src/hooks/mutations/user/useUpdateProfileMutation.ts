@@ -1,7 +1,8 @@
 import { toast } from 'sonner'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { updateProfile } from '@/lib/api/user'
+import { deleteProfileImage, updateProfile } from '@/lib/api/user'
 import { QueryKey } from '@/constants/common/queryKey'
+import { CurrentUser } from '@/types/user'
 
 export const useUpdateProfileMutation = (
     cancelEditMode: () => void,
@@ -11,14 +12,25 @@ export const useUpdateProfileMutation = (
 
     return useMutation({
         mutationFn: updateProfile,
-        onMutate: () => {
+        onMutate: async (formData) => {
+            await queryClient.cancelQueries({ queryKey: QueryKey.user.DEFAULT })
+
             setLoading(true)
+
+            const prevData = queryClient.getQueryData<CurrentUser>(
+                QueryKey.user.DEFAULT,
+            )
+
+            if (!!prevData?.profileImg && !formData.profileImg) {
+                // 프로필 이미지가 삭제된 경우 삭제 API 호출
+                await deleteProfileImage()
+            }
         },
         onSuccess: () => {
-            // 정확하게 일치하는 경우에만 처리되도록
             queryClient
                 .invalidateQueries({
                     queryKey: QueryKey.user.DEFAULT,
+                    // 정확하게 일치하는 경우에만 처리되도록
                     exact: true,
                 })
                 .then(() => {
