@@ -9,8 +9,7 @@ import { CustomInput, CustomSelect, LoopAnimation } from '@/components'
 import { QUIZBOOK_CATEGORY } from '@/constants/quizbook'
 import AddedQuiz from './AddedQuiz'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { postQuizbook } from '@/lib/api/quizbook'
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { AxiosError } from 'axios'
@@ -20,9 +19,9 @@ import {
     PostQuizbookFormData,
     postQuizbookSchema,
 } from '@/types/schemas/quizbook'
+import { usePostQuizbook } from '@/hooks/mutations/quizbook'
 
 export default function PostQuizbookForm() {
-    const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
     const methods = useForm<PostQuizbookFormData>({
         resolver: zodResolver(postQuizbookSchema),
@@ -36,21 +35,24 @@ export default function PostQuizbookForm() {
     const { handleSubmit, setValue, reset } = methods
     const { quizList, resetQuizList } = usePostQuizbookStore()
 
+    const { mutate, isPending } = usePostQuizbook()
+
     const onSubmit = async (data: PostQuizbookFormData) => {
-        try {
-            setIsLoading(true)
-            await postQuizbook(data)
+        mutate(data, {
+            onSuccess: () => {
+                resetQuizList()
+                reset()
+                router.push('/quizbook')
+            },
+            onError: (e) => {
+                const err = e as AxiosError<ErrorResponse>
+                const msg =
+                    err.response?.data.message ||
+                    '문제집 생성 중 에러가 발생했습니다.'
 
-            setIsLoading(false)
-            resetQuizList()
-            reset()
-            router.push('/quizbook')
-        } catch (e) {
-            const error = e as AxiosError<ErrorResponse>
-
-            setIsLoading(false)
-            toast.error(error.response?.data.message || error.message)
-        }
+                toast.error(msg)
+            },
+        })
     }
 
     // TODO: AUTO SAVE 기능 추가
@@ -123,18 +125,18 @@ export default function PostQuizbookForm() {
                     <PlusSvg className="h-[24px] w-[24px]" />
                 </Link>
                 <button
-                    disabled={isLoading}
+                    disabled={isPending}
                     type="submit"
                     form="post-quizbook-form"
                     className={clsx(
                         'btn-solid btn-mobile-lg w-full md:btn-pc-lg',
                         {
-                            'btn-loading': isLoading,
+                            'btn-loading': isPending,
                         },
                     )}
                 >
-                    {isLoading && <LoopAnimation />}
-                    {isLoading ? '생성중...' : '생성하기'}
+                    {isPending && <LoopAnimation />}
+                    {isPending ? '생성중...' : '생성하기'}
                 </button>
             </div>
         </FormProvider>
