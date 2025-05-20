@@ -6,19 +6,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { CustomInput, LoopAnimation } from '@/components'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
+import { useCurrentUser } from '@/hooks/queries/user'
 
 interface Props {
     onCancelEditMode: () => void
-}
-
-const user = {
-    _id: '1',
-    nickname: 'example',
-    profileImg: '',
-    introduce: '안녕하세요',
-    category: ['자료구조'],
-    experience: 0,
-    isOAuthAccount: false,
 }
 
 const schema = z.object({
@@ -34,6 +25,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export default function Editor({ onCancelEditMode }: Props) {
+    const { data: user } = useCurrentUser()
     const [isLoading, setIsLoading] = useState(false)
     const methods = useForm<FormData>({
         resolver: zodResolver(schema),
@@ -90,7 +82,7 @@ export default function Editor({ onCancelEditMode }: Props) {
                 introduce: user.introduce,
             })
         }
-    }, [methods])
+    }, [methods, user])
 
     if (!user) {
         return null
