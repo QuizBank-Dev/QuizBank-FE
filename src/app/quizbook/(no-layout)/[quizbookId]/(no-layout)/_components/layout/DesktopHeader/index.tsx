@@ -1,11 +1,13 @@
 import ExitBtn from './ExitBtn'
+import ToSolutionBtn from './ToSolutionBtn'
 
 interface Props {
     title: string
     category: string
+    isRightBtn?: boolean
 }
 
-export default function DesktopHeader({ title, category }: Props) {
+export default function DesktopHeader({ title, category, isRightBtn }: Props) {
     return (
         <div className="hidden items-center justify-center bg-white md:flex">
             <div className="flex w-full max-w-[1024px] items-center gap-[16px] px-[32px] py-[16px]">
@@ -17,6 +19,7 @@ export default function DesktopHeader({ title, category }: Props) {
                     <span className="shrink-0">|</span>
                     <span className="shrink-0 text-point-500">{category}</span>
                 </h1>
+                {isRightBtn && <ToSolutionBtn />}
             </div>
         </div>
     )
