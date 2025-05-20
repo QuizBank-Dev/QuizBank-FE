@@ -1,6 +1,5 @@
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CustomInput, LoopAnimation } from '@/components'
@@ -8,6 +7,7 @@ import { useCurrentUser } from '@/hooks/queries/user'
 import { EditProfileFormData, editProfileSchema } from '@/types/schemas/user'
 import { getDirtyValues } from '@/utils/form'
 import EditProfileImage from './EditProfileImage'
+import { useUpdateProfileMutation } from '@/hooks/mutations/user'
 
 interface Props {
     onCancelEditMode: () => void
@@ -20,28 +20,13 @@ export default function Editor({ onCancelEditMode }: Props) {
         resolver: zodResolver(editProfileSchema),
         mode: 'onChange',
     })
+    const { mutate: editProfile } = useUpdateProfileMutation(
+        onCancelEditMode,
+        setIsLoading,
+    )
 
     const handleFormSubmit = async (data: EditProfileFormData) => {
-        const dirtyValues = getDirtyValues(methods.formState.dirtyFields, data)
-
-        setIsLoading(true)
-        // TODO 사용자 정보 수정 API 호출
-        const result = await new Promise<string>((resolve) =>
-            setTimeout(() => {
-                console.log(dirtyValues)
-                resolve('OK')
-            }, 2000),
-        )
-        setIsLoading(false)
-
-        if (result === 'OK') {
-            // 가입 완료 처리
-            toast('저장되었습니다.')
-            onCancelEditMode()
-        } else {
-            // 가입 실패 처리
-            toast('ERROR')
-        }
+        editProfile(getDirtyValues(methods.formState.dirtyFields, data))
     }
 
     useEffect(() => {
