@@ -8,7 +8,7 @@ import { EmptyResponse } from '@/types/base'
  * @returns 빈 응답 반환
  */
 export const postQuizbook = async (body: PostQuizbookFormData) => {
-    const res = await axiosInstance.post<EmptyResponse>('/quizbook', body)
+    const res = await axiosInstance.post<EmptyResponse>('/v1/quizbook', body)
 
     return res.data
 }

@@ -9,9 +9,8 @@ export default function OXAnswerCard({ answer, correct }: Props) {
     return (
         <div className="flex w-full flex-1 items-center justify-center gap-[16px]">
             {['O', 'X'].map((opt) => {
-                const isCorrect = correct === opt.toLowerCase()
-                const isWrong =
-                    opt.toLowerCase() === answer && answer !== correct
+                const isCorrect = correct === opt
+                const isWrong = opt === answer && answer !== correct
 
                 return (
                     <div

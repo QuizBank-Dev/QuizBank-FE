@@ -4,6 +4,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useState } from 'react'
 import StudyStats from './StudyStats'
 import MemberAnswer from './MemberAnswer'
+import { Quiz } from '@/types/quiz'
 
 export interface Props {
     scoreList: {
@@ -19,12 +20,7 @@ export interface Props {
         nickname: string
         profileImg: string
     }[]
-    quizList: {
-        _id: string
-        type: '객관식' | '주관식' | '서술형' | 'ox'
-        question: string
-        optionList: string[]
-    }[]
+    quizList: Quiz[]
 }
 
 export default function StudyStatus({

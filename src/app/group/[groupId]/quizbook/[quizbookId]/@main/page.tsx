@@ -65,11 +65,13 @@ const quizList: Props['quizList'][number][] = [
         type: '주관식',
         question: 'test1',
         optionList: [],
+        answer: 'test',
     },
     {
         _id: '2',
         type: '서술형',
         question: 'test2',
+        answer: 'test',
         optionList: [],
     },
     {
@@ -77,6 +79,7 @@ const quizList: Props['quizList'][number][] = [
         type: '주관식',
         question: 'test3',
         optionList: [],
+        answer: 'test',
     },
 ]
 

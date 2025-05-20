@@ -28,6 +28,7 @@ const quizbookList: Quizbook[] = [
         reviewCount: 1,
         reviewScore: 4,
         reviewRating: 4,
+        totalScore: 10,
         author: {
             _id: '1',
             nickname: '나',
@@ -53,6 +54,7 @@ const quizbookList: Quizbook[] = [
         reviewCount: 1,
         reviewScore: 4,
         reviewRating: 4,
+        totalScore: 10,
         author: {
             _id: '1',
             nickname: '나',
@@ -78,6 +80,7 @@ const quizbookList: Quizbook[] = [
         reviewCount: 1,
         reviewScore: 4,
         reviewRating: 4,
+        totalScore: 10,
         author: {
             _id: '1',
             nickname: '나',
@@ -100,6 +103,7 @@ const quizbookList: Quizbook[] = [
         ],
         solvedCount: 3,
         solvedScore: 123,
+        totalScore: 10,
         reviewCount: 1,
         reviewScore: 4,
         reviewRating: 4,

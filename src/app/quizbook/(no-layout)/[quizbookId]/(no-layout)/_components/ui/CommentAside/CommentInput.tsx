@@ -1,9 +1,15 @@
 'use client'
 
 import SendSvg from '@/assets/svgs/send.svg'
-import clsx from 'clsx'
 
+import { LoopAnimation, ProfileImage } from '@/components'
+import { usePostComment } from '@/hooks/mutations/comment'
+import { useCurrentUser } from '@/hooks/queries/user'
+import { ErrorResponse } from '@/types/base'
+import { AxiosError } from 'axios'
+import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
 
 interface Props {
     quizId: string
@@ -25,25 +31,41 @@ export default function CommentInput({ quizId, commentId }: Props) {
     }, [value])
 
     const handleSubmit = async () => {
-        if (!value.trim()) return
+        if (!value.trim() || isPending) return
 
-        // TODO: 댓글 POST 로직
-        const data = {
-            quizId,
-            commentId,
-            content: value,
-        }
+        postComment(
+            {
+                content: value,
+                commentId,
+            },
+            {
+                onSuccess: () => {
+                    setValue('')
+                },
+                onError: (e) => {
+                    const err = e as AxiosError<ErrorResponse>
+                    const msg =
+                        err.response?.data.message ||
+                        '댓글 등록 중 오류가 발생했습니다.'
 
-        console.log(data)
-
-        setValue('')
-
-        // TODO: 리패칭 로직
+                    toast.error(msg)
+                },
+            },
+        )
     }
+
+    const { mutate: postComment, isPending } = usePostComment(quizId)
+    const { data: userData } = useCurrentUser()
 
     return (
         <div className="flex items-end gap-[16px] overflow-y-hidden bg-white p-[16px] py-[8px] md:py-[16px]">
-            <div className="size-8 -translate-y-1/4 rounded-full bg-gray-300 pb-[20px] md:pb-[24px]" />
+            <div className="-translate-y-1/4">
+                <ProfileImage
+                    size={32}
+                    profileImg={userData?.profileImg || ''}
+                />
+            </div>
+
             <div className="relative flex-1">
                 {value === '' && (
                     <div className="pointer-events-none absolute left-[24px] top-1/2 -translate-y-1/2 text-mobile-body-md text-gray-400 md:left-[32px] md:text-pc-body-md">
@@ -60,15 +82,22 @@ export default function CommentInput({ quizId, commentId }: Props) {
                 />
             </div>
             <button
+                disabled={isPending}
                 onClick={handleSubmit}
-                className="translate-y-1/4 pb-[20px] md:pb-[24px]"
+                className="-translate-y-1/4"
             >
-                <SendSvg
-                    className={clsx(
-                        'size-8 text-gray-400',
-                        'hover:text-point-500 active:text-point-500',
-                    )}
-                />
+                {isPending ? (
+                    <div className="size-8 animate-spin">
+                        <LoopAnimation />
+                    </div>
+                ) : (
+                    <SendSvg
+                        className={clsx(
+                            'size-8 text-gray-400',
+                            'hover:text-point-500 active:text-point-500',
+                        )}
+                    />
+                )}
             </button>
         </div>
     )

@@ -2,27 +2,32 @@
 
 import CloseSvg from '@/assets/svgs/close.svg'
 
-import { Quiz } from '@/types/quiz'
-import { Quizbook } from '@/types/quizbook'
+import { QuizbookMeta } from '@/types/quizbook'
 import { QuizbookInfo } from '../../common'
 import QuizList from './QuizList'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { Sheet } from 'react-modal-sheet'
+import { LoopAnimation } from '@/components'
 
 interface Props {
-    quizbook: Quizbook<Quiz>
+    quizbookMeta: QuizbookMeta
 }
 
-export default function ListAside({ quizbook }: Props) {
+export default function ListAside({ quizbookMeta }: Props) {
     const router = useRouter()
     const pathname = usePathname()
-    const [isOpen, setIsOpen] = useState(true)
+    const [isOpen, setIsOpen] = useState(false)
 
     const handleClose = () => {
         setIsOpen(false)
         router.replace(pathname)
     }
+
+    // 새로 고침시 Hydration mismatch 오류 방지(컴포넌트 마운트 후 Open)
+    useEffect(() => {
+        setIsOpen(true)
+    }, [])
 
     return (
         <>
@@ -43,10 +48,20 @@ export default function ListAside({ quizbook }: Props) {
                             <CloseSvg className="size-6 shrink-0" />
                         </button>
                     </div>
-                    <QuizbookInfo quizbook={quizbook} />
+                    <Suspense
+                        fallback={
+                            <div className="flex items-center justify-center p-[16] md:p-[32px]">
+                                <div className="size-8 animate-spin">
+                                    <LoopAnimation />
+                                </div>
+                            </div>
+                        }
+                    >
+                        <QuizbookInfo quizbookMeta={quizbookMeta} />
+                    </Suspense>
                     <QuizList
-                        quizList={quizbook.quizList}
-                        quizbookId={quizbook._id}
+                        quizList={quizbookMeta.quizList}
+                        quizbookId={quizbookMeta._id}
                     />
                 </aside>
             </div>
@@ -72,8 +87,8 @@ export default function ListAside({ quizbook }: Props) {
                         </div>
                         <Sheet.Scroller className="no-scrollbar">
                             <QuizList
-                                quizList={quizbook.quizList}
-                                quizbookId={quizbook._id}
+                                quizList={quizbookMeta.quizList}
+                                quizbookId={quizbookMeta._id}
                             />
                         </Sheet.Scroller>
                     </Sheet.Content>

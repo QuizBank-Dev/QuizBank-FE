@@ -2,21 +2,27 @@
 
 import { QuestionCard } from '@/components/study'
 import { getAnswerStore, getQuestionStore } from '@/store/quizbook'
-import { Quiz } from '@/types/quiz'
 import { AnswerInput } from '../common'
-import { Quizbook } from '@/types/quizbook'
-import { useSearchParams } from 'next/navigation'
+import { QuizbookMeta } from '@/types/quizbook'
+import { useRouter, useSearchParams } from 'next/navigation'
 import ListAside from './ListAside'
 import CommentAside from './CommentAside'
+import { usePostStudy } from '@/hooks/mutations/study'
+import clsx from 'clsx'
+import { LoopAnimation } from '@/components'
+import { AxiosError } from 'axios'
+import { ErrorResponse } from '@/types/base'
+import { toast } from 'sonner'
 
 interface Props {
-    quizbook: Quizbook<Quiz>
+    quizbookMeta: QuizbookMeta
 }
 
-export default function StudyUI({ quizbook }: Props) {
+export default function StudyUI({ quizbookMeta }: Props) {
+    const router = useRouter()
     const panel = useSearchParams().get('panel')
 
-    const { _id: quizbookId, quizList } = quizbook
+    const { _id: quizbookId, quizList } = quizbookMeta
     const questionStore = getQuestionStore(quizbookId)
     const answerStore = getAnswerStore(quizbookId)
 
@@ -31,18 +37,33 @@ export default function StudyUI({ quizbook }: Props) {
     const answerReset = answerStore((s) => s.reset)
 
     const handleSubmit = () => {
-        // TODO: 학습 제출 로직
-        const data = {
-            quizbookId,
-            answerList: quizList.map((quiz) => ({
-                quizId: quiz._id,
-                answer: answerMap[quiz._id] || '',
-            })),
-        }
-        console.log(data)
-        answerReset()
-        questionReset()
+        const answerList = quizList.map((quiz) => ({
+            quizId: quiz._id,
+            answer: answerMap[quiz._id] || '',
+        }))
+        postStudy(
+            {
+                answerList,
+            },
+            {
+                onSuccess: () => {
+                    answerReset()
+                    questionReset()
+                    router.replace(`/quizbook/${quizbookMeta._id}/result`)
+                },
+                onError: (e) => {
+                    const err = e as AxiosError<ErrorResponse>
+                    const msg =
+                        err.response?.data.message ||
+                        '답안 제출 중 오류가 발생했습니다.'
+
+                    toast.error(msg)
+                },
+            },
+        )
     }
+
+    const { mutate: postStudy, isPending } = usePostStudy(quizbookMeta._id)
 
     return (
         <div className="mb-[16px] flex flex-1 flex-col justify-between gap-[32px] md:mb-[32px]">
@@ -64,15 +85,24 @@ export default function StudyUI({ quizbook }: Props) {
             </div>
             <div className="px-[16px] md:px-[32px]">
                 <button
+                    disabled={isPending}
                     onClick={handleSubmit}
-                    className="btn-solid btn-mobile-lg w-full md:btn-pc-lg"
+                    className={clsx(
+                        'btn-solid btn-mobile-lg w-full md:btn-pc-lg',
+                        {
+                            'btn-loading': isPending,
+                        },
+                    )}
                 >
-                    제출하기
+                    {isPending && <LoopAnimation />}
+                    {isPending ? '제출중...' : '제출하기'}
                 </button>
             </div>
 
-            {panel === 'list' && <ListAside quizbook={quizbook} />}
-            {panel === 'comment' && <CommentAside quizbook={quizbook} />}
+            {panel === 'list' && <ListAside quizbookMeta={quizbookMeta} />}
+            {panel === 'comment' && (
+                <CommentAside quizbookMeta={quizbookMeta} />
+            )}
         </div>
     )
 }
