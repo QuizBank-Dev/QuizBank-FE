@@ -21,7 +21,7 @@ export default function OXAnswerInput({ value, onChange }: Props) {
                             ? 'border-point-500'
                             : 'border-gray-200',
                     )}
-                    onClick={() => onChange(opt.toLowerCase())}
+                    onClick={() => onChange(opt)}
                 >
                     {opt}
                 </button>
