@@ -3,6 +3,7 @@
 import { useMyCommentQuery } from '@/hooks/queries/comment'
 import { InfiniteScrollContainer } from '@/components'
 import CommentItem from './CommentItem'
+import CommentItemSkeleton from './CommentItemSkeleton'
 
 export default function CommentList() {
     const {
@@ -16,7 +17,12 @@ export default function CommentList() {
     return (
         <>
             <span className="text-mobile-body-lg md:text-pc-body-lg">
-                <span className="font-bold text-point-500">{totalCount}</span>개
+                {!isPending && (
+                    <span className="font-bold text-point-500">
+                        {totalCount}
+                    </span>
+                )}
+                개
             </span>
             <InfiniteScrollContainer
                 className="flex flex-col gap-4"
@@ -24,6 +30,7 @@ export default function CommentList() {
                 hasNextPage={hasNextPage}
                 isFetchingNextPage={isFetchingNextPage}
                 fetchNextPage={fetchNextPage}
+                SkeletonUI={<CommentItemSkeleton />}
             >
                 {commentList.map((comment) => (
                     <CommentItem key={comment._id} {...comment} />
