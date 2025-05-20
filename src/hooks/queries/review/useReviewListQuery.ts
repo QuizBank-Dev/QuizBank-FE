@@ -9,7 +9,8 @@ export const useReviewListQuery = (quizbookId: string, limit: number = 5) => {
     return useInfiniteQuery({
         queryKey: ['quizbook-reviews', quizbookId],
         queryFn: ({ pageParam }) => getReviewList(quizbookId, limit, pageParam),
-        getNextPageParam: (lastPage) => lastPage.nextCursor,
+        getNextPageParam: (lastPage) =>
+            lastPage.nextCursor ? JSON.stringify(lastPage.nextCursor) : null,
         initialPageParam: '',
         staleTime: 0,
         gcTime: GcTime.DEFAULT,
