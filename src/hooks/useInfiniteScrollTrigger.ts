@@ -31,7 +31,6 @@ export const useInfiniteScrollTrigger = ({
                     hasNextPage &&
                     !isFetchingNextPage
                 ) {
-                    console.log('트리거 동작')
                     fetchNextPage()
                 }
             },
