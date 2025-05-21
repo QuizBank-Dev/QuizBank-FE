@@ -1,7 +1,6 @@
 'use client'
 
 import LeftArrowIcon from '@/assets/svgs/left-arrow.svg'
-
 import Link from 'next/link'
 import StudyStatus, { Props } from './StudyStatus'
 import TitleSection from './TitleSection'
@@ -111,11 +110,7 @@ export default function Detail() {
                 title={infoData?.quizbook.title || '--'}
                 category={infoData?.quizbook.category || '--'}
             />
-            <EndDateSection
-                endDate={infoData?.endedAt}
-                groupId={groupId as string}
-                quizbookId={quizbookId as string}
-            />
+            <EndDateSection endDate={infoData?.endedAt} />
             <StudyStatus
                 scoreList={scoreList}
                 memberList={memberList}

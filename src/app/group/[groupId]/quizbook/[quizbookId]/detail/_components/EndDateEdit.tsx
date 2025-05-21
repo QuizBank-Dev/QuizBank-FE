@@ -12,15 +12,22 @@ import {
     PopoverTrigger,
 } from '@/components/ui/popover'
 import { ko } from 'date-fns/locale'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
+import { useCurrentUser } from '@/hooks/queries/user'
+import { useGroupQuery } from '@/hooks/queries/group'
 
 export default function EndDateEdit({
     endDate,
 }: {
     endDate: string | undefined
 }) {
+    const { groupId, quizbookId } = useParams()
     const [date, setDate] = useState<Date>(
         endDate ? parseISO(endDate) : new Date(),
     )
+    const { data: userData } = useCurrentUser()
+    const { data: groupData } = useGroupQuery(groupId as string)
 
     useEffect(() => {
         if (endDate) setDate(parseISO(endDate))
@@ -33,9 +40,10 @@ export default function EndDateEdit({
                     <Button
                         variant={'outline'}
                         className={cn(
-                            'h-8 flex-1 justify-start text-left text-mobile-body-sm font-regular md:text-pc-body-sm',
+                            'h-8 flex-1 justify-start text-left text-mobile-body-sm font-regular disabled:opacity-100 md:text-pc-body-sm',
                             !date && 'text-muted-foreground',
                         )}
+                        disabled={groupData?.admin._id !== userData?._id}
                     >
                         <CalendarIcon />
                         {format(date, 'PPP', { locale: ko })}
@@ -52,9 +60,19 @@ export default function EndDateEdit({
                     />
                 </PopoverContent>
             </Popover>
-            <button className="btn-solid btn-mobile-sm md:btn-pc-sm">
-                적용
-            </button>
+            {groupData?.admin._id === userData?._id && (
+                <>
+                    <button className="btn-solid btn-mobile-sm md:btn-pc-sm">
+                        적용
+                    </button>
+                    <Link
+                        className="btn-solid btn-mobile-sm md:btn-pc-sm"
+                        href={`/group/${groupId}/quizbook/${quizbookId}/detail/delete`}
+                    >
+                        선정해제
+                    </Link>
+                </>
+            )}
         </div>
     )
 }
