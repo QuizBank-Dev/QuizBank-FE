@@ -1,13 +1,17 @@
+'use client'
+
 import clsx from 'clsx'
-import { Props } from './StudyStatus'
 import { QuestionCard } from '@/components/study'
 import { useState } from 'react'
 import AnswerList from './AnswerList'
+import { Quiz } from '@/types/quiz'
 
-export default function MemberAnswer({
-    quizList,
-    activeTab,
-}: Partial<Props> & { activeTab: string }) {
+interface Props {
+    quizList: Quiz[] | undefined
+    activeTab: string
+}
+
+export default function MemberAnswer({ quizList, activeTab }: Props) {
     const [pageNumber, setPageNumber] = useState(0)
     const [showAnswers, setShowAnswers] = useState(false)
 

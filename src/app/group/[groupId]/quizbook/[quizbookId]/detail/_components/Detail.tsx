@@ -2,90 +2,11 @@
 
 import LeftArrowIcon from '@/assets/svgs/left-arrow.svg'
 import Link from 'next/link'
-import StudyStatus, { Props } from './StudyStatus'
+import StudyStatus from './StudyStatus'
 import TitleSection from './TitleSection'
 import EndDateSection from './EndDateSection'
 import { useGroupQuizbookQuery } from '@/hooks/queries/group-quizbook'
 import { useParams } from 'next/navigation'
-
-const scoreList = [
-    {
-        score: 100,
-        owner: {
-            _id: '1',
-            nickname: '쭈니1',
-            profileImg: '',
-        },
-    },
-    {
-        score: 50,
-        owner: {
-            _id: '2',
-            nickname: '쭈니2',
-            profileImg: '',
-        },
-    },
-    {
-        score: 30,
-        owner: {
-            _id: '3',
-            nickname: '쭈니3',
-            profileImg: '',
-        },
-    },
-]
-
-const memberList = [
-    {
-        _id: '1',
-        nickname: '쭈니1',
-        profileImg: '',
-    },
-    {
-        _id: '2',
-        nickname: '쭈니2',
-        profileImg: '',
-    },
-    {
-        _id: '3',
-        nickname: '쭈니3',
-        profileImg: '',
-    },
-    {
-        _id: '4',
-        nickname: '쭈니4',
-        profileImg: '',
-    },
-    {
-        _id: '5',
-        nickname: '쭈니5',
-        profileImg: '',
-    },
-]
-
-const quizList: Props['quizList'][number][] = [
-    {
-        _id: '1',
-        type: '주관식',
-        question: 'test1',
-        optionList: [],
-        answer: 'test',
-    },
-    {
-        _id: '2',
-        type: '서술형',
-        question: 'test2',
-        answer: 'test',
-        optionList: [],
-    },
-    {
-        _id: '3',
-        type: '주관식',
-        question: 'test3',
-        optionList: [],
-        answer: 'test',
-    },
-]
 
 export default function Detail() {
     const { groupId, quizbookId } = useParams()
@@ -111,11 +32,7 @@ export default function Detail() {
                 category={infoData?.quizbook.category || '--'}
             />
             <EndDateSection endDate={infoData?.endedAt} />
-            <StudyStatus
-                scoreList={scoreList}
-                memberList={memberList}
-                quizList={quizList}
-            />
+            <StudyStatus quizList={infoData?.quizbook.quizList} />
         </div>
     )
 }
