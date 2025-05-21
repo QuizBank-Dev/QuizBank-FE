@@ -10,11 +10,12 @@ import { useQueries } from '@tanstack/react-query'
  */
 export const useGroupMemberAnswerQuery = (
     groupId: string,
+    quizbookId: string,
     quizList: Quiz[],
 ) => {
     return useQueries({
         queries: quizList.map((data) => ({
-            queryKey: ['group-quizbook', groupId, data._id, 'member-answer'],
+            queryKey: ['group-quizbook', groupId, quizbookId, data._id],
             queryFn: () => getGroupMemberAnswer(data._id, groupId),
             staleTime: StaleTime.MINUTE,
             gcTime: GcTime.DEFAULT,
