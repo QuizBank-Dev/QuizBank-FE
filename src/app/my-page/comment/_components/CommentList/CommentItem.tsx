@@ -14,7 +14,7 @@ export default function CommentItem({ content, updatedAt }: Props) {
                 </data>
                 <Link
                     // TODO 댓글 자세히보기 링크
-                    href={`#`}
+                    href={`/my-page/comment/todo`}
                     className="text-point-500 underline"
                 >
                     자세히 보기
