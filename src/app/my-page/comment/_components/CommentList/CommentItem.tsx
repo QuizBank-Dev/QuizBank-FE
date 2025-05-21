@@ -1,14 +1,10 @@
 import Link from 'next/link'
 import { getRelativeTime } from '@/utils/date/formatter'
+import { MyComment } from '@/types/comment'
 
-interface Props {
-    _id: string // comment id
-    quiz: string // quiz id
-    content: string
-    updatedAt: string
-}
+type Props = MyComment
 
-export default function CommentItem({ _id, quiz, content, updatedAt }: Props) {
+export default function CommentItem({ content, updatedAt }: Props) {
     return (
         <div className="rounded-lg bg-white p-4 shadow-point hover:bg-gray-100">
             <p className="line-clamp-3">{content}</p>
