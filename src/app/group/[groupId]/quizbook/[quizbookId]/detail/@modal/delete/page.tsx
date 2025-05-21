@@ -1,21 +1,19 @@
 'use client'
 
 import { LoopAnimation, Modal } from '@/components'
+import { useDeleteGroupQuizbook } from '@/hooks/mutations/group-quizbook'
 import clsx from 'clsx'
 import { useParams } from 'next/navigation'
-import { useState } from 'react'
 
 export default function DeleteGroupQuizbookModal() {
-    const [isLoading, setIsLoading] = useState(false)
-    const params = useParams()
+    const { groupId, quizbookId } = useParams()
+    const { mutate, isPending } = useDeleteGroupQuizbook(
+        groupId as string,
+        quizbookId as string,
+    )
 
     const handleClick = () => {
-        // 추후 로직 수정
-        setIsLoading(true)
-        setTimeout(() => {
-            console.log(1)
-            setIsLoading(false)
-        }, 2000)
+        mutate()
     }
 
     return (
@@ -30,15 +28,15 @@ export default function DeleteGroupQuizbookModal() {
                     <span>그룹에서 해제하시겠습니까?</span>
                 </div>
                 <button
-                    disabled={isLoading}
+                    disabled={isPending}
                     className={clsx(
                         'btn-solid btn-mobile-md bg-danger-300 md:btn-pc-md',
-                        isLoading && 'btn-loading',
+                        isPending && 'btn-loading',
                     )}
                     onClick={handleClick}
                 >
-                    {isLoading && <LoopAnimation />}
-                    {isLoading ? 'Loading...' : '해제'}
+                    {isPending && <LoopAnimation />}
+                    {isPending ? 'Loading...' : '해제'}
                 </button>
             </div>
         </Modal>
