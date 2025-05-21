@@ -5,6 +5,8 @@ import { QuestionCard } from '@/components/study'
 import { useState } from 'react'
 import AnswerList from './AnswerList'
 import { Quiz } from '@/types/quiz'
+import { useParams } from 'next/navigation'
+import { useGroupMemberAnswerQuery } from '@/hooks/queries/group-quizbook'
 
 interface Props {
     quizList: Quiz[] | undefined
@@ -14,8 +16,14 @@ interface Props {
 export default function MemberAnswer({ quizList, activeTab }: Props) {
     const [pageNumber, setPageNumber] = useState(0)
     const [showAnswers, setShowAnswers] = useState(false)
+    const { groupId, quizbookId } = useParams()
+    const queries = useGroupMemberAnswerQuery(
+        groupId as string,
+        quizbookId as string,
+        quizList || [],
+    )
 
-    if (!quizList) return null
+    if (!quizList || !queries.every((q) => q.isSuccess)) return null
 
     const onPrevHandler = () => {
         if (pageNumber === 0) return
@@ -50,7 +58,10 @@ export default function MemberAnswer({ quizList, activeTab }: Props) {
                     />
                 </div>
                 {showAnswers ? (
-                    <AnswerList quizId={quizList[pageNumber]._id} />
+                    <AnswerList
+                        quiz={quizList[pageNumber]}
+                        answerList={queries[pageNumber].data}
+                    />
                 ) : (
                     <span
                         className="cursor-pointer text-mobile-body-sm text-point-500 md:text-pc-body-sm"
