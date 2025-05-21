@@ -4,6 +4,11 @@ import { deleteProfileImage, updateProfile } from '@/lib/api/user'
 import { QueryKey } from '@/constants/common/queryKey'
 import { CurrentUser } from '@/types/user'
 
+/**
+ * 사용자 프로필을 업데이트하는 mutation
+ * @param cancelEditMode 사용자 프로필 수정을 중지하는 함수
+ * @param setLoading 로딩 상태를 업데이트하는 함수
+ */
 export const useUpdateProfileMutation = (
     cancelEditMode: () => void,
     setLoading: (state: boolean) => void,
@@ -12,6 +17,7 @@ export const useUpdateProfileMutation = (
 
     return useMutation({
         mutationFn: updateProfile,
+        // mutationFn 실행 전 프로필 사진이 삭제된 경우 프로필 사진 삭제 API 실행
         onMutate: async (formData) => {
             await queryClient.cancelQueries({ queryKey: QueryKey.user.DEFAULT })
 

@@ -4,6 +4,11 @@ import { cancelFollow, follow } from '@/lib/api/follow'
 import { QueryKey } from '@/constants/common/queryKey'
 import { FollowerType } from '@/types/api/follow'
 
+/**
+ * 특정 사용자를 팔로우 / 팔로우 취소하는 함수
+ * @param userId 팔로우/팔로우 취소 대상 사용자 아이디
+ * @param toggleClickFollow 팔로우 상태를 toggle하는 함수
+ */
 export const useFollowMutation = (
     userId: string,
     toggleClickFollow?: () => void,

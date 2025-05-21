@@ -2,6 +2,9 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { QueryKey } from '@/constants/common/queryKey'
 import { getMyComment } from '@/lib/api/comment'
 
+/**
+ * 내가 작성한 댓글을 가져오는 query
+ */
 export const useMyCommentQuery = () => {
     const { data, ...query } = useInfiniteQuery({
         queryKey: QueryKey.comment.me,
