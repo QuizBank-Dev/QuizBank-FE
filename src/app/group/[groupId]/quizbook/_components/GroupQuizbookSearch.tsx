@@ -151,7 +151,7 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                                 <QuizbookCard.QuizCount />
                             </div>
                             <Link
-                                href={`/group/${groupId}/quizbook/${groupQuizbook.quizbook._id}`}
+                                href={`/group/${groupId}/quizbook/${groupQuizbook.quizbook._id}/detail`}
                                 className="flex cursor-pointer items-center gap-1 text-point-500"
                             >
                                 <span className="text-mobile-body-sm font-semi-bold md:text-pc-body-sm">

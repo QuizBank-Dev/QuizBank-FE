@@ -21,7 +21,7 @@ export default function EndDateSection({
                 <EndDateEdit endDate={endDate} />
                 <Link
                     className="btn-solid btn-mobile-sm md:btn-pc-sm"
-                    href={`/group/${groupId}/quizbook/${quizbookId}/delete`}
+                    href={`/group/${groupId}/quizbook/${quizbookId}/detail/delete`}
                 >
                     선정해제
                 </Link>
