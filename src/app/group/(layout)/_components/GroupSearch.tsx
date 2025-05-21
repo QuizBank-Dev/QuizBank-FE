@@ -13,7 +13,8 @@ import { useGroupListQuery } from '@/hooks/queries/group'
 import Link from 'next/link'
 import { useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { CardSkeleton, InfiniteScrollContainer } from '@/components'
+import { CardSkeleton, EmptyList, InfiniteScrollContainer } from '@/components'
+import QuizbookSvg from '@/assets/svgs/quizbook.svg'
 
 export default function GroupSearch() {
     const { groupListQuery, name, setName, theme, setTheme } =
@@ -117,6 +118,9 @@ export default function GroupSearch() {
                 SkeletonUI={<CardSkeleton />}
                 className={'flex flex-col gap-4'}
             >
+                {!groupListQuery.isPending && list.length === 0 && (
+                    <EmptyList Icon={QuizbookSvg} />
+                )}
                 {list.map((data) => (
                     <GroupCard key={data._id} data={data}>
                         <div className="flex items-center justify-between">
