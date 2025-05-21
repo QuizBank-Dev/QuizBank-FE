@@ -1,5 +1,6 @@
 import { Quiz } from './quiz'
 import { Quizbook } from './quizbook'
+import { Author } from './review'
 
 export interface GroupQuizbook {
     group: string
@@ -21,4 +22,9 @@ export interface GroupQuizbookMeta {
 
 export interface EditEndDate {
     endDate: string
+}
+
+export interface QuizGroupMemberScore {
+    memberList: Author[]
+    scoreList: { score: number; owner: Author }[]
 }
