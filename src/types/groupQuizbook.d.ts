@@ -18,3 +18,7 @@ export interface GroupQuizbookMeta {
     quizbook: Quizbook<Quiz>
     endedAt: string
 }
+
+export interface EditEndDate {
+    endDate: string
+}
