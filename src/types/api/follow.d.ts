@@ -1,1 +1,3 @@
-export type FollowerType = 'all' | 'follower' | 'following'
+export type FollowerType = 'follower' | 'following'
+
+// export type FollowerTypeWithAll = FollowerType | 'all'

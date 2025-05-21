@@ -20,7 +20,7 @@ export const useFollowMutation = (
             type = 'following',
         }: {
             isFollowed: boolean
-            type?: Exclude<FollowerType, 'all'>
+            type?: FollowerType
         }) => {
             const method = !isFollowed
                 ? follow

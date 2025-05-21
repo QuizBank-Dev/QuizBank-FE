@@ -18,7 +18,7 @@ export const follow = async (targetId: string) => {
  */
 export const cancelFollow = async (
     targetId: string,
-    type: Exclude<FollowerType, 'all'> = 'following',
+    type: FollowerType = 'following',
 ) => {
     return (
         await axiosInstance.delete(`v1/follow/${targetId}`, {

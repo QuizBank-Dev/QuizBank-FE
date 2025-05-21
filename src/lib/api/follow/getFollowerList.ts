@@ -8,7 +8,7 @@ import { FollowerType } from '@/types/api/follow'
  */
 export const getAllFollowerList = async () => {
     const res = await axiosInstance.get<
-        Response<Record<Exclude<FollowerType, 'all'>, Follower[]>>
+        Response<Record<FollowerType, Follower[]>>
     >('v1/follow', { params: { type: 'all' } })
 
     return res.data?.result

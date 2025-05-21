@@ -7,7 +7,7 @@ import { useFollowMutation } from '@/hooks/mutations/user'
 import { FollowerType } from '@/types/api/follow'
 
 interface Props {
-    followType: Exclude<FollowerType, 'all'>
+    followType: FollowerType
     user: Follower
 }
 

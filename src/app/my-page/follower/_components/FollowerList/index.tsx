@@ -11,8 +11,7 @@ export default function FollowerList() {
     const { data: followerList, isPending } = useFollowerListQuery()
 
     const searchParams = useSearchParams()
-    const selectedTab =
-        (searchParams.get('tab') as Exclude<FollowerType, 'all'>) || 'following'
+    const selectedTab = (searchParams.get('tab') as FollowerType) || 'following'
 
     return (
         <div className="overflow-hidden rounded-lg bg-white shadow-point">
