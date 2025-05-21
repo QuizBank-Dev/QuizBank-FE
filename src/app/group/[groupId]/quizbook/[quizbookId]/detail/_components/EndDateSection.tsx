@@ -2,7 +2,7 @@ import Link from 'next/link'
 import EndDateEdit from './EndDateEdit'
 
 interface Props {
-    endDate: string
+    endDate: string | undefined
     groupId: string
     quizbookId: string
 }

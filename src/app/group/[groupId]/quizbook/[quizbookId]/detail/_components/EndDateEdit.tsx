@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { format, parseISO } from 'date-fns'
 import { CalendarIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -13,8 +13,18 @@ import {
 } from '@/components/ui/popover'
 import { ko } from 'date-fns/locale'
 
-export default function EndDateEdit({ endDate }: { endDate: string }) {
-    const [date, setDate] = useState<Date>(parseISO(endDate))
+export default function EndDateEdit({
+    endDate,
+}: {
+    endDate: string | undefined
+}) {
+    const [date, setDate] = useState<Date>(
+        endDate ? parseISO(endDate) : new Date(),
+    )
+
+    useEffect(() => {
+        if (endDate) setDate(parseISO(endDate))
+    }, [endDate])
 
     return (
         <div className="flex flex-1 items-center gap-2 md:gap-4">

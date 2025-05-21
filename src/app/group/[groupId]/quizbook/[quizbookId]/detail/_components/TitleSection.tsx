@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 interface Props {
-    _id: string
+    _id: string | undefined
     title: string
     category: string
 }
@@ -14,7 +14,7 @@ export default function TitleSection({ _id, title, category }: Props) {
             </span>
             <div className="flex w-full items-center justify-between rounded-lg bg-white p-4 shadow-point md:px-8">
                 <Link
-                    href={`/quizbook/${_id}`}
+                    href={`/quizbook/${_id}/info`}
                     className="cursor-pointer text-mobile-body-lg text-point-900 md:text-pc-body-lg"
                 >
                     {title}
