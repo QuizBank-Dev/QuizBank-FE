@@ -16,6 +16,7 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { useCurrentUser } from '@/hooks/queries/user'
 import { useGroupQuery } from '@/hooks/queries/group'
+import { usePatchGroupQuizbook } from '@/hooks/mutations/group-quizbook'
 
 export default function EndDateEdit({
     endDate,
@@ -28,6 +29,10 @@ export default function EndDateEdit({
     )
     const { data: userData } = useCurrentUser()
     const { data: groupData } = useGroupQuery(groupId as string)
+    const { mutate, isPending } = usePatchGroupQuizbook(
+        groupId as string,
+        quizbookId as string,
+    )
 
     useEffect(() => {
         if (endDate) setDate(parseISO(endDate))
@@ -62,7 +67,13 @@ export default function EndDateEdit({
             </Popover>
             {groupData?.admin._id === userData?._id && (
                 <>
-                    <button className="btn-solid btn-mobile-sm md:btn-pc-sm">
+                    <button
+                        className="btn-solid btn-mobile-sm md:btn-pc-sm"
+                        onClick={() => {
+                            mutate({ endDate: date.toISOString() })
+                        }}
+                        disabled={isPending}
+                    >
                         적용
                     </button>
                     <Link
