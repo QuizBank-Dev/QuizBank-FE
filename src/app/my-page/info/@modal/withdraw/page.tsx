@@ -3,14 +3,26 @@
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { Modal } from '@/components'
+import { withdraw } from '@/lib/api/auth'
+import { useQueryClient } from '@tanstack/react-query'
+import { QueryKey } from '@/constants/common/queryKey'
 
 export default function WithdrawModal() {
     const router = useRouter()
+    const queryClient = useQueryClient()
 
     const handleWithdraw = () => {
-        // API 호출
-        router.push('/login')
-        toast('탈퇴가 완료되었습니다.')
+        withdraw().then(() => {
+            queryClient
+                .invalidateQueries({
+                    queryKey: QueryKey.user.DEFAULT,
+                    exact: true,
+                })
+                .then(() => {
+                    router.push('/login')
+                    toast('탈퇴가 완료되었습니다.')
+                })
+        })
     }
 
     return (

@@ -1,27 +1,26 @@
-import { ProfileImage } from '@/components'
 import clsx from 'clsx'
+import { ProfileImage } from '@/components'
+import { useCurrentUser } from '@/hooks/queries/user'
 
 interface Props {
+    isEditMode: boolean
     onEditMode: () => void
 }
 
-const user = {
-    _id: '1',
-    nickname: 'example',
-    profileImg: '',
-    introduce: '안녕하세요',
-    category: ['자료구조'],
-    experience: 0,
-    isOAuthAccount: false,
-}
+export default function Viewer({ isEditMode, onEditMode }: Props) {
+    const { data: user } = useCurrentUser()
 
-export default function Viewer({ onEditMode }: Props) {
     if (!user) {
         return null
     }
 
     return (
-        <div className="flex flex-col items-center gap-4 rounded-lg bg-white p-4 shadow-point">
+        <div
+            className={clsx(
+                'flex flex-col items-center gap-4 rounded-lg bg-white p-4 shadow-point',
+                isEditMode && '!hidden',
+            )}
+        >
             <ProfileImage size={128} profileImg={user.profileImg} />
             <p className="text-mobile-body-md text-point-900 md:text-pc-body-md">
                 {user.nickname}

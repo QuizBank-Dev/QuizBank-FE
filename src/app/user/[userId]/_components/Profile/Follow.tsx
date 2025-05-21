@@ -20,7 +20,7 @@ export default function Follow() {
     )
 
     const handleFollowClick = () => {
-        toggleFollow(isFollowed)
+        toggleFollow({ isFollowed })
     }
 
     return (

@@ -9,7 +9,7 @@ export default function TabList() {
     const selectedTab = searchParams.get('tab') || 'following'
 
     const handleChangeActiveTap = (tab: string) => {
-        router.push(`/my-page/follower?tab=${tab}`)
+        router.replace(`/my-page/follower?tab=${tab}`)
     }
 
     return (

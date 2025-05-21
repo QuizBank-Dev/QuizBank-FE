@@ -5,18 +5,15 @@ import Sidebar from '@/components/Sidebar'
 import BadgeSvg from '@/assets/svgs/badge.svg'
 import PasswordSvg from '@/assets/svgs/password.svg'
 import CategorySvg from '@/assets/svgs/category.svg'
-
-const user = {
-    _id: '1',
-    nickname: 'example',
-    profileImg: '',
-    introduce: '안녕하세요',
-    category: ['자료구조'],
-    experience: 0,
-    isOAuthAccount: false,
-}
+import { useCurrentUser } from '@/hooks/queries/user'
 
 export default function MyInfoMenu() {
+    const { data: user } = useCurrentUser()
+
+    if (!user) {
+        return null
+    }
+
     return (
         <Sidebar gap={4}>
             <Sidebar.Group>
@@ -31,7 +28,8 @@ export default function MyInfoMenu() {
                     <Sidebar.Item
                         icon={<PasswordSvg className="size-5" />}
                         text="비밀번호 변경"
-                        href="/my-page/info/change-password"
+                        // TODO 비밀번호 변경 로직 구현 후 수정 필요
+                        href="/my-page/info/todo"
                     />
                 )}
                 <Sidebar.Item

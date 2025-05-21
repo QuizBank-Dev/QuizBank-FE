@@ -12,3 +12,12 @@ export interface Comment {
     parent?: string
     recommentCount?: number
 }
+
+export interface MyComment {
+    _id: string // commentId
+    quiz: string // quizId
+    content: string
+    author: string
+    createdAt: string
+    updatedAt: string
+}

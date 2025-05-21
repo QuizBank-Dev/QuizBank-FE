@@ -14,6 +14,7 @@ export const QueryKey = {
     comment: {
         LIST: (quizId: string) => ['comment-list', quizId],
         RECOMMENT_LIST: (commentId: string) => ['recomment-list', commentId],
+        me: ['comment', 'me'],
     },
     study: {
         SOLVED_ANSWER: (quizId: string) => ['solved-answer', quizId],
@@ -32,5 +33,8 @@ export const QueryKey = {
             userId || 'me',
             offset,
         ],
+    },
+    follower: {
+        DEFAULT: ['follower'],
     },
 } as const
