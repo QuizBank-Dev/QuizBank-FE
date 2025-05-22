@@ -27,7 +27,7 @@ export default async function Page({
     return (
         <OtherUserPreFetcher userId={userId} defaultData={user}>
             <MobileHeader title={user?.nickname || ''} backBtn />
-            <main className="no-scrollbar relative flex w-full max-w-[1056px] flex-col items-start gap-4 overflow-auto p-4 md:flex-row md:pt-8">
+            <main className="no-scrollbar relative flex w-full max-w-[1056px] flex-col items-start gap-8 overflow-auto p-4 md:flex-row md:pt-8">
                 <Profile />
                 <div className="flex w-full flex-1 flex-col gap-4">
                     <h2 className="hidden text-mobile-title-sm font-extra-bold text-point-900 md:block md:text-pc-title-sm">
