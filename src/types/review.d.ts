@@ -16,7 +16,7 @@ export interface Author {
 
 export interface ReviewList {
     data: ReviewCard[]
-    nextCursor: string | null
+    nextCursor: { _id: string } | null
     leftCount: number
 }
 

@@ -2,6 +2,7 @@
 
 import {
     CardSkeleton,
+    EmptyList,
     InfiniteScrollContainer,
     QuizbookCard,
 } from '@/components'
@@ -20,6 +21,7 @@ import { extractKSTDateOnly } from '@/utils/date/dateOnly'
 import { useRouter } from 'next/navigation'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
+import QuizbookSvg from '@/assets/svgs/quizbook.svg'
 
 export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
     const { groupQuizbookListQuery, setStandard, setStatus, setSort } =
@@ -118,6 +120,12 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                 SkeletonUI={<CardSkeleton />}
                 className={'flex flex-col gap-4'}
             >
+                {!groupQuizbookListQuery.isPending && list.length === 0 && (
+                    <EmptyList
+                        Icon={QuizbookSvg}
+                        text="조건에 맞는 그룹 선정 문제집이 없습니다!"
+                    />
+                )}
                 {list.map((groupQuizbook) => (
                     <QuizbookCard
                         key={groupQuizbook.quizbook._id}
@@ -151,7 +159,7 @@ export default function GroupQuizbookSearch({ groupId }: { groupId: string }) {
                                 <QuizbookCard.QuizCount />
                             </div>
                             <Link
-                                href={`/group/${groupId}/quizbook/${groupQuizbook.quizbook._id}`}
+                                href={`/group/${groupId}/quizbook/${groupQuizbook.quizbook._id}/detail`}
                                 className="flex cursor-pointer items-center gap-1 text-point-500"
                             >
                                 <span className="text-mobile-body-sm font-semi-bold md:text-pc-body-sm">

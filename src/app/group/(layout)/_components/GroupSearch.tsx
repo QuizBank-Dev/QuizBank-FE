@@ -13,7 +13,9 @@ import { useGroupListQuery } from '@/hooks/queries/group'
 import Link from 'next/link'
 import { useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { CardSkeleton, InfiniteScrollContainer } from '@/components'
+import { CardSkeleton, EmptyList, InfiniteScrollContainer } from '@/components'
+import QuizbookSvg from '@/assets/svgs/quizbook.svg'
+import { toast } from 'sonner'
 
 export default function GroupSearch() {
     const { groupListQuery, name, setName, theme, setTheme } =
@@ -26,6 +28,12 @@ export default function GroupSearch() {
             queryKey: ['group', 'list', 'my'],
         })
     }, [])
+
+    useEffect(() => {
+        if (groupListQuery.isError) {
+            toast('인증정보가 올바르지 않습니다. 로그인해주세요!')
+        }
+    }, [groupListQuery])
 
     const list = groupListQuery.data?.pages.flatMap((page) => page.list) ?? []
 
@@ -117,6 +125,9 @@ export default function GroupSearch() {
                 SkeletonUI={<CardSkeleton />}
                 className={'flex flex-col gap-4'}
             >
+                {!groupListQuery.isPending && list.length === 0 && (
+                    <EmptyList Icon={QuizbookSvg} />
+                )}
                 {list.map((data) => (
                     <GroupCard key={data._id} data={data}>
                         <div className="flex items-center justify-between">

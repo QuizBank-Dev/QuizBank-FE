@@ -1,2 +1,7 @@
 export * from './getGroupQuizbookList'
 export * from './postGroupQuizbook'
+export * from './getGroupQuizbook'
+export * from './patchGroupQuizbook'
+export * from './deleteGroupQuizbook'
+export * from './getGroupMemberScore'
+export * from './getGroupMemberAnswer'

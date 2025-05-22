@@ -22,6 +22,9 @@ export const useGroupListQuery = (
         staleTime: 0,
         gcTime: GcTime.DEFAULT,
         retry: 0,
+        meta: {
+            ignoreGlobalError: true,
+        },
     })
 
     return { groupListQuery, name, setName, theme, setTheme }

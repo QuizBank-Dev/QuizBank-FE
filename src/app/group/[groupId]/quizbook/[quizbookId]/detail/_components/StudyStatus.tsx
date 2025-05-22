@@ -6,28 +6,11 @@ import StudyStats from './StudyStats'
 import MemberAnswer from './MemberAnswer'
 import { Quiz } from '@/types/quiz'
 
-export interface Props {
-    scoreList: {
-        score: number
-        owner: {
-            _id: string
-            nickname: string
-            profileImg: string
-        }
-    }[]
-    memberList: {
-        _id: string
-        nickname: string
-        profileImg: string
-    }[]
-    quizList: Quiz[]
+interface Props {
+    quizList: Quiz[] | undefined
 }
 
-export default function StudyStatus({
-    scoreList,
-    memberList,
-    quizList,
-}: Props) {
+export default function StudyStatus({ quizList }: Props) {
     const [activeTab, setActiveTab] = useState('stats')
 
     return (
@@ -57,11 +40,7 @@ export default function StudyStatus({
                     </TabsList>
                 </Tabs>
             </nav>
-            <StudyStats
-                scoreList={scoreList}
-                memberList={memberList}
-                activeTab={activeTab}
-            />
+            <StudyStats activeTab={activeTab} />
             <MemberAnswer quizList={quizList} activeTab={activeTab} />
         </section>
     )
