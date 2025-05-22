@@ -5,8 +5,10 @@ import { useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { AxiosError } from 'axios'
+import { useQueryClient } from '@tanstack/react-query'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CustomInput } from '@/components'
+import { QueryKey } from '@/constants/common/queryKey'
 import { LoginFormData, loginSchema } from '@/types/schemas/auth'
 import { EmptyResponse } from '@/types/base'
 import { login } from '@/lib/api/auth'
@@ -15,6 +17,7 @@ import LoadingButton from '../../_components/LoadingButton'
 export default function LoginForm() {
     const router = useRouter()
     const searchParams = useSearchParams()
+    const queryClient = useQueryClient()
     const [isLoading, setIsLoading] = useState(false)
     const methods = useForm<LoginFormData>({
         resolver: zodResolver(loginSchema),
@@ -27,6 +30,10 @@ export default function LoginForm() {
             .then(() => {
                 const token = searchParams.get('token')
                 router.push(token ? `/group/invitation?token=${token}` : '/')
+                queryClient.invalidateQueries({
+                    queryKey: QueryKey.user.DEFAULT,
+                    exact: true,
+                })
             })
             .catch((error: AxiosError<EmptyResponse>) => {
                 toast(
