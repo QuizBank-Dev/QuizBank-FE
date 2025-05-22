@@ -9,6 +9,7 @@ const PUBLIC_PATHS = [
     '/quizbook',
     /^\/quizbook\/[^/]+$/,
     /^\/quizbook\/[^/]+\/info$/,
+    '/group',
     '/group/invitation',
 ]
 
