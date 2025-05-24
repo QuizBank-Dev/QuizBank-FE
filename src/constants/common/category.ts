@@ -19,3 +19,12 @@ export const CategoryEmoji: Record<CategoryType, string> = {
 }
 
 export const MINIMUM_REQUIRED_CATEGORIES = 1
+
+export const CategoryBackgroundImg = {
+    자료구조: '/jpgs/background1.jpg',
+    알고리즘: '/jpgs/background2.jpg',
+    네트워크: '/jpgs/background3.jpg',
+    데이터베이스: '/jpgs/background4.jpg',
+    '웹 개발': '/jpgs/background5.jpg',
+    기타: '/jpgs/background6.jpg',
+}

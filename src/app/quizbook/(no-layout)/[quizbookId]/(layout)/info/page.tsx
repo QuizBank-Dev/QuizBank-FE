@@ -1,5 +1,3 @@
-import backgroundImg from '@/assets/pngs/background.png'
-import Image from 'next/image'
 import NoteIcon from '@/assets/svgs/note.svg'
 import DateIcon from '@/assets/svgs/date.svg'
 import Link from 'next/link'
@@ -10,6 +8,7 @@ import SideBar from './_components/SideBar'
 import { getQuizbookMeta } from '@/lib/api/quizbook'
 import { extractKSTDateOnly } from '@/utils/date/dateOnly'
 import States from './_components/States'
+import { CategoryBackgroundImg } from '@/constants/common/category'
 
 export default async function QuizbookDetailPage({
     params,
@@ -22,18 +21,16 @@ export default async function QuizbookDetailPage({
 
     return (
         <main className="no-scrollbar flex w-full flex-1 flex-col items-center overflow-auto">
-            <section className="relative flex w-full justify-center">
-                {/* 배경 이미지 */}
-                <Image
-                    src={backgroundImg}
-                    alt="배경 이미지"
-                    fill
-                    style={{ objectFit: 'cover' }}
-                    priority
-                />
-
+            <section
+                className="relative flex w-full justify-center"
+                style={{
+                    backgroundImage: `url(${CategoryBackgroundImg[quizbookMeta.category]})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }}
+            >
                 {/* 보라색 오버레이 */}
-                <div className="absolute inset-0 bg-[#271065] opacity-45"></div>
+                <div className="absolute inset-0 bg-[#271065] opacity-70"></div>
 
                 {/* 안의 텍스트 */}
                 <div className="relative z-10 flex w-full max-w-[1056px] flex-col items-start gap-4 p-4 text-white md:py-8">
