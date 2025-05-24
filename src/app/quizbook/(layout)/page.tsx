@@ -10,9 +10,9 @@ export default async function Page({
     const params = await searchParams
 
     return (
-        <div className="flex w-full max-w-[1056px] flex-col gap-4 px-4 py-4 md:py-8">
+        <main className="flex w-full max-w-[1056px] flex-col gap-4 px-4 py-4 md:py-8">
             <SearchForm params={params} />
             <QuizbookList />
-        </div>
+        </main>
     )
 }
