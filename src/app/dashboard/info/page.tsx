@@ -1,5 +1,5 @@
 import { AnnualStudyHeatmap, WeeklyStudyTracker } from '@/components'
-import { BadgeBoard, RecentStudyBoard } from '../../_components'
+import { BadgeBoard, RecentStudyBoard } from '../_components'
 
 export default function Page() {
     return (
