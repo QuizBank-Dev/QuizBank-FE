@@ -20,7 +20,7 @@ export default function DashboardSidebar() {
                 <Sidebar.Group>
                     <Sidebar.Item
                         icon={<HeartFillSvg className="size-5" />}
-                        text="찜한 문제집"
+                        text="찜 한 문제집"
                         href="/dashboard/quizbook-like"
                     />
                     <Sidebar.Item
@@ -28,15 +28,15 @@ export default function DashboardSidebar() {
                         text="나중에 볼 문제"
                         href="/dashboard/quiz-like"
                     />
-                    <Sidebar.Item
+                    {/* <Sidebar.Item
                         icon={<GroupChatSvg className="size-5" />}
                         text="그룹 선정 문제집"
                         href="/dashboard/group-quizbook"
-                    />
+                    /> */}
                     <Sidebar.Item
                         icon={<RecentSvg className="size-5" />}
                         text="학습 결과"
-                        href="/dashboard/result"
+                        href="/dashboard/study-result"
                     />
                 </Sidebar.Group>
             </Sidebar>
