@@ -1,3 +1,4 @@
+import { QueryKey } from '@/constants/common/queryKey'
 import { postQuizbookLike } from '@/lib/api/like'
 import { QuizbookUserFlags } from '@/types/quizbook'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -47,6 +48,10 @@ export const usePostQuizbookLike = (quizbookId: string) => {
         onSuccess: () => {
             queryClient.removeQueries({
                 queryKey: ['quizbook'],
+            })
+            // 찜 한 문제집 리스트 쿼리 무효화
+            queryClient.invalidateQueries({
+                queryKey: QueryKey.like.QUIZBOOK_LIST,
             })
         },
     })
