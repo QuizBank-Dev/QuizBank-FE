@@ -1,17 +1,25 @@
 'use client'
 
-import StudySvg from '@/assets/svgs/study.svg'
 import PlaySvg from '@/assets/svgs/play.svg'
+import StudySvg from '@/assets/svgs/study.svg'
 
-import { EmptyList } from '@/components'
 import { getAnswerStore, useRecentQuizbookStore } from '@/store/quizbook'
+import clsx from 'clsx'
+import { useRouter } from 'next/navigation'
 
 export default function RecentStudyBoard() {
-    const { recent } = useRecentQuizbookStore()
+    const router = useRouter()
 
+    const { recent } = useRecentQuizbookStore()
     const answerStore = getAnswerStore(recent?._id || '__empty__')
     const { answerMap } = answerStore()
     const solvedCount = Object.keys(answerMap).length
+
+    const hanldeClick = () => {
+        if (!recent) return
+
+        router.push(`/quizbook/${recent._id}/study`)
+    }
 
     return (
         <div className="flex flex-col gap-[16px] rounded-lg bg-white p-[16px] shadow-point md:px-[32px] md:pb-[32px]">
@@ -19,9 +27,17 @@ export default function RecentStudyBoard() {
                 최근 학습
             </h3>
             <div className="flex flex-1 items-center gap-[16px]">
-                <div className="flex size-10 items-center justify-center rounded-full bg-point-500">
+                <button
+                    onClick={hanldeClick}
+                    className={clsx(
+                        'flex size-10 cursor-not-allowed items-center justify-center rounded-full bg-gray-500',
+                        {
+                            '!cursor-pointer !bg-point-500': recent,
+                        },
+                    )}
+                >
                     <PlaySvg className="size-6 text-white" />
-                </div>
+                </button>
                 {recent ? (
                     <div className="flex flex-col gap-[8px]">
                         <div className="flex flex-1 flex-col">
@@ -45,8 +61,8 @@ export default function RecentStudyBoard() {
                         </div>
                     </div>
                 ) : (
-                    <span className="text-gray-400">
-                        학습 중인 문제집이 없습니다.
+                    <span className="text-mobile-body-md text-gray-400 md:text-pc-body-md">
+                        학습 중인 문제집이 없습니다 😖
                     </span>
                 )}
             </div>
