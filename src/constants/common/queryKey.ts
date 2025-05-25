@@ -34,6 +34,10 @@ export const QueryKey = {
             offset,
         ],
     },
+    like: {
+        QUIZBOOK_LIST: ['quizbook-like', 'me'],
+        QUIZ_LIST: ['quiz-like', 'me'],
+    },
     follower: {
         DEFAULT: ['follower'],
     },
