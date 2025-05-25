@@ -27,7 +27,7 @@ export default function MobileBottomNavRoot({ children }: Prop) {
                     <MenuItem text="그룹" href="/group">
                         <BottomGroup />
                     </MenuItem>
-                    <UserMenuItem text="학습현황" href="/study-status">
+                    <UserMenuItem text="학습현황" href="/dashboard">
                         <BottomMyStatus />
                     </UserMenuItem>
                 </>
