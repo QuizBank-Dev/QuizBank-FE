@@ -13,7 +13,7 @@ import {
 } from '@/types/schemas/auth'
 import { EmptyResponse } from '@/types/base'
 import { confirmResetPassword } from '@/lib/api/auth'
-import LoadingButton from '@/app/(auth)/_components/LoadingButton'
+import LoadingButton from '../../_components/LoadingButton'
 
 export default function ResetForm() {
     const router = useRouter()
