@@ -25,7 +25,7 @@ export default function DashboardSidebar() {
                     />
                     <Sidebar.Item
                         icon={<BookmarkSvg className="size-5" />}
-                        text="나중에 볼 문제"
+                        text="다시 볼 문제"
                         href="/dashboard/quiz-like"
                     />
                     {/* <Sidebar.Item
