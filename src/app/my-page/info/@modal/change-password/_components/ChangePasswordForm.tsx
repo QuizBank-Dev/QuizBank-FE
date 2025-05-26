@@ -5,42 +5,18 @@ import { useRouter } from 'next/navigation'
 import { FormProvider, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import clsx from 'clsx'
-import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { CustomInput, LoopAnimation } from '@/components'
-
-const schema = z
-    .object({
-        currentPassword: z
-            .string()
-            .nonempty('필수로 입력되어야하는 항목입니다.'),
-        password: z
-            .string()
-            .nonempty('필수 입력되어야하는 항목입니다.')
-            .regex(
-                /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d`~!@#$%^&*()\-_=+\\|/?,.<>;:'"[\]{}]+$/,
-                '비밀번호는 8자리 이상, 영문과 숫자를 1가지 이상 조합해주세요.',
-            )
-            .min(
-                8,
-                '비밀번호는 8자리 이상, 영문과 숫자를 1가지 이상 조합해주세요.',
-            ),
-        confirmPassword: z
-            .string()
-            .nonempty('필수로 입력되어야하는 항목입니다.'),
-    })
-    .refine((data) => data.password === data.confirmPassword, {
-        message: '비밀번호가 일치하지 않습니다.',
-        path: ['confirmPassword'],
-    })
-
-type FormData = z.infer<typeof schema>
+import {
+    ChangePasswordFormData,
+    changePasswordSchema,
+} from '@/types/schemas/auth'
 
 export default function ChangePasswordForm() {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
-    const methods = useForm<FormData>({
-        resolver: zodResolver(schema),
+    const methods = useForm<ChangePasswordFormData>({
+        resolver: zodResolver(changePasswordSchema),
         mode: 'onChange',
     })
 
@@ -48,7 +24,7 @@ export default function ChangePasswordForm() {
         router.back()
     }
 
-    const handleFormSubmit = async (data: FormData) => {
+    const handleFormSubmit = async (data: ChangePasswordFormData) => {
         setIsLoading(true)
         // TODO 비밀번호 변경 API 호출
         const result = await new Promise<string>((resolve) =>
