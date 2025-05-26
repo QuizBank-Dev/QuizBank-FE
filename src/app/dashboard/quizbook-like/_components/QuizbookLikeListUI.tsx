@@ -1,6 +1,8 @@
 'use client'
 
-import { InfiniteScrollContainer, QuizbookCard } from '@/components'
+import StudySvg from '@/assets/svgs/study.svg'
+
+import { EmptyList, InfiniteScrollContainer, QuizbookCard } from '@/components'
 import { QuizbookCardStatus } from '@/constants/common/quizbookBadge'
 import { useInfiniteQuizbookLikeList } from '@/hooks/queries/like'
 import { useRouter } from 'next/navigation'
@@ -21,44 +23,48 @@ export default function QuizbookLikeListUI() {
                 )}
                 개의 문제집
             </p>
-            <InfiniteScrollContainer
-                className="flex flex-col gap-[16px]"
-                isPending={isPending}
-                hasNextPage={hasNextPage}
-                isFetchingNextPage={isFetchingNextPage}
-                fetchNextPage={fetchNextPage}
-            >
-                {quizbookLikeList.map((quizbook) => (
-                    <QuizbookCard
-                        key={quizbook._id}
-                        id={quizbook._id}
-                        {...quizbook}
-                        badge={{
-                            status: quizbook.isStudied
-                                ? QuizbookCardStatus.COMPLETED
-                                : QuizbookCardStatus.BEFORE,
-                        }}
-                        title={quizbook.title}
-                        category={quizbook.category}
-                        onClick={() =>
-                            router.push(`/quizbook/${quizbook._id}/info`)
-                        }
-                    >
-                        <QuizbookCard.Description />
-                        <QuizbookCard.Author />
-                        <div className="flex w-full justify-between">
-                            <div className="flex items-center gap-2">
-                                <QuizbookCard.SolvedRate />
-                                <QuizbookCard.ReviewRate />
-                                <QuizbookCard.QuizCount />
+            {!isPending && quizbookLikeList.length === 0 ? (
+                <EmptyList Icon={StudySvg} text="찜 한 문제집이 없습니다." />
+            ) : (
+                <InfiniteScrollContainer
+                    className="flex flex-col gap-[16px]"
+                    isPending={isPending}
+                    hasNextPage={hasNextPage}
+                    isFetchingNextPage={isFetchingNextPage}
+                    fetchNextPage={fetchNextPage}
+                >
+                    {quizbookLikeList.map((quizbook) => (
+                        <QuizbookCard
+                            key={quizbook._id}
+                            id={quizbook._id}
+                            {...quizbook}
+                            badge={{
+                                status: quizbook.isStudied
+                                    ? QuizbookCardStatus.COMPLETED
+                                    : QuizbookCardStatus.BEFORE,
+                            }}
+                            title={quizbook.title}
+                            category={quizbook.category}
+                            onClick={() =>
+                                router.push(`/quizbook/${quizbook._id}/info`)
+                            }
+                        >
+                            <QuizbookCard.Description />
+                            <QuizbookCard.Author />
+                            <div className="flex w-full justify-between">
+                                <div className="flex items-center gap-2">
+                                    <QuizbookCard.SolvedRate />
+                                    <QuizbookCard.ReviewRate />
+                                    <QuizbookCard.QuizCount />
+                                </div>
+                                <QuizbookCard.LikeButton
+                                    isLike={quizbook.isLiked}
+                                />
                             </div>
-                            <QuizbookCard.LikeButton
-                                isLike={quizbook.isLiked}
-                            />
-                        </div>
-                    </QuizbookCard>
-                ))}
-            </InfiniteScrollContainer>
+                        </QuizbookCard>
+                    ))}
+                </InfiniteScrollContainer>
+            )}
         </div>
     )
 }

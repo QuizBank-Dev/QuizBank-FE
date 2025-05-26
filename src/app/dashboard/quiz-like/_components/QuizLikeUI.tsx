@@ -42,7 +42,7 @@ export default function QuizLikeUI() {
 
     if (!isPending && quizLikeList.length === 0) {
         return (
-            <div className="flex flex-1 items-center justify-center">
+            <div className="flex flex-1 flex-col">
                 <EmptyList
                     Icon={StudySvg}
                     text="북마크 된 다시 볼 문제가 없습니다."
