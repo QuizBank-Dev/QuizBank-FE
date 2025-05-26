@@ -29,6 +29,7 @@ export const useInfiniteRecommentList = (commentId?: string) =>
         staleTime: StaleTime.MINUTE * 5, // (5분)
         gcTime: GcTime.MINUTE * 5, // (5분)
         retry: 1,
+        enabled: !!commentId,
         meta: {
             ignoreGlobalError: true,
         },
