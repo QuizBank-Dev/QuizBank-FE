@@ -15,8 +15,8 @@ export const useInfiniteQuizbookLikeList = () =>
             nextPage.nextCursor
                 ? JSON.stringify(nextPage.nextCursor)
                 : undefined,
-        staleTime: StaleTime.HALF,
-        gcTime: GcTime.HALF,
+        staleTime: StaleTime.MINUTE * 10,
+        gcTime: GcTime.MINUTE * 10,
         retry: 1,
         meta: {
             ignoreGlobalError: true,
