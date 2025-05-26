@@ -57,10 +57,12 @@ export default function QuizLikeUI() {
                 <>
                     <QuestionCard
                         quiz={currentQuiz}
-                        curIdx={curIdx + 1} // 1-based index for display
+                        curIdx={curIdx + 1}
                         totalIdx={totalCount}
                         onNext={handleNext}
                         onPrev={handlePrev}
+                        onLikeBtn={true}
+                        isLiked={currentQuiz.isLiked}
                     />
                     <div className="px-[16px] md:px-[32px]">
                         <SolvedCard role="ai" quiz={currentQuiz} />
