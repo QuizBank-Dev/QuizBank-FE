@@ -44,7 +44,10 @@ export default function RecentStudyBoard() {
                             <span className="text-mobile-caption text-point-500 md:text-pc-caption">
                                 {recent.category}
                             </span>
-                            <h4 className="line-clamp-1 text-mobile-body-md font-semi-bold md:text-pc-body-md">
+                            <h4
+                                onClick={hanldeClick}
+                                className="line-clamp-1 cursor-pointer text-mobile-body-md font-semi-bold md:text-pc-body-md"
+                            >
                                 {recent.title}
                             </h4>
                         </div>
