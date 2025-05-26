@@ -1,12 +1,13 @@
-import DonutProgressbar from '@/components/study/DonutProgressbar'
-import ScoreTag from './ScoreTag'
-
 // SVG
 import QuestionSvg from '@/assets/svgs/question.svg'
 import LeftArrowSvg from '@/assets/svgs/left-arrow.svg'
 import RightArrowSvg from '@/assets/svgs/right-arrow.svg'
+
+import DonutProgressbar from '@/components/study/DonutProgressbar'
 import clsx from 'clsx'
 import { Quiz } from '@/types/quiz'
+import ScoreTag from './ScoreTag'
+import QuizLikeBtn from './QuizLikeBtn'
 
 interface QuestionCardProps {
     quiz: Quiz
@@ -15,6 +16,8 @@ interface QuestionCardProps {
     background?: boolean
     onPrev: () => void
     onNext: () => void
+    onLikeBtn?: boolean
+    isLiked?: boolean
 }
 
 export default function QuestionCard({
@@ -24,6 +27,8 @@ export default function QuestionCard({
     background,
     onPrev,
     onNext,
+    onLikeBtn,
+    isLiked,
 }: QuestionCardProps) {
     return (
         <article
@@ -76,8 +81,14 @@ export default function QuestionCard({
 
                     {/* 카드 영역 */}
                     <div className="flex max-h-[250px] min-h-[250px] flex-col rounded-lg bg-white px-[16px] py-[16px] shadow-point md:max-h-[400px] md:min-h-[400px] md:px-[32px]">
-                        <div className="mb-[8px] md:mb-[32px]">
+                        <div className="mb-[8px] flex justify-between md:mb-[32px]">
                             <ScoreTag type={quiz.type} />
+                            {onLikeBtn && (
+                                <QuizLikeBtn
+                                    quizId={quiz._id}
+                                    initState={isLiked ?? false}
+                                />
+                            )}
                         </div>
                         <div className="grid flex-1 place-items-center overflow-y-auto">
                             <p

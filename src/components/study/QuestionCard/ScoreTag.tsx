@@ -1,9 +1,8 @@
+import PlusSvg from '@/assets/svgs/plus.svg'
+
 import clsx from 'clsx'
 import { TypeToColor, TypeToXp } from '@/constants/quiz'
 import { QuizType } from '@/types/quiz'
-
-// SVG
-import PlusSvg from '@/assets/svgs/plus.svg'
 
 interface ScoreTagProps {
     type: QuizType
