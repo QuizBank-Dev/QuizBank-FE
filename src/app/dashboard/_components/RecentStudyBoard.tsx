@@ -1,7 +1,6 @@
 'use client'
 
 import PlaySvg from '@/assets/svgs/play.svg'
-import StudySvg from '@/assets/svgs/study.svg'
 
 import { getAnswerStore, useRecentQuizbookStore } from '@/store/quizbook'
 import clsx from 'clsx'
