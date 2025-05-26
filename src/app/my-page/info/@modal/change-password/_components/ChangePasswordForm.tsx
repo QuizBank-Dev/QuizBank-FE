@@ -11,6 +11,9 @@ import {
     ChangePasswordFormData,
     changePasswordSchema,
 } from '@/types/schemas/auth'
+import { changePassword } from '@/lib/api/auth'
+import { AxiosError } from 'axios'
+import { EmptyResponse } from '@/types/base'
 
 export default function ChangePasswordForm() {
     const router = useRouter()
@@ -26,23 +29,22 @@ export default function ChangePasswordForm() {
 
     const handleFormSubmit = async (data: ChangePasswordFormData) => {
         setIsLoading(true)
-        // TODO 비밀번호 변경 API 호출
-        const result = await new Promise<string>((resolve) =>
-            setTimeout(() => {
-                console.log(data)
-                resolve('OK')
-            }, 2000),
-        )
-        setIsLoading(false)
-
-        if (result === 'OK') {
-            // 완료 처리
-            handleCloseModal()
-            toast('비밀번호 변경이 완료되었습니다.')
-        } else {
-            // 실패 처리
-            toast('비밀번호 변경 중 오류가 발생했습니다.')
-        }
+        changePassword(data)
+            .then(() => {
+                handleCloseModal()
+                toast('비밀번호 변경이 완료되었습니다.')
+            })
+            .catch((error: AxiosError<EmptyResponse>) => {
+                const data = error.response?.data
+                toast(
+                    data
+                        ? data.message
+                        : '비밀번호 변경 중 오류가 발생했습니다.',
+                )
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
     }
 
     return (
@@ -52,16 +54,16 @@ export default function ChangePasswordForm() {
                 onSubmit={methods.handleSubmit(handleFormSubmit)}
             >
                 <CustomInput
-                    id="currentPassword"
-                    name="currentPassword"
+                    id="password"
+                    name="password"
                     type="password"
                     label="이전 비밀번호"
                     placeholder="현재 비밀번호를 입력해주세요"
                     style="solid"
                 />
                 <CustomInput
-                    id="password"
-                    name="password"
+                    id="newPassword"
+                    name="newPassword"
                     type="password"
                     label="변경할 비밀번호"
                     placeholder="변경할 비밀번호를 입력해주세요"

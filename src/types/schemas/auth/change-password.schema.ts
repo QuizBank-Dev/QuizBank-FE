@@ -2,10 +2,8 @@ import * as z from 'zod'
 
 export const changePasswordSchema = z
     .object({
-        currentPassword: z
-            .string()
-            .nonempty('필수로 입력되어야하는 항목입니다.'),
-        password: z
+        password: z.string().nonempty('필수로 입력되어야하는 항목입니다.'),
+        newPassword: z
             .string()
             .nonempty('필수 입력되어야하는 항목입니다.')
             .regex(
@@ -20,7 +18,7 @@ export const changePasswordSchema = z
             .string()
             .nonempty('필수로 입력되어야하는 항목입니다.'),
     })
-    .refine((data) => data.password === data.confirmPassword, {
+    .refine((data) => data.newPassword === data.confirmPassword, {
         message: '비밀번호가 일치하지 않습니다.',
         path: ['confirmPassword'],
     })

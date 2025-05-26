@@ -1,5 +1,6 @@
 import axiosInstance from '@/lib/api/base'
 import {
+    ChangePasswordFormData,
     ForgotPasswordFormData,
     ResetPasswordFormData,
 } from '@/types/schemas/auth'
@@ -34,4 +35,19 @@ export const confirmResetPassword = async (
             newPassword,
         },
     )
+}
+
+/**
+ * 비밀번호를 변경하는 함수
+ * @param password 이전 비밀번호
+ * @param newPassword 변경할 비밀번호
+ */
+export const changePassword = async ({
+    password,
+    newPassword,
+}: ChangePasswordFormData) => {
+    return await axiosInstance.patch('v1/auth/password', {
+        password,
+        newPassword,
+    })
 }
