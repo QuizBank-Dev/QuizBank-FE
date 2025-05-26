@@ -19,6 +19,7 @@ export const QueryKey = {
     study: {
         SOLVED_ANSWER: (quizId: string) => ['solved-answer', quizId],
         author: (authorId: string) => ['quizbook', 'author', authorId],
+        RESULT_LIST: ['result-list', 'me'],
     },
     studyLog: {
         yearly: (year: number, userId?: string) => [
