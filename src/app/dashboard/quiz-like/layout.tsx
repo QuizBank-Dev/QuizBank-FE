@@ -8,9 +8,7 @@ interface Props {
 export default function Layout({ children }: Props) {
     return (
         <>
-            <MobileHeader backBtn={true} title="다시 볼 문제">
-                <MobileHeader.UserMenu />
-            </MobileHeader>
+            <MobileHeader backBtn={true} title="다시 볼 문제" />
             <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
                 <div className="flex w-full max-w-[1024px] flex-1 flex-col gap-[16px] md:mx-auto md:flex-row md:gap-[32px] md:p-[16px]">
                     <div className="hidden md:block">

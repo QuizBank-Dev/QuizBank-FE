@@ -52,7 +52,7 @@ export default function BadgeBoard({ className }: Props) {
                     </div>
                 </div>
                 {/* 뱃지 영역 */}
-                <div className="flex items-center justify-center gap-[16px] pt-[16px]">
+                <div className="flex items-center justify-around gap-[16px] overflow-x-auto pt-[16px]">
                     {badgeList.map((badge) => (
                         <Badge
                             key={badge.id}
