@@ -3,6 +3,7 @@ import DesktopHeader from '@/components/DesktopHeader'
 import MobileBottomNav from '@/components/MobileBottomNav'
 import MobileHeader from '@/components/MobileHeader'
 import { QuizbookListPreFetcher } from './_providers/QuizbookListPreFetcher'
+import DesktopFooter from '@/components/DesktopFooter'
 
 export default async function Layout({
     children,
@@ -24,9 +25,12 @@ export default async function Layout({
                     <MobileHeader.UserMenu />
                 </MobileHeader>
 
-                <main className="no-scrollbar flex w-full flex-1 flex-col items-center overflow-auto">
+                <div className="no-scrollbar flex h-full w-full flex-1 flex-col items-center justify-between overflow-auto">
                     {children}
-                </main>
+
+                    {/* 데스크탑 푸터 */}
+                    <DesktopFooter />
+                </div>
 
                 {/* 모바일 전용 바텀 Nav */}
                 <MobileBottomNav />
