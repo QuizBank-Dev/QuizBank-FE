@@ -1,31 +1,28 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { FormProvider, useForm } from 'react-hook-form'
-import * as z from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEmailVerification } from '@/hooks/useEmailVerification'
 import { CustomInput } from '@/components'
-import LoadingButton from '../../_components/LoadingButton'
-
-const schema = z.object({
-    email: z.string().email('이메일 형식으로 입력해주세요.'),
-    code: z.string(),
-})
-
-type FormData = z.infer<typeof schema>
+import {
+    ResetPasswordFormData,
+    resetPasswordSchema,
+} from '@/types/schemas/auth'
 
 export default function ResetForm() {
     const router = useRouter()
-    const { isVerified, isVerifying, isSending, timer, sendCode, verifyCode } =
-        useEmailVerification('reset-password')
-    const methods = useForm<FormData>({
-        resolver: zodResolver(schema),
+    const searchParams = useSearchParams()
+
+    const methods = useForm<ResetPasswordFormData>({
+        resolver: zodResolver(resetPasswordSchema),
         mode: 'onChange',
     })
 
-    const handleFormSubmit = async ({ email, code }: FormData) => {
-        await verifyCode(email, code)
+    const handleFormSubmit = async ({ newPassword }: ResetPasswordFormData) => {
+        const token = searchParams.get('token')
+
+        // API 호출
+        console.log(token, newPassword)
         router.push('/login')
     }
 
@@ -35,42 +32,28 @@ export default function ResetForm() {
                 className="flex w-full flex-col gap-3"
                 onSubmit={methods.handleSubmit(handleFormSubmit)}
             >
-                <div className="flex items-center gap-1">
-                    <CustomInput
-                        id="email"
-                        name="email"
-                        label="비밀번호를 초기화 할 이메일"
-                        placeholder="이메일 주소를 입력해주세요"
-                        style="solid"
-                        disabled={isVerified}
-                    />
-                    <LoadingButton
-                        className="w-32 shrink-0 !px-0 md:mt-1"
-                        isLoading={isSending}
-                        loadingMessage="전송중"
-                        onClick={() => sendCode('')}
-                        disabled={isVerified}
-                    >
-                        {timer === 0 ? '인증번호 전송' : '재전송'}
-                    </LoadingButton>
-                </div>
                 <CustomInput
-                    id="code"
-                    name="code"
-                    label="인증번호"
-                    placeholder="인증번호를 입력해주세요"
+                    id="newPassword"
+                    name="newPassword"
+                    type="password"
+                    label="비밀번호"
+                    placeholder="비밀번호를 입력해주세요"
                     style="solid"
-                    disabled={timer === 0 || isVerified}
                 />
-                <LoadingButton
+                <CustomInput
+                    id="confirmNewPassword"
+                    name="confirmNewPassword"
+                    type="password"
+                    label="비밀번호확인"
+                    placeholder="비밀번호를 다시 입력해주세요"
+                    style="solid"
+                />
+                <button
                     type="submit"
-                    size="lg"
-                    isLoading={isVerifying}
-                    loadingMessage="인증중"
-                    disabled={timer === 0 || isVerified}
+                    className="btn-solid btn-mobile-lg md:btn-pc-lg"
                 >
-                    {!isVerified ? '비밀번호 초기화 메일 전송' : '전송완료'}
-                </LoadingButton>
+                    비밀번호 재설정
+                </button>
             </form>
         </FormProvider>
     )
