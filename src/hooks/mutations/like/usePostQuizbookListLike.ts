@@ -1,6 +1,7 @@
 import { toast } from 'sonner'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { postQuizbookLike } from '@/lib/api/like'
+import { QueryKey } from '@/constants/common/queryKey'
 
 /**
  * 문제집리스트 페이지에서 문제집 좋아요를 진행하는 mutation
@@ -35,6 +36,10 @@ export const usePostQuizbookListLike = (
             queryClient.invalidateQueries({
                 queryKey: ['quizbook-flags', quizbookId],
                 type: 'all',
+            })
+            // 찜 한 문제집 리스트 쿼리 무효화
+            queryClient.invalidateQueries({
+                queryKey: QueryKey.like.QUIZBOOK_LIST,
             })
         },
     })

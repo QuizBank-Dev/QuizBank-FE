@@ -33,7 +33,7 @@ export default function UserMenu() {
 
     return (
         <div className="flex items-center gap-4">
-            <Link className="btn-outline btn-pc-lg" href={'/study-status'}>
+            <Link className="btn-outline btn-pc-lg" href={'/dashboard'}>
                 학습현황
             </Link>
             <Notification

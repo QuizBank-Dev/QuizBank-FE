@@ -19,6 +19,7 @@ export const QueryKey = {
     study: {
         SOLVED_ANSWER: (quizId: string) => ['solved-answer', quizId],
         author: (authorId: string) => ['quizbook', 'author', authorId],
+        RESULT_LIST: ['result-list', 'me'],
     },
     studyLog: {
         yearly: (year: number, userId?: string) => [
@@ -33,6 +34,10 @@ export const QueryKey = {
             userId || 'me',
             offset,
         ],
+    },
+    like: {
+        QUIZBOOK_LIST: ['quizbook-like', 'me'],
+        QUIZ_LIST: ['quiz-like', 'me'],
     },
     follower: {
         DEFAULT: ['follower'],

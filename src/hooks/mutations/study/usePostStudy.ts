@@ -16,6 +16,9 @@ export const usePostStudy = (quizbookId: string) => {
                 queryClient.invalidateQueries({
                     queryKey: QueryKey.quizbook.USERFLAGS(quizbookId),
                 }),
+                queryClient.invalidateQueries({
+                    queryKey: QueryKey.study.RESULT_LIST,
+                }),
             ])
         },
         retry: 0,

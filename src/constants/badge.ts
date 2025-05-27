@@ -16,3 +16,30 @@ export const Badges: Record<
     '5000': { Icon: UserSvg, title: '뱃지4', description: '뱃지4' },
     '10000': { Icon: UserSvg, title: '뱃지5', description: '뱃지5' },
 }
+
+export const BADGE_DATA = [
+    {
+        id: 'badge_lv_1',
+        xp: 1000,
+        label: '뱃지1',
+        imageUrl: '/badges/badge_lv_1.png',
+    },
+    {
+        id: 'badge_lv_2',
+        xp: 2500,
+        label: '뱃지2',
+        imageUrl: '/badges/badge_lv_2.png',
+    },
+    {
+        id: 'badge_lv_3',
+        xp: 5000,
+        label: '뱃지3',
+        imageUrl: '/badges/badge_lv_3.png',
+    },
+    {
+        id: 'badge_lv_4',
+        xp: 10000,
+        label: '뱃지4',
+        imageUrl: '/badges/badge_lv_4.png',
+    },
+]

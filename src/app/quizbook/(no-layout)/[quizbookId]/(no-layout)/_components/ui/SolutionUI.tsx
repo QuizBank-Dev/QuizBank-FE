@@ -18,7 +18,6 @@ export default function SolutionUI({ quizbookMeta }: Props) {
     const panel = useSearchParams().get('panel')
 
     const [showAnswerList, setShowAnswerList] = useState(false)
-    const scrollRef = useRef<HTMLDivElement | null>(null)
 
     const { quizList } = quizbookMeta
     const questionStore = getQuestionStore(quizbookMeta._id)
@@ -54,7 +53,6 @@ export default function SolutionUI({ quizbookMeta }: Props) {
                 <div className="mb-[8px] flex flex-col gap-[32px] px-[16px] md:mb-[16px] md:px-[32px]">
                     <InfiniteScrollContainer
                         className="flex flex-col gap-[16px]"
-                        rootRef={scrollRef as React.RefObject<HTMLDivElement>}
                         isPending={isPending}
                         hasNextPage={hasNextPage}
                         isFetchingNextPage={isFetchingNextPage}

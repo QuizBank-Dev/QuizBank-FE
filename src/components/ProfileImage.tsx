@@ -3,9 +3,14 @@
 interface ProfileImageProps {
     size: number
     profileImg: string
+    alt?: string
 }
 
-export default function ProfileImage({ size, profileImg }: ProfileImageProps) {
+export default function ProfileImage({
+    size,
+    profileImg,
+    alt,
+}: ProfileImageProps) {
     return (
         <div
             className="overflow-hidden rounded-full bg-gray-300"
@@ -14,7 +19,7 @@ export default function ProfileImage({ size, profileImg }: ProfileImageProps) {
             {profileImg && (
                 <img
                     src={profileImg}
-                    alt="프로필 이미지"
+                    alt={alt ? alt : '프로필 이미지'}
                     className="h-full w-full object-cover"
                 />
             )}

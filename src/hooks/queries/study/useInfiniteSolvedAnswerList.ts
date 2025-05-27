@@ -11,6 +11,7 @@ export const useInfiniteSolvedAnswerList = (quizId: string) =>
             getSolvedAnswerList(quizId, {
                 cursor: pageParam ?? undefined,
             }),
+        enabled: !!quizId,
         getNextPageParam: (nextPage) =>
             nextPage.nextCursor
                 ? JSON.stringify(nextPage.nextCursor)

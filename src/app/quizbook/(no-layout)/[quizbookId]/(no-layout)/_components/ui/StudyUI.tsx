@@ -1,7 +1,11 @@
 'use client'
 
 import { QuestionCard } from '@/components/study'
-import { getAnswerStore, getQuestionStore } from '@/store/quizbook'
+import {
+    getAnswerStore,
+    getQuestionStore,
+    useRecentQuizbookStore,
+} from '@/store/quizbook'
 import { AnswerInput } from '../common'
 import { QuizbookMeta } from '@/types/quizbook'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -13,6 +17,7 @@ import { LoopAnimation } from '@/components'
 import { AxiosError } from 'axios'
 import { ErrorResponse } from '@/types/base'
 import { toast } from 'sonner'
+import { useEffect } from 'react'
 
 interface Props {
     quizbookMeta: QuizbookMeta
@@ -21,6 +26,8 @@ interface Props {
 export default function StudyUI({ quizbookMeta }: Props) {
     const router = useRouter()
     const panel = useSearchParams().get('panel')
+
+    const { addRecent, reset: recentReset } = useRecentQuizbookStore()
 
     const { _id: quizbookId, quizList } = quizbookMeta
     const questionStore = getQuestionStore(quizbookId)
@@ -47,6 +54,7 @@ export default function StudyUI({ quizbookMeta }: Props) {
             },
             {
                 onSuccess: () => {
+                    recentReset()
                     answerReset()
                     questionReset()
                     router.replace(`/quizbook/${quizbookMeta._id}/result`)
@@ -64,6 +72,21 @@ export default function StudyUI({ quizbookMeta }: Props) {
     }
 
     const { mutate: postStudy, isPending } = usePostStudy(quizbookMeta._id)
+
+    useEffect(() => {
+        addRecent({
+            _id: quizbookMeta._id,
+            title: quizbookMeta.title,
+            category: quizbookMeta.category,
+            count: quizbookMeta.quizList.length,
+        })
+    }, [
+        addRecent,
+        quizbookMeta._id,
+        quizbookMeta.title,
+        quizbookMeta.category,
+        quizbookMeta.quizList.length,
+    ])
 
     return (
         <div className="mb-[16px] flex flex-1 flex-col justify-between gap-[32px] md:mb-[32px]">

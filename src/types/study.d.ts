@@ -1,4 +1,5 @@
 import { QuizType } from './quiz'
+import { Quizbook } from './quizbook'
 import { Author } from './user'
 
 /**
@@ -27,5 +28,14 @@ export interface QuizResult {
 export interface StudyResult {
     quizList: QuizResult[]
     createdAt: string
+    updatedAt: string
+}
+
+/**
+ * 학습 결과 리스트 아이템 타입
+ */
+export interface StudyResultItem {
+    quizbook: Quizbook<string>
+    score: number
     updatedAt: string
 }
