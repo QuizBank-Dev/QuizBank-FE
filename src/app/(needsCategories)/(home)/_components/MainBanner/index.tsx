@@ -8,7 +8,7 @@ import BannerItem from './BannerItem'
 export default function MainBanner() {
     return (
         <Carousel
-            className="w-full select-none overflow-hidden rounded-lg"
+            className="w-full select-none"
             opts={{
                 loop: true,
             }}
