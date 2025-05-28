@@ -1,32 +1,50 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { FormProvider, useForm } from 'react-hook-form'
-import * as z from 'zod'
+import { toast } from 'sonner'
+import { AxiosError } from 'axios'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useEmailVerification } from '@/hooks/useEmailVerification'
 import { CustomInput } from '@/components'
+import {
+    ResetPasswordFormData,
+    resetPasswordSchema,
+} from '@/types/schemas/auth'
+import { EmptyResponse } from '@/types/base'
+import { confirmResetPassword } from '@/lib/api/auth'
 import LoadingButton from '../../_components/LoadingButton'
-
-const schema = z.object({
-    email: z.string().email('이메일 형식으로 입력해주세요.'),
-    code: z.string(),
-})
-
-type FormData = z.infer<typeof schema>
 
 export default function ResetForm() {
     const router = useRouter()
-    const { isVerified, isVerifying, isSending, timer, sendCode, verifyCode } =
-        useEmailVerification('reset-password')
-    const methods = useForm<FormData>({
-        resolver: zodResolver(schema),
+    const searchParams = useSearchParams()
+    const [isLoading, setIsLoading] = useState(false)
+
+    const methods = useForm<ResetPasswordFormData>({
+        resolver: zodResolver(resetPasswordSchema),
         mode: 'onChange',
     })
 
-    const handleFormSubmit = async ({ email, code }: FormData) => {
-        await verifyCode(email, code)
-        router.push('/login')
+    const handleFormSubmit = async (formData: ResetPasswordFormData) => {
+        const token = searchParams.get('token')
+
+        setIsLoading(true)
+        confirmResetPassword(token || '', formData)
+            .then(() => {
+                router.push('/login')
+                toast('비밀번호가 재설정되었습니다.')
+            })
+            .catch((error: AxiosError<EmptyResponse>) => {
+                const data = error.response?.data
+                toast(
+                    data
+                        ? data.message
+                        : '비밀번호 재설정 중 오류가 발생했습니다.',
+                )
+            })
+            .finally(() => {
+                setIsLoading(false)
+            })
     }
 
     return (
@@ -35,41 +53,29 @@ export default function ResetForm() {
                 className="flex w-full flex-col gap-3"
                 onSubmit={methods.handleSubmit(handleFormSubmit)}
             >
-                <div className="flex items-center gap-1">
-                    <CustomInput
-                        id="email"
-                        name="email"
-                        label="비밀번호를 초기화 할 이메일"
-                        placeholder="이메일 주소를 입력해주세요"
-                        style="solid"
-                        disabled={isVerified}
-                    />
-                    <LoadingButton
-                        className="w-32 shrink-0 !px-0 md:mt-1"
-                        isLoading={isSending}
-                        loadingMessage="전송중"
-                        onClick={() => sendCode('')}
-                        disabled={isVerified}
-                    >
-                        {timer === 0 ? '인증번호 전송' : '재전송'}
-                    </LoadingButton>
-                </div>
                 <CustomInput
-                    id="code"
-                    name="code"
-                    label="인증번호"
-                    placeholder="인증번호를 입력해주세요"
+                    id="newPassword"
+                    name="newPassword"
+                    type="password"
+                    label="비밀번호"
+                    placeholder="비밀번호를 입력해주세요"
                     style="solid"
-                    disabled={timer === 0 || isVerified}
+                />
+                <CustomInput
+                    id="confirmNewPassword"
+                    name="confirmNewPassword"
+                    type="password"
+                    label="비밀번호확인"
+                    placeholder="비밀번호를 다시 입력해주세요"
+                    style="solid"
                 />
                 <LoadingButton
                     type="submit"
                     size="lg"
-                    isLoading={isVerifying}
-                    loadingMessage="인증중"
-                    disabled={timer === 0 || isVerified}
+                    isLoading={isLoading}
+                    loadingMessage="Loading..."
                 >
-                    {!isVerified ? '비밀번호 초기화 메일 전송' : '전송완료'}
+                    비밀번호 재설정
                 </LoadingButton>
             </form>
         </FormProvider>

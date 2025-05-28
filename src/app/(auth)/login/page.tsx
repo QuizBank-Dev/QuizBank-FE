@@ -9,7 +9,7 @@ export default function Page() {
         <CommonPageLayout title="로그인">
             <LoginForm />
             <Link
-                href="/reset-password"
+                href="/forgot-password"
                 className="text-mobile-body-sm font-regular text-point-500 underline md:text-pc-body-sm"
             >
                 비밀번호를 잊으셨나요?
