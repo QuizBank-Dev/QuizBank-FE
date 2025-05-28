@@ -60,5 +60,5 @@ export function middleware(request: NextRequest) {
 
 export const config = {
     // 정적 리소스 검사 제외
-    matcher: ['/((?!api|_next|favicon.ico).*)'],
+    matcher: ['/((?!api|_next|favicon.ico|jpg|badges).*)'],
 }
