@@ -53,7 +53,7 @@ export default function BannerItem({
                     </p>
                     <Link
                         href={link}
-                        className="btn-solid btn-mobile-lg border-2 border-transparent bg-point-500/75 duration-200 md:btn-pc-lg hover:border-white hover:bg-point-500/90"
+                        className="btn-solid btn-mobile-lg border-2 border-transparent bg-point-500/75 duration-200 md:btn-pc-lg hover:border-white/75 hover:bg-point-500/90"
                         onClick={handleCheckIsLoggedIn}
                     >
                         {ctaText}
