@@ -1,9 +1,9 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import clsx from 'clsx'
 import { toast } from 'sonner'
 import { CarouselItem } from '@/components/ui/carousel'
 import { useCurrentUser } from '@/hooks/queries/user'
-import Image from 'next/image'
 
 interface Props {
     title: string
