@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation'
 
 interface Prop {
     backBtn?: boolean
+    path?: string
 }
 
-export default function BackBtn({ backBtn }: Prop) {
+export default function BackBtn({ backBtn, path }: Prop) {
     const router = useRouter()
 
     return (
@@ -15,7 +16,10 @@ export default function BackBtn({ backBtn }: Prop) {
             {backBtn && (
                 <LeftArrow
                     className="size-6 cursor-pointer"
-                    onClick={() => router.back()}
+                    onClick={() => {
+                        if (path) router.push(path)
+                        else router.back()
+                    }}
                 />
             )}
         </div>

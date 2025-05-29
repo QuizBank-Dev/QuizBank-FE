@@ -5,13 +5,19 @@ interface Props {
     title: string
     category: string
     isRightBtn?: boolean
+    path?: string
 }
 
-export default function DesktopHeader({ title, category, isRightBtn }: Props) {
+export default function DesktopHeader({
+    title,
+    category,
+    isRightBtn,
+    path,
+}: Props) {
     return (
         <div className="hidden items-center justify-center bg-white md:flex">
             <div className="flex w-full max-w-[1024px] items-center gap-[16px] px-[32px] py-[16px]">
-                <ExitBtn />
+                <ExitBtn path={path} />
                 <h1 className="flex flex-1 items-center gap-[8px] text-pc-body-lg font-semi-bold">
                     <span className="line-clamp-1 text-pc-title-sm font-extra-bold">
                         {title}
