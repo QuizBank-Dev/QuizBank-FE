@@ -21,8 +21,13 @@ export default async function Layout({ params, children }: Props) {
                 title={quizbookMeta.title}
                 category={quizbookMeta.category}
                 isRightBtn={true}
+                path={`/quizbook/${quizbookId}/info`}
             />
-            <MobileHeader backBtn={true} title={quizbookMeta.title}>
+            <MobileHeader
+                path={`/quizbook/${quizbookId}/info`}
+                backBtn={true}
+                title={quizbookMeta.title}
+            >
                 <ToSolutionBtn />
             </MobileHeader>
             <main className="mx-auto w-full max-w-[1024px] flex-1">
