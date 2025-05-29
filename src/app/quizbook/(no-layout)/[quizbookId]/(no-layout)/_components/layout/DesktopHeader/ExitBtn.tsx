@@ -13,7 +13,7 @@ export default function ExitBtn({ path }: Props) {
     return (
         <button
             onClick={() => {
-                if (path) router.push(path)
+                if (path) router.replace(path)
                 else router.back()
             }}
             className="btn-outline btn-pc-md flex gap-[8px]"

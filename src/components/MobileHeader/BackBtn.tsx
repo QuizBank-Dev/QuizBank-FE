@@ -17,7 +17,7 @@ export default function BackBtn({ backBtn, path }: Prop) {
                 <LeftArrow
                     className="size-6 cursor-pointer"
                     onClick={() => {
-                        if (path) router.push(path)
+                        if (path) router.replace(path)
                         else router.back()
                     }}
                 />
