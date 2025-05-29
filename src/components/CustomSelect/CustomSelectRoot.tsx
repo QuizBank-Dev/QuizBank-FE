@@ -48,24 +48,26 @@ export default function CustomSelectRoot({
             <Controller
                 control={control}
                 name={name}
-                render={({ field: { value, onChange } }) => (
-                    <Select
-                        value={value ?? ''}
-                        onValueChange={onChange}
-                        disabled={disabled}
-                        open={isOpen}
-                        onOpenChange={setIsOpen}
-                    >
-                        <SelectTrigger
-                            id={id}
-                            data-error={error && !isOpen}
-                            className={className}
+                render={({ field: { value, onChange } }) => {
+                    return (
+                        <Select
+                            value={value}
+                            onValueChange={(value) => value && onChange(value)}
+                            disabled={disabled}
+                            open={isOpen}
+                            onOpenChange={setIsOpen}
                         >
-                            <SelectValue placeholder={placeholder} />
-                        </SelectTrigger>
-                        <SelectContent>{children}</SelectContent>
-                    </Select>
-                )}
+                            <SelectTrigger
+                                id={id}
+                                data-error={error && !isOpen}
+                                className={className}
+                            >
+                                <SelectValue placeholder={placeholder} />
+                            </SelectTrigger>
+                            <SelectContent>{children}</SelectContent>
+                        </Select>
+                    )
+                }}
             />
 
             {error && (
