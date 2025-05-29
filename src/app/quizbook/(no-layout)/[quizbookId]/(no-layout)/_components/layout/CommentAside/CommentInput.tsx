@@ -10,6 +10,7 @@ import { AxiosError } from 'axios'
 import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
+import { useCommentAside } from './CommentAsideContext'
 
 interface Props {
     quizId: string
@@ -20,15 +21,13 @@ export default function CommentInput({ quizId, commentId }: Props) {
     const [value, setValue] = useState('')
     const divRef = useRef<HTMLDivElement>(null)
 
+    // Todo: 리펙토링 후 삭제
+    const { selectedComment, setSelectedComment } = useCommentAside()
+
     const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
-        const text = e.currentTarget.textContent || ''
+        const text = e.currentTarget.innerText || ''
         setValue(text)
     }
-
-    useEffect(() => {
-        if (divRef.current && divRef.current.textContent !== value)
-            divRef.current.textContent = value
-    }, [value])
 
     const handleSubmit = async () => {
         if (!value.trim() || isPending) return
@@ -41,6 +40,17 @@ export default function CommentInput({ quizId, commentId }: Props) {
             {
                 onSuccess: () => {
                     setValue('')
+
+                    // Todo: 리펙토링 후 삭제
+                    if (selectedComment) {
+                        const { recommentCount } = selectedComment
+                        setSelectedComment({
+                            ...selectedComment,
+                            recommentCount: recommentCount
+                                ? recommentCount + 1
+                                : 1,
+                        })
+                    }
                 },
                 onError: (e) => {
                     const err = e as AxiosError<ErrorResponse>
@@ -57,8 +67,13 @@ export default function CommentInput({ quizId, commentId }: Props) {
     const { mutate: postComment, isPending } = usePostComment(quizId)
     const { data: userData } = useCurrentUser()
 
+    useEffect(() => {
+        if (divRef.current && divRef.current.innerText !== value)
+            divRef.current.innerText = value
+    }, [value])
+
     return (
-        <div className="flex items-end gap-[16px] overflow-y-hidden bg-white p-[16px] py-[8px] md:py-[16px]">
+        <div className="flex items-end gap-[16px] overflow-y-hidden bg-white p-[16px] md:py-[24px]">
             <div className="-translate-y-1/4">
                 <ProfileImage
                     size={32}

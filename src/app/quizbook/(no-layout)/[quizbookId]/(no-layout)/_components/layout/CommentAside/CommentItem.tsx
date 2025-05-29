@@ -1,11 +1,12 @@
 'use client'
 
-import EllipsisVSvg from '@/assets/svgs/elipsis-v.svg'
 import RightArrowSvg from '@/assets/svgs/right-arrow.svg'
 import { ProfileImage } from '@/components'
 import { Comment } from '@/types/comment'
 import { extractKSTDateOnly } from '@/utils/date/dateOnly'
 import clsx from 'clsx'
+import CommentMenuBtn from './CommentMenuBtn'
+import { useCurrentUser } from '@/hooks/queries/user'
 
 interface Props {
     comment: Comment
@@ -18,6 +19,8 @@ export default function CommentItem({
     isTopComment = false,
     onClickComment,
 }: Props) {
+    const { data: user } = useCurrentUser()
+
     return (
         <div
             onClick={onClickComment}
@@ -47,9 +50,9 @@ export default function CommentItem({
                         {comment.content}
                     </p>
                 </div>
-                <button className="flex self-start">
-                    <EllipsisVSvg className="size-6" />
-                </button>
+                {user?._id === comment.author._id && (
+                    <CommentMenuBtn comment={comment} />
+                )}
             </div>
             {comment.recommentCount && !isTopComment ? (
                 <div className="flex items-center gap-[16px] text-mobile-body-sm md:text-pc-body-sm">
