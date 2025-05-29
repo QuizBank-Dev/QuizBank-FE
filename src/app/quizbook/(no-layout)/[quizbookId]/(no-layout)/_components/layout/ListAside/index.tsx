@@ -69,7 +69,7 @@ export default function ListAside({ quizbookMeta }: Props) {
                 className="md:hidden"
                 isOpen={isOpen}
                 onClose={handleClose}
-                snapPoints={[0.8, 0.6, 0.4, 0.2]}
+                snapPoints={[1, 0.8, 0.6, 0.4, 0.2]}
                 initialSnap={1}
                 dragVelocityThreshold={2000}
             >
