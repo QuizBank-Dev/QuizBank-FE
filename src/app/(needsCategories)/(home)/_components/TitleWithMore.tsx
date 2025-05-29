@@ -13,9 +13,9 @@ export default function TitleWithMore({ title, link, loginRequired }: Props) {
 
     return (
         <h3 className="flex items-center justify-between">
-            <p className="text-mobile-title-sm font-extra-bold text-point-900 md:text-pc-title-sm">
+            <span className="text-mobile-title-sm font-extra-bold text-point-900 md:text-pc-title-sm">
                 {title}
-            </p>
+            </span>
             {(user || !loginRequired) && (
                 <Link href={link} className="flex items-center text-point-700">
                     <span className="text-mobile-body-md font-semi-bold md:text-pc-body-md">
