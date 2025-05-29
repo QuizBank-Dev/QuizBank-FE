@@ -3,6 +3,7 @@ import { toast } from 'sonner'
 import { CarouselItem } from '@/components/ui/carousel'
 import { useCurrentUser } from '@/hooks/queries/user'
 import Image from 'next/image'
+import clsx from 'clsx'
 
 interface Props {
     title: string
@@ -31,17 +32,18 @@ export default function BannerItem({
 
     return (
         <CarouselItem>
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-point-700 sm:aspect-[8/3]">
-                {backgroundImage && (
-                    <Image
-                        className="object-cover object-center"
-                        loading="eager"
-                        src={backgroundImage}
-                        alt="banner-image"
-                        fill={true}
-                        priority
-                    />
+            <div
+                className={clsx(
+                    'relative aspect-[4/3] w-full overflow-hidden rounded-lg sm:aspect-[8/3]',
+                    !backgroundImage && 'bg-point-700',
                 )}
+                style={{
+                    backgroundImage:
+                        backgroundImage && `url("${backgroundImage}")`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                }}
+            >
                 <div className="absolute top-0 z-10 flex size-full flex-col items-center justify-center gap-7 bg-point-700/50">
                     <p className="text-mobile-title-sm font-semi-bold text-white drop-shadow-[0_0_8px_#271065] md:text-pc-title-sm">
                         {title}
