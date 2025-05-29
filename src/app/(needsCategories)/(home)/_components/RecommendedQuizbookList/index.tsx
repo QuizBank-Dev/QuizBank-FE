@@ -56,7 +56,8 @@ export default function RecommendedQuizbookList() {
             </div>
             <div
                 className={clsx(
-                    'no-scrollbar flex gap-4 overflow-x-scroll p-2',
+                    'custom-scrollbar flex gap-4 overflow-x-scroll p-2',
+                    isPending && 'no-scrollbar',
                     !isPending && quizbookList.length === 0 && 'flex-col',
                 )}
             >
