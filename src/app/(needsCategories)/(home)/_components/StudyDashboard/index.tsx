@@ -11,7 +11,7 @@ import WeeklyStudyTracker from './WeeklyStudyTracker'
 export default function StudyDashboard() {
     const { data: user } = useCurrentUser()
     return (
-        <section className="flex flex-col gap-[16px]">
+        <section className="flex flex-col gap-[16px] pb-4">
             <TitleWithMore title="학습 현황" link="/dashboard" />
             <div className="relative">
                 <div
