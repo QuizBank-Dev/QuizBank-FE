@@ -115,14 +115,14 @@ export default function ConfirmUI({ quizbookMeta }: Props) {
                 }
             </p>
             <div className="flex gap-[16px]">
-                <button className="btn-outline btn-mobile-lg w-full md:btn-pc-lg">
+                <button className="btn-solid btn-mobile-lg w-full md:btn-pc-lg">
                     아니오
                 </button>
                 <button
                     disabled={isPending}
                     onClick={handleSubmit}
                     className={clsx(
-                        'btn-solid btn-mobile-lg w-full md:btn-pc-lg',
+                        'btn-outline btn-mobile-lg w-full md:btn-pc-lg',
                         {
                             'btn-loading': isPending,
                         },
