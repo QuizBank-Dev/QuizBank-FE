@@ -63,7 +63,7 @@ export default function PostQuizbookForm() {
     }
 
     const onInvalid = (errors: typeof formState.errors) => {
-        if(errors.quizList) {
+        if (errors.quizList) {
             toast.error(errors.quizList.message)
         }
     }
@@ -77,10 +77,12 @@ export default function PostQuizbookForm() {
                 category,
             })
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [hydrated, reset])
 
     // Meta 정보 상태 동기화
     useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const subscription = watch(({ quizList: _, ...rest }) => {
             setMeta(rest as Partial<PostQuizbookFormData>)
         })

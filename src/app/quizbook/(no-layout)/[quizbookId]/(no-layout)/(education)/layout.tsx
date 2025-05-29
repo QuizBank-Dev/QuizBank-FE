@@ -7,13 +7,15 @@ import {
     MobileMenu,
     StudyMenuBtn,
 } from '../_components/layout'
+import React from 'react'
 
 interface Props {
     params: Promise<{ quizbookId: string }>
+    modal: React.ReactNode
     children: React.ReactNode
 }
 
-export default async function Layout({ params, children }: Props) {
+export default async function Layout({ params, modal, children }: Props) {
     const { quizbookId } = await params
 
     const quizbookMeta = await getQuizbookMeta(quizbookId).catch(() => null)
@@ -26,10 +28,15 @@ export default async function Layout({ params, children }: Props) {
             <DesktopHeader
                 title={quizbookMeta.title}
                 category={quizbookMeta.category}
+                path={`/quizbook/${quizbookId}/info`}
             />
 
             {/* 모바일 헤더 */}
-            <MobileHeader backBtn={true} title={quizbookMeta.title}>
+            <MobileHeader
+                path={`/quizbook/${quizbookId}/info`}
+                backBtn={true}
+                title={quizbookMeta.title}
+            >
                 <StudyMenuBtn />
             </MobileHeader>
             <main className="flex flex-1 justify-center overflow-hidden">
@@ -43,6 +50,7 @@ export default async function Layout({ params, children }: Props) {
 
             {/* 모바일 메뉴 */}
             <MobileMenu quizbookMeta={quizbookMeta} />
+            {modal}
         </div>
     )
 }
