@@ -28,3 +28,7 @@ export interface QuizGroupMemberScore {
     memberList: Author[]
     scoreList: { score: number; owner: Author }[]
 }
+
+export interface AllGroupQuizbook extends Quizbook<string> {
+    endedAt: string
+}

@@ -10,6 +10,7 @@ export const QueryKey = {
         STATES: (quizbookId: string) => ['quizbook-states', quizbookId],
         USERFLAGS: (quizbookId: string) => ['quizbook-flags', quizbookId],
         author: (authorId: string) => ['quizbook', 'author', authorId],
+        GROUP: ['quizbook-group', 'me'],
     },
     comment: {
         LIST: (quizId: string) => ['comment-list', quizId],
