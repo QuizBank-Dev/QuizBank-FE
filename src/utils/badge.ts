@@ -1,11 +1,4 @@
-import { BADGE_DATA, Badges } from '@/constants/badge'
-
-export const getMyBadges = (exp: number) => {
-    const badgeKeys = Object.keys(Badges).filter(
-        (key: string) => parseInt(key) <= exp,
-    )
-    return badgeKeys.map((key) => Badges[key])
-}
+import { BADGE_DATA } from '@/constants/badge'
 
 /**
  * 뱃지 리스트 가져오기
