@@ -16,7 +16,7 @@ export default async function Layout({ params, children }: Props) {
     if (!quizbookMeta) return notFound()
 
     return (
-        <div className="flex max-h-screen min-h-screen flex-col">
+        <div className="flex h-full flex-col">
             <DesktopHeader
                 title={quizbookMeta.title}
                 category={quizbookMeta.category}
