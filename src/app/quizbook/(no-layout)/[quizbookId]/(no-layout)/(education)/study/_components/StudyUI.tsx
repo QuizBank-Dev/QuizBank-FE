@@ -6,18 +6,11 @@ import {
     getQuestionStore,
     useRecentQuizbookStore,
 } from '@/store/quizbook'
-import { AnswerInput } from '../common'
 import { QuizbookMeta } from '@/types/quizbook'
 import { useRouter, useSearchParams } from 'next/navigation'
-import ListAside from './ListAside'
-import CommentAside from './CommentAside'
-import { usePostStudy } from '@/hooks/mutations/study'
-import clsx from 'clsx'
-import { LoopAnimation } from '@/components'
-import { AxiosError } from 'axios'
-import { ErrorResponse } from '@/types/base'
-import { toast } from 'sonner'
 import { useEffect } from 'react'
+import { CommentAside, ListAside } from '../../../_components/layout'
+import AnswerInput from './AnswerInput'
 
 interface Props {
     quizbookMeta: QuizbookMeta
@@ -27,51 +20,19 @@ export default function StudyUI({ quizbookMeta }: Props) {
     const router = useRouter()
     const panel = useSearchParams().get('panel')
 
-    const { addRecent, reset: recentReset } = useRecentQuizbookStore()
+    const { addRecent } = useRecentQuizbookStore()
 
     const { _id: quizbookId, quizList } = quizbookMeta
     const questionStore = getQuestionStore(quizbookId)
     const answerStore = getAnswerStore(quizbookId)
 
-    const { curIdx, next, prev, reset: questionReset } = questionStore()
+    const { curIdx, next, prev } = questionStore()
     const curQuiz = quizList[curIdx - 1]
 
     const value = answerStore((s) =>
         curQuiz._id ? s.answerMap[curQuiz._id] : undefined,
     )
     const setAnswer = answerStore((s) => s.setAnswer)
-    const answerMap = answerStore((s) => s.answerMap)
-    const answerReset = answerStore((s) => s.reset)
-
-    const handleSubmit = () => {
-        const answerList = quizList.map((quiz) => ({
-            quizId: quiz._id,
-            answer: answerMap[quiz._id] || '',
-        }))
-        postStudy(
-            {
-                answerList,
-            },
-            {
-                onSuccess: () => {
-                    recentReset()
-                    answerReset()
-                    questionReset()
-                    router.replace(`/quizbook/${quizbookMeta._id}/result`)
-                },
-                onError: (e) => {
-                    const err = e as AxiosError<ErrorResponse>
-                    const msg =
-                        err.response?.data.message ||
-                        '답안 제출 중 오류가 발생했습니다.'
-
-                    toast.error(msg)
-                },
-            },
-        )
-    }
-
-    const { mutate: postStudy, isPending } = usePostStudy(quizbookMeta._id)
 
     useEffect(() => {
         addRecent({
@@ -80,13 +41,8 @@ export default function StudyUI({ quizbookMeta }: Props) {
             category: quizbookMeta.category,
             count: quizbookMeta.quizList.length,
         })
-    }, [
-        addRecent,
-        quizbookMeta._id,
-        quizbookMeta.title,
-        quizbookMeta.category,
-        quizbookMeta.quizList.length,
-    ])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <div className="mb-[16px] flex flex-1 flex-col justify-between gap-[32px] md:mb-[32px]">
@@ -108,17 +64,12 @@ export default function StudyUI({ quizbookMeta }: Props) {
             </div>
             <div className="px-[16px] md:px-[32px]">
                 <button
-                    disabled={isPending}
-                    onClick={handleSubmit}
-                    className={clsx(
-                        'btn-solid btn-mobile-lg w-full md:btn-pc-lg',
-                        {
-                            'btn-loading': isPending,
-                        },
-                    )}
+                    onClick={() =>
+                        router.push(`/quizbook/${quizbookId}/confirm`)
+                    }
+                    className="btn-solid btn-mobile-lg w-full md:btn-pc-lg"
                 >
-                    {isPending && <LoopAnimation />}
-                    {isPending ? '제출중...' : '제출하기'}
+                    제출하기
                 </button>
             </div>
 

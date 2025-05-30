@@ -16,7 +16,7 @@ export default function Layout({
                 <DesktopHeader />
 
                 {/* 모바일 전용 헤더 */}
-                <MobileHeader title="그룹 정보" backBtn>
+                <MobileHeader path="/quizbook/" title="문제집 상세" backBtn>
                     <MobileHeader.UserMenu />
                 </MobileHeader>
 

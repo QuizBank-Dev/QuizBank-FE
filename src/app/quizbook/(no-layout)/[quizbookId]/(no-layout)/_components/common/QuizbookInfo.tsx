@@ -35,7 +35,7 @@ export default function QuizbookInfo({
     const onToggle = () => {
         const next = mode === 'study' ? 'solution' : 'study'
         setMode(next)
-        router.replace(`/quizbook/${quizbookMeta._id}/${next}`)
+        router.push(`/quizbook/${quizbookMeta._id}/${next}`)
     }
 
     return (

@@ -32,7 +32,7 @@ export default function DesktopMenu({ quizbookId }: Props) {
         if (path === 'list' || path === 'comment') {
             router.replace(`${pathname}?panel=${path}`)
         } else {
-            router.replace(`/quizbook/${quizbookId}/${path}`)
+            router.push(`/quizbook/${quizbookId}/${path}`)
         }
     }
 

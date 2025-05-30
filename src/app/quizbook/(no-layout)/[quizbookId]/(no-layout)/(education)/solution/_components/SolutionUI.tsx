@@ -4,11 +4,10 @@ import { QuestionCard, SolvedCard } from '@/components/study'
 import { getQuestionStore } from '@/store/quizbook'
 import { useSearchParams } from 'next/navigation'
 import { QuizbookMeta } from '@/types/quizbook'
-import ListAside from './ListAside'
-import CommentAside from './CommentAside'
 import { useInfiniteSolvedAnswerList } from '@/hooks/queries/study'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 import { InfiniteScrollContainer } from '@/components'
+import { CommentAside, ListAside } from '../../../_components/layout'
 
 interface Props {
     quizbookMeta: QuizbookMeta

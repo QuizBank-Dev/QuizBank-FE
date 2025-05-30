@@ -16,6 +16,8 @@ import CommentItem from './CommentItem'
 import { Sheet } from 'react-modal-sheet'
 import CommentInputPortal from './CommentInputPortal'
 import { LoopAnimation } from '@/components'
+import CommentAsideContext from './CommentAsideContext'
+import CommentEditInput from './CommentEditInput'
 
 interface Props {
     quizbookMeta: QuizbookMeta
@@ -28,6 +30,8 @@ export default function CommentAside({ quizbookMeta }: Props) {
     const [isOpen, setIsOpen] = useState(false)
     const [mode, setMode] = useState<'list' | 'detail'>('list')
     const [selectedComment, setSelectedComment] = useState<Comment | null>(null)
+    const [editTarget, setEditTarget] = useState<Comment | null>(null)
+
     const desktopRef = useRef<HTMLDivElement | null>(null)
     const mobileRef = useRef<HTMLDivElement | null>(null)
 
@@ -42,10 +46,12 @@ export default function CommentAside({ quizbookMeta }: Props) {
     const handleClickRecomment = (comment: Comment) => {
         setSelectedComment(comment)
         setMode('detail')
+        setEditTarget(null)
     }
     const handleBack = () => {
         setSelectedComment(null)
         setMode('list')
+        setEditTarget(null)
     }
 
     // 새로 고침시 Hydration mismatch 오류 방지(컴포넌트 마운트 후 Open)
@@ -54,7 +60,15 @@ export default function CommentAside({ quizbookMeta }: Props) {
     }, [])
 
     return (
-        <>
+        <CommentAsideContext.Provider
+            value={{
+                editTarget,
+                setEditTarget,
+                selectedComment,
+                setSelectedComment,
+                setMode,
+            }}
+        >
             {/* 데스크탑 사이드바 */}
             <div
                 onClick={handleClose}
@@ -81,56 +95,60 @@ export default function CommentAside({ quizbookMeta }: Props) {
                         </button>
                     </div>
 
-                    {/* 상위 댓글 */}
-                    {mode === 'list' && (
-                        <>
-                            <Suspense
-                                fallback={
-                                    <div className="flex items-center justify-center p-[16] md:p-[32px]">
-                                        <div className="size-8 animate-spin">
-                                            <LoopAnimation />
+                    <div className="relative flex flex-1 flex-col overflow-hidden">
+                        {/* 상위 댓글 */}
+                        {mode === 'list' && (
+                            <>
+                                <Suspense
+                                    fallback={
+                                        <div className="flex items-center justify-center p-[16] md:p-[32px]">
+                                            <div className="size-8 animate-spin">
+                                                <LoopAnimation />
+                                            </div>
                                         </div>
-                                    </div>
-                                }
-                            >
-                                <QuizbookInfo quizbookMeta={quizbookMeta} />
-                            </Suspense>
-                            <div
-                                className="flex-1 overflow-y-auto"
-                                ref={desktopRef}
-                            >
-                                <CommentListView
+                                    }
+                                >
+                                    <QuizbookInfo quizbookMeta={quizbookMeta} />
+                                </Suspense>
+                                <div
+                                    className="flex-1 overflow-y-auto"
                                     ref={desktopRef}
-                                    onClickRecomment={handleClickRecomment}
-                                    quiz={curQuiz}
-                                />
-                            </div>
-                        </>
-                    )}
+                                >
+                                    <CommentListView
+                                        ref={desktopRef}
+                                        onClickRecomment={handleClickRecomment}
+                                        quiz={curQuiz}
+                                    />
+                                </div>
+                            </>
+                        )}
 
-                    {/* 대댓글 */}
-                    {mode === 'detail' && selectedComment && (
-                        <>
-                            <CommentItem
-                                isTopComment={true}
-                                comment={selectedComment}
-                            />
-                            <div
-                                className="flex-1 overflow-y-auto"
-                                ref={desktopRef}
-                            >
-                                <RecommentListView
+                        {/* 대댓글 */}
+                        {mode === 'detail' && selectedComment && (
+                            <>
+                                <div
+                                    className="flex-1 overflow-y-auto"
                                     ref={desktopRef}
-                                    comment={selectedComment}
-                                />
-                            </div>
-                        </>
-                    )}
+                                >
+                                    <CommentItem
+                                        isTopComment={true}
+                                        comment={selectedComment}
+                                    />
+                                    <RecommentListView
+                                        ref={desktopRef}
+                                        comment={selectedComment}
+                                    />
+                                </div>
+                            </>
+                        )}
 
-                    <CommentInput
-                        quizId={curQuiz._id}
-                        commentId={selectedComment?._id}
-                    />
+                        <CommentInput
+                            quizId={curQuiz._id}
+                            commentId={selectedComment?._id}
+                        />
+
+                        {editTarget && <CommentEditInput />}
+                    </div>
                 </aside>
             </div>
 
@@ -204,6 +222,6 @@ export default function CommentAside({ quizbookMeta }: Props) {
                     commentId={selectedComment?._id}
                 />
             )}
-        </>
+        </CommentAsideContext.Provider>
     )
 }

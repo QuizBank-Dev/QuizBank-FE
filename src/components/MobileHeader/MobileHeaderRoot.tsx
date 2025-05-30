@@ -3,14 +3,20 @@ import BackBtn from './BackBtn'
 interface Props {
     title: string
     backBtn?: boolean
+    path?: string
     children?: React.ReactNode
 }
 
-export default function MobileHeaderRoot({ title, backBtn, children }: Props) {
+export default function MobileHeaderRoot({
+    title,
+    backBtn,
+    path,
+    children,
+}: Props) {
     return (
         <header className="flex w-full items-center justify-between bg-white p-4 text-gray-900 md:hidden">
             {/* 왼쪽 공간 div */}
-            <BackBtn backBtn={backBtn} />
+            <BackBtn backBtn={backBtn} path={path} />
             {/* 중앙 제목 */}
             <h1 className="line-clamp-1 text-mobile-title-sm font-extra-bold">
                 {title}

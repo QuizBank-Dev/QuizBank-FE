@@ -1,6 +1,6 @@
 import { getQuizbookMeta } from '@/lib/api/quizbook'
-import { SolutionUI } from '../../_components/ui'
 import { notFound } from 'next/navigation'
+import { SolutionUI } from './_components'
 
 interface Props {
     params: Promise<{ quizbookId: string }>

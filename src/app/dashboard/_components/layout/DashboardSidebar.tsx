@@ -28,11 +28,11 @@ export default function DashboardSidebar() {
                         text="다시 볼 문제"
                         href="/dashboard/quiz-like"
                     />
-                    {/* <Sidebar.Item
+                    <Sidebar.Item
                         icon={<GroupChatSvg className="size-5" />}
                         text="그룹 선정 문제집"
                         href="/dashboard/group-quizbook"
-                    /> */}
+                    />
                     <Sidebar.Item
                         icon={<RecentSvg className="size-5" />}
                         text="학습 결과"

@@ -23,24 +23,31 @@ import { usePostQuizbook } from '@/hooks/mutations/quizbook'
 
 export default function PostQuizbookForm() {
     const router = useRouter()
+
+    const {
+        title,
+        description,
+        category,
+        quizList,
+        hydrated,
+        setMeta,
+        removeQuiz,
+        reset: resetStore,
+    } = usePostQuizbookStore()
+
     const methods = useForm<PostQuizbookFormData>({
         resolver: zodResolver(postQuizbookSchema),
         mode: 'onChange',
-        defaultValues: {
-            title: '',
-            category: undefined,
-            quizList: [],
-        },
     })
-    const { handleSubmit, setValue, reset } = methods
-    const { quizList, resetQuizList } = usePostQuizbookStore()
+
+    const { handleSubmit, setValue, reset, watch, formState } = methods
 
     const { mutate, isPending } = usePostQuizbook()
 
     const onSubmit = async (data: PostQuizbookFormData) => {
         mutate(data, {
             onSuccess: () => {
-                resetQuizList()
+                resetStore()
                 reset()
                 router.push('/quizbook')
             },
@@ -55,18 +62,45 @@ export default function PostQuizbookForm() {
         })
     }
 
-    // TODO: AUTO SAVE 기능 추가
+    const onInvalid = (errors: typeof formState.errors) => {
+        if (errors.quizList) {
+            toast.error(errors.quizList.message)
+        }
+    }
 
+    // 폼 상태 초기화
     useEffect(() => {
-        setValue('quizList', quizList)
-    }, [quizList, setValue])
+        if (hydrated) {
+            reset({
+                title: title ?? '',
+                description: description ?? '',
+                category,
+            })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [hydrated, reset])
+
+    // Meta 정보 상태 동기화
+    useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const subscription = watch(({ quizList: _, ...rest }) => {
+            setMeta(rest as Partial<PostQuizbookFormData>)
+        })
+
+        return () => subscription.unsubscribe()
+    }, [watch, setMeta])
+
+    // QuizList 상태 동기화
+    useEffect(() => {
+        if (quizList && hydrated) setValue('quizList', quizList)
+    }, [quizList, setValue, hydrated])
 
     return (
         <FormProvider {...methods}>
             <form
                 id="post-quizbook-form"
                 className="flex flex-1 flex-col gap-[8px]"
-                onSubmit={handleSubmit(onSubmit)}
+                onSubmit={handleSubmit(onSubmit, onInvalid)}
             >
                 {/* 카테고리 영역 */}
                 <CustomSelect
@@ -102,14 +136,15 @@ export default function PostQuizbookForm() {
                 {/* 추가 카드 리스트 영역 */}
                 <div className="flex w-full flex-1 flex-col gap-1">
                     <span className="text-mobile-body-sm font-regular text-gray-500 md:text-pc-body-sm">
-                        {`추가된 문제 (총 ${quizList.length})`}
+                        {`추가된 문제 (총 ${quizList?.length})`}
                     </span>
                     <div className="flex w-full flex-1 flex-col gap-[8px] px-[8px] pl-0 md:px-[16px] md:pl-0">
-                        {quizList.map((quiz, idx) => (
+                        {quizList?.map((quiz, idx) => (
                             <AddedQuiz
                                 key={`${quiz}-${idx}`}
                                 quiz={quiz}
                                 idx={idx}
+                                onRemove={() => removeQuiz(idx)}
                             />
                         ))}
                     </div>
