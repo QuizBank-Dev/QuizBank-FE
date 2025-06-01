@@ -13,9 +13,12 @@ const pretendard = localFont({
 })
 
 export const metadata: Metadata = {
-    title: 'Quizbank: AI 채점 및 문제 검증 기반 오픈 퀴즈 플랫폼',
-    description:
-        'AI가 문제를 자동으로 검토하고 채점해주는 새로운 학습 플랫폼. 누구나 직접 문제를 만들고 풀며 지식을 공유하고 성장할 수 있습니다.',
+    metadataBase: new URL(
+        process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000',
+    ),
+    title: 'Quizbank - AI 기반 퀴즈 학습 플랫폼',
+    description: '누구나 문제를 만들고 풀 수 있는 AI 기반 퀴즈 학습 플랫폼',
+    authors: [{ name: 'Quizbank Team', url: 'https://quizbank.store' }],
     icons: {
         icon: [
             {
@@ -33,6 +36,26 @@ export const metadata: Metadata = {
         apple: { url: '/icons/apple-touch-icon.png', sizes: '180x180' },
     },
     manifest: '/site.webmanifest',
+    openGraph: {
+        title: 'Quizbank - AI 기반 퀴즈 학습 플랫폼',
+        description: '누구나 문제를 만들고 풀 수 있는 AI 기반 퀴즈 학습 플랫폼',
+        url: 'https://quizbank.store',
+        siteName: 'Quizbank',
+        images: [
+            {
+                url: '/images/og-image.png',
+                width: 1200,
+                height: 630,
+                alt: 'Quizbank Open Graph Image',
+            },
+        ],
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'Quizbank',
+        images: ['/og-image.png'],
+    },
 }
 
 export default function RootLayout({
