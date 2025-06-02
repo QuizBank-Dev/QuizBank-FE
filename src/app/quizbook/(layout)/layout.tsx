@@ -4,6 +4,24 @@ import MobileBottomNav from '@/components/MobileBottomNav'
 import MobileHeader from '@/components/MobileHeader'
 import { QuizbookListPreFetcher } from './_providers/QuizbookListPreFetcher'
 import DesktopFooter from '@/components/DesktopFooter'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: '문제집 탐색 | Quizbank',
+    description: '다양한 문제집을 탐색하고 원하는 주제로 학습을 시작해보세요.',
+    alternates: {
+        canonical: '/quizbook',
+    },
+    openGraph: {
+        title: '문제집 탐색 | Quizbank',
+        description:
+            '다양한 문제집을 탐색하고 원하는 주제로 학습을 시작해보세요.',
+        url: '/quizbook',
+    },
+    twitter: {
+        title: '문제집 탐색 | Quizbank',
+    },
+}
 
 export default async function Layout({
     children,
