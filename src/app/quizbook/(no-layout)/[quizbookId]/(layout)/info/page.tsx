@@ -9,15 +9,61 @@ import { getQuizbookMeta } from '@/lib/api/quizbook'
 import { extractKSTDateOnly } from '@/utils/date/dateOnly'
 import States from './_components/States'
 import { CategoryBackgroundImg } from '@/constants/common/category'
+import { notFound } from 'next/navigation'
+import { Metadata } from 'next'
 
-export default async function QuizbookDetailPage({
-    params,
-}: {
+interface Props {
     params: Promise<{ quizbookId: string }>
-}) {
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { quizbookId } = await params
 
-    const quizbookMeta = await getQuizbookMeta(quizbookId)
+    const meta = await getQuizbookMeta(quizbookId).catch(() => null)
+
+    if (!meta) {
+        return {
+            title: '문제집 상세 | Quizbank',
+            description: '문제집 정보를 불러올 수 없습니다.',
+        }
+    }
+
+    return {
+        title: `${meta.title} | Quizbank`,
+        description: meta.description,
+        keywords: [
+            meta.title,
+            meta.category,
+            meta.description,
+            `${meta.category} 문제`,
+            `${meta.category} 퀴즈`,
+            `${meta.category} 문제집`,
+            '온라인 퀴즈',
+            '기출 문제',
+            'AI 학습',
+        ],
+        authors: [{ name: meta.author.nickname }],
+        alternates: {
+            canonical: `/quizbook/${quizbookId}/info`,
+        },
+        openGraph: {
+            title: `${meta.title} | Quizbank`,
+            description: meta.description,
+            url: `quizbook/${quizbookId}`,
+            type: 'article',
+        },
+        twitter: {
+            title: `${meta.title} | Quizbank`,
+        },
+    }
+}
+
+export default async function QuizbookDetailPage({ params }: Props) {
+    const { quizbookId } = await params
+
+    const quizbookMeta = await getQuizbookMeta(quizbookId).catch(() => null)
+
+    if (!quizbookMeta) notFound()
 
     return (
         <main className="no-scrollbar flex w-full flex-1 flex-col items-center overflow-auto">
