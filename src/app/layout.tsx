@@ -4,6 +4,7 @@ import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 import { QueryProvider } from './_providers/QueryProvider'
 import { UserPrefetcher } from './_providers/UserPrefetcher'
+import { ENV } from '@/constants/common/env'
 
 const pretendard = localFont({
     src: '../static/fonts/PretendardVariable.woff2',
@@ -13,12 +14,29 @@ const pretendard = localFont({
 })
 
 export const metadata: Metadata = {
-    metadataBase: new URL(
-        process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000',
-    ),
+    metadataBase: new URL(ENV.SITE!),
     title: 'Quizbank - AI 기반 퀴즈 학습 플랫폼',
+    keywords: [
+        '학습',
+        '퀴즈',
+        '문제집',
+        'AI 퀴즈 플랫폼',
+        '스터디 그룹',
+        '온라인 퀴즈',
+        '네트워크 학습',
+        '알고리즘 학습',
+        '웹 개발 학습',
+        '자료구조 학습',
+        '데이터베이스 학습',
+        '기출 문제',
+        '자격증 시험',
+        'IT 자격증',
+        '정보처리기사',
+    ],
     description: '누구나 문제를 만들고 풀 수 있는 AI 기반 퀴즈 학습 플랫폼',
-    authors: [{ name: 'Quizbank Team', url: 'https://quizbank.store' }],
+    authors: [
+        { name: 'Quizbank Team', url: 'https://github.com/QuizBank-Dev' },
+    ],
     icons: {
         icon: [
             {
@@ -39,22 +57,23 @@ export const metadata: Metadata = {
     openGraph: {
         title: 'Quizbank - AI 기반 퀴즈 학습 플랫폼',
         description: '누구나 문제를 만들고 풀 수 있는 AI 기반 퀴즈 학습 플랫폼',
-        url: 'https://quizbank.store',
+        url: ENV.SITE,
         siteName: 'Quizbank',
+        locale: 'ko_KR',
         images: [
             {
-                url: '/images/og-image.png',
+                url: `${ENV.SITE}/images/og/og-image.png`,
                 width: 1200,
                 height: 630,
-                alt: 'Quizbank Open Graph Image',
+                alt: 'Quizbank 대표 이미지',
             },
         ],
         type: 'website',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Quizbank',
-        images: ['/og-image.png'],
+        title: 'Quizbank - AI 기반 퀴즈 학습 플랫폼',
+        images: ['/images/og/og-image.png'],
     },
 }
 
