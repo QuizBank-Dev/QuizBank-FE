@@ -10,9 +10,12 @@ import { useEmailVerification } from '@/hooks/useEmailVerification'
 import { SignupFormData, signupSchema } from '@/types/schemas/auth'
 import { signup } from '@/lib/api/auth'
 import LoadingButton from '../../_components/LoadingButton'
+import { useQueryClient } from '@tanstack/react-query'
+import { QueryKey } from '@/constants/common/queryKey'
 
 export default function SignupForm() {
     const router = useRouter()
+    const queryClient = useQueryClient()
     const [isLoading, setIsLoading] = useState(false)
     const methods = useForm<SignupFormData>({
         resolver: zodResolver(signupSchema),
@@ -25,7 +28,11 @@ export default function SignupForm() {
         setIsLoading(true)
         signup(data)
             .then(() => {
-                router.push('/')
+                queryClient
+                    .invalidateQueries({
+                        queryKey: QueryKey.user.DEFAULT,
+                    })
+                    .then(() => router.push('/'))
             })
             .catch(() => {
                 toast('회원가입 중 오류가 발생했습니다.')
