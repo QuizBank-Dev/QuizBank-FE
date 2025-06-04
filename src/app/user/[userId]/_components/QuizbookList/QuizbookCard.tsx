@@ -9,7 +9,8 @@ type Props = Quizbook
 
 export default function QuizbookCard({ ...quizbook }: Props) {
     const router = useRouter()
-    const handleQuizbookClick = () => router.push(`/quizbook/${quizbook._id}`)
+    const handleQuizbookClick = () =>
+        router.push(`/quizbook/${quizbook._id}/info`)
     return (
         <Card
             id={quizbook._id}
