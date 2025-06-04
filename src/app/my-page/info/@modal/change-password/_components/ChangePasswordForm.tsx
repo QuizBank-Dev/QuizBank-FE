@@ -57,8 +57,8 @@ export default function ChangePasswordForm() {
                     id="password"
                     name="password"
                     type="password"
-                    label="이전 비밀번호"
-                    placeholder="현재 비밀번호를 입력해주세요"
+                    label="현재 비밀번호"
+                    placeholder="현재 사용중인 비밀번호를 입력해주세요"
                     style="solid"
                 />
                 <CustomInput
