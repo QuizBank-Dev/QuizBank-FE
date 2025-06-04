@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server'
 const PUBLIC_PATHS = [
     '/',
     '/login',
+    '/login/todo', // TODO OAuth 구현 완료 시 제거
     '/signup',
     '/forgot-password',
     '/reset-password',
@@ -17,6 +18,7 @@ const PUBLIC_PATHS = [
 // 로그인이 필요없는 paths
 const SKIP_AUTH_PATHS = [
     '/login',
+    '/login/todo', // TODO OAuth 구현 완료 시 제거
     '/signup',
     '/forgot-password',
     '/reset-password',

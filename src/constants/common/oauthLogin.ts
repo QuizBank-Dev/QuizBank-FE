@@ -17,3 +17,5 @@ export const OAuthBgColor: Record<OAuthProvider, string> = {
     kakao: 'bg-[#FEE500]',
     naver: 'bg-[#03C75A]',
 }
+
+export const ValidProviderList: OAuthProvider[] = ['github']
