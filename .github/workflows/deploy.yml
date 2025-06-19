@@ -23,17 +23,20 @@ jobs:
 
             - name: Clone deploy repository & checkout branch
               run: |
-                  git clone https://x-access-token:${{ secrets.DEPLOY_REPO_PAT }}@github.com/Kim-HyounSuk/quizbank-prod.git deploy
-                  cd deploy
+                  git clone https://x-access-token:${{ secrets.DEPLOY_REPO_PAT }}@github.com/Kim-HyounSuk/quizbank-prod.git ../deploy
+                  cd ../deploy
                   git checkout develop
 
-            - name: Sync files
+            - name: Sync files into deploy-repo root
               run: |
                   rsync -av --delete \
                     --exclude=".git" \
                     --exclude=".github/workflows" \
-                    ./ ./deploy/
-                  cd deploy
+                    ./ ../deploy/
+
+            - name: Commit and Push to deploy-repo
+              run: |
+                  cd ../deploy
                   git add .
                   git commit -m "🚀 Auto deploy from dev-repo $GITHUB_SHA" || echo "No changes to commit"
                   git push origin develop
