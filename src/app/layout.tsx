@@ -73,6 +73,7 @@ export const metadata: Metadata = {
     twitter: {
         card: 'summary_large_image',
         title: 'Quizbank - AI 기반 퀴즈 학습 플랫폼',
+        description: '누구나 문제를 만들고 풀 수 있는 AI 기반 퀴즈 학습 플랫폼',
         images: ['/images/og/og-image.png'],
     },
 }
