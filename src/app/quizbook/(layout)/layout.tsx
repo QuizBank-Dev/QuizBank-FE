@@ -22,7 +22,7 @@ export const metadata: Metadata = {
         locale: 'ko_KR',
         images: [
             {
-                url: `${ENV.SITE}/images/og/og-image.png`,
+                url: `${ENV.SITE}/images/og/og-img.png`,
                 width: 1200,
                 height: 630,
                 alt: 'Quizbank 대표 이미지',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
         title: '문제집 탐색 | Quizbank',
         description:
             '다양한 문제집을 탐색하고 원하는 주제로 학습을 시작해보세요.',
-        images: ['/images/og/og-image.png'],
+        images: ['/images/og/og-img.png'],
     },
 }
 

@@ -62,7 +62,7 @@ export const metadata: Metadata = {
         locale: 'ko_KR',
         images: [
             {
-                url: `${ENV.SITE}/images/og/og-image.png`,
+                url: `${ENV.SITE}/images/og/og-img.png`,
                 width: 1200,
                 height: 630,
                 alt: 'Quizbank 대표 이미지',
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: 'Quizbank - AI 기반 퀴즈 학습 플랫폼',
         description: '누구나 문제를 만들고 풀 수 있는 AI 기반 퀴즈 학습 플랫폼',
-        images: ['/images/og/og-image.png'],
+        images: ['/images/og/og-img.png'],
     },
 }
 
