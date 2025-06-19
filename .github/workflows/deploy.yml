@@ -24,7 +24,10 @@ jobs:
 
             - name: Sync files
               run: |
-                  rsync -av --delete --exclude=".git" ./ deploy/
+                  rsync -av --delete \
+                    --exclude=".git" \
+                    --exclude=".github/workflows" \
+                    ./ deploy/
                   cd deploy
                   git checkout develop
                   git add .
