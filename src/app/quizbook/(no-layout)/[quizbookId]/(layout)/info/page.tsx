@@ -11,6 +11,7 @@ import States from './_components/States'
 import { CategoryBackgroundImg } from '@/constants/common/category'
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
+import { ENV } from '@/constants/common/env'
 
 interface Props {
     params: Promise<{ quizbookId: string }>
@@ -49,11 +50,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         openGraph: {
             title: `${meta.title} | Quizbank`,
             description: meta.description,
-            url: `quizbook/${quizbookId}`,
+            url: `${ENV.SITE}/quizbook/${quizbookId}`,
+            siteName: 'Quizbank',
+            locale: 'ko_KR',
+            images: [
+                {
+                    url: `${ENV.SITE}/images/og/og-image.png`,
+                    width: 1200,
+                    height: 630,
+                    alt: 'Quizbank 대표 이미지',
+                },
+            ],
             type: 'article',
         },
         twitter: {
+            card: 'summary_large_image',
             title: `${meta.title} | Quizbank`,
+            description: meta.description,
+            images: ['/images/og/og-image.png'],
         },
     }
 }

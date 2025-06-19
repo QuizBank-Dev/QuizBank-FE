@@ -1,6 +1,7 @@
 import DesktopHeader from '@/components/DesktopHeader'
 import SocketProvider from './[groupId]/_components/SocketProvider'
 import { Metadata } from 'next'
+import { ENV } from '@/constants/common/env'
 
 export const metadata: Metadata = {
     title: '스터디 그룹 탐색 | Quizbank',
@@ -20,10 +21,24 @@ export const metadata: Metadata = {
         title: '스터디 그룹 탐색 | Quizbank',
         description:
             '함께 공부할 그룹을 찾아보고, 함께 학습하며 실력을 높여보세요.',
-        url: '/group',
+        url: `${ENV.SITE}/group`,
+        siteName: 'Quizbank',
+        locale: 'ko_KR',
+        images: [
+            {
+                url: `${ENV.SITE}/images/og/og-image.png`,
+                width: 1200,
+                height: 630,
+                alt: 'Quizbank 대표 이미지',
+            },
+        ],
+        type: 'website',
     },
     twitter: {
+        card: 'summary_large_image',
         title: '스터디 그룹 탐색 | Quizbank',
+        description: '누구나 문제를 만들고 풀 수 있는 AI 기반 퀴즈 학습 플랫폼',
+        images: ['/images/og/og-image.png'],
     },
 }
 
