@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             locale: 'ko_KR',
             images: [
                 {
-                    url: `${ENV.SITE}/images/og/og-image.png`,
+                    url: `${ENV.SITE}/images/og/og-img.png`,
                     width: 1200,
                     height: 630,
                     alt: 'Quizbank 대표 이미지',
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
             card: 'summary_large_image',
             title: `${meta.title} | Quizbank`,
             description: meta.description,
-            images: ['/images/og/og-image.png'],
+            images: ['/images/og/og-img.png'],
         },
     }
 }
