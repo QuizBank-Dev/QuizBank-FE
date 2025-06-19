@@ -37,7 +37,8 @@ export const metadata: Metadata = {
     twitter: {
         card: 'summary_large_image',
         title: '스터디 그룹 탐색 | Quizbank',
-        description: '누구나 문제를 만들고 풀 수 있는 AI 기반 퀴즈 학습 플랫폼',
+        description:
+            '함께 공부할 그룹을 찾아보고, 함께 학습하며 실력을 높여보세요',
         images: ['/images/og/og-image.png'],
     },
 }

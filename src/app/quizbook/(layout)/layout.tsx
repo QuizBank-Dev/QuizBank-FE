@@ -14,7 +14,7 @@ export const metadata: Metadata = {
         canonical: '/quizbook',
     },
     openGraph: {
-        title: '스문제집 탐색 | Quizbank',
+        title: '문제집 탐색 | Quizbank',
         description:
             '다양한 문제집을 탐색하고 원하는 주제로 학습을 시작해보세요.',
         url: `${ENV.SITE}/quizbook`,
