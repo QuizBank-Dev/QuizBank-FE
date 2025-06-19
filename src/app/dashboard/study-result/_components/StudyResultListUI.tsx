@@ -42,7 +42,7 @@ export default function StudyResultListUI() {
                             category={result.quizbook.category}
                             badge={{
                                 status: QuizbookCardStatus.COMPLETED,
-                                customText: `${result.score} / ${result.quizbook.totalScore}xp (${result.score ? Math.floor(result.score / result.quizbook.totalScore) * 100 : 0}%)`,
+                                customText: `${result.score} / ${result.quizbook.totalScore}xp (${result.score ? Math.floor((result.score / result.quizbook.totalScore) * 100) : 0}%)`,
                             }}
                             onClick={() =>
                                 router.push(
